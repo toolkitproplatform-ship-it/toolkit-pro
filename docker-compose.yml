@@ -1,0 +1,90 @@
+# docker-compose.yml ফাইল তৈরি করুন
+cat > docker-compose.yml << 'EOF'
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: toolkit-pro-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - toolkit-network
+    environment:
+      - DB_HOST=mysql
+      - REDIS_HOST=redis
+
+  nginx:
+    image: nginx:alpine
+    container_name: toolkit-pro-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - app
+    networks:
+      - toolkit-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: toolkit-pro-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: toolkit_pro
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: toolkit
+      MYSQL_PASSWORD: toolkitpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - toolkit-network
+
+  redis:
+    image: redis:alpine
+    container_name: toolkit-pro-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - toolkit-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: toolkit-pro-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - toolkit-network
+
+volumes:
+  mysql-data:
+  redis-data:
+
+networks:
+  toolkit-network:
+    driver: bridge
+EOF
+
+echo "✅ docker-compose.yml ফাইল তৈরি হয়েছে"
