@@ -1,0 +1,52 @@
+# Render.com Blueprint Configuration
+# Toolkit Pro - All-in-One Online Tools Platform
+
+services:
+  # Main Web Service
+  - type: web
+    name: toolkit-pro
+    env: node
+    plan: free
+    region: singapore  # Asia Pacific (Bangladesh থেকে দ্রুত)
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: toolkit-pro-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: toolkit-pro-redis
+          type: redis
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADSENSE_PUBLISHER_ID
+        sync: false
+      - key: ADSENSE_ENABLED
+        value: "true"
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "100"
+
+  # Redis Cache Service
+  - type: redis
+    name: toolkit-pro-redis
+    plan: free
+    ipAllowList: []  # Allow all IPs (public access)
+
+# PostgreSQL Database
+databases:
+  - name: toolkit-pro-db
+    plan: free
+    databaseName: toolkit_pro
+    user: toolkit_admin
