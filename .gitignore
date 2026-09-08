@@ -1,0 +1,60 @@
+# .gitignore ফাইল তৈরি করুন
+cat > .gitignore << 'EOF'
+# Environment files
+.env
+.env.local
+.env.production
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# Storage
+/storage/*
+!/storage/.gitkeep
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Logs
+*.log
+/logs/*
+/storage/logs/*
+
+# Cache
+/cache/*
+/storage/cache/*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build
+/dist/
+/build/
+/coverage/
+
+# Testing
+/.phpunit.cache/
+.phpunit.result.cache
+
+# Composer
+composer.phar
+
+# Temporary files
+*.tmp
+*.temp
+~$*
+
+# Backup files
+*.bak
+*.backup
+EOF
+
+echo "✅ .gitignore ফাইল তৈরি হয়েছে"
