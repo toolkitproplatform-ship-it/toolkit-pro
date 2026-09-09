@@ -19,10 +19,10 @@ dotenv.config();
 // PostgreSQL কানেকশন পুল
 // ----------------------------------------------
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL_INTERNAL,
   max: parseInt(process.env.DB_MAX_CONNECTIONS) || 10,
   idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT) || 30000,
-  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT) || 5000,
+  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT) || 10000,
   ssl: process.env.NODE_ENV === "production" ? {
     rejectUnauthorized: false
   } : false
@@ -33,29 +33,47 @@ const pool = new Pool({
 // ----------------------------------------------
 pool.on("error", (err) => {
   console.error("❌ Unexpected database error:", err);
-  process.exit(-1);
 });
 
 pool.on("connect", () => {
   console.log("📦 New database connection established");
 });
 
-pool.on("remove", () => {
-  console.log("📦 Database connection closed");
-});
+// ----------------------------------------------
+// ডাটাবেস কানেকশন ফাংশন (রিট্রাই সহ)
+// ----------------------------------------------
+async function connect(retries = 5) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const client = await pool.connect();
+      console.log("✅ PostgreSQL connection successful");
+      console.log(`📊 Database URL: ${maskConnectionString(process.env.DATABASE_URL)}`);
+      client.release();
+      return true;
+    } catch (error) {
+      console.error(`❌ PostgreSQL connection attempt ${i + 1}/${retries} failed:`, error.message);
+      
+      if (i < retries - 1) {
+        console.log(`⏳ Retrying in 5 seconds...`);
+        await new Promise(resolve => setTimeout(resolve, 5000));
+      } else {
+        throw error;
+      }
+    }
+  }
+}
 
 // ----------------------------------------------
-// ডাটাবেস কানেকশন ফাংশন
+// কানেকশন স্ট্রিং মাস্ক হেল্পার
 // ----------------------------------------------
-async function connect() {
+function maskConnectionString(connectionString) {
+  if (!connectionString) return "Not set";
+  
   try {
-    const client = await pool.connect();
-    console.log("✅ PostgreSQL connection successful");
-    client.release();
-    return true;
-  } catch (error) {
-    console.error("❌ PostgreSQL connection failed:", error.message);
-    throw error;
+    const url = new URL(connectionString);
+    return `${url.protocol}//${url.username}:****@${url.hostname}:${url.port}${url.pathname}`;
+  } catch {
+    return "Invalid URL format";
   }
 }
 
@@ -73,13 +91,12 @@ async function checkConnection() {
 }
 
 // ----------------------------------------------
-// টেবিল সেটআপ
+// টেবিল সেটআপ (এরর হ্যান্ডলিং সহ)
 // ----------------------------------------------
 async function setupTables() {
   const client = await pool.connect();
   
   try {
-    // ট্রানজেকশন শুরু
     await client.query("BEGIN");
     
     // Users টেবিল
@@ -109,28 +126,8 @@ async function setupTables() {
         id SERIAL PRIMARY KEY,
         slug VARCHAR(200) UNIQUE NOT NULL,
         name VARCHAR(200) NOT NULL,
-        name_bn VARCHAR(200),
-        name_hi VARCHAR(200),
-        name_es VARCHAR(200),
-        name_fr VARCHAR(200),
-        name_de VARCHAR(200),
-        name_ja VARCHAR(200),
-        name_ko VARCHAR(200),
-        name_zh VARCHAR(200),
-        name_ar VARCHAR(200),
-        description TEXT NOT NULL,
-        description_bn TEXT,
-        description_hi TEXT,
-        description_es TEXT,
-        description_fr TEXT,
-        description_de TEXT,
-        description_ja TEXT,
-        description_ko TEXT,
-        description_zh TEXT,
-        description_ar TEXT,
         category VARCHAR(100) NOT NULL,
-        category_bn VARCHAR(100),
-        subcategory VARCHAR(100),
+        description TEXT NOT NULL,
         icon VARCHAR(50) DEFAULT '🔧',
         url VARCHAR(500),
         api_endpoint VARCHAR(500),
@@ -162,15 +159,6 @@ async function setupTables() {
         id SERIAL PRIMARY KEY,
         slug VARCHAR(100) UNIQUE NOT NULL,
         name VARCHAR(100) NOT NULL,
-        name_bn VARCHAR(100),
-        name_hi VARCHAR(100),
-        name_es VARCHAR(100),
-        name_fr VARCHAR(100),
-        name_de VARCHAR(100),
-        name_ja VARCHAR(100),
-        name_ko VARCHAR(100),
-        name_zh VARCHAR(100),
-        name_ar VARCHAR(100),
         description TEXT,
         icon VARCHAR(50) DEFAULT '📁',
         tool_count INTEGER DEFAULT 0,
@@ -181,7 +169,7 @@ async function setupTables() {
     `);
     console.log("✅ Tool categories table ready");
     
-    // Tool Views টেবিল (অ্যানালিটিক্স)
+    // Tool Views টেবিল
     await client.query(`
       CREATE TABLE IF NOT EXISTS tool_views (
         id SERIAL PRIMARY KEY,
@@ -278,86 +266,12 @@ async function setupTables() {
     `);
     console.log("✅ Sessions table ready");
     
-    // কমিট
     await client.query("COMMIT");
     console.log("✅ All database tables created successfully");
     
   } catch (error) {
-    // রোলব্যাক
     await client.query("ROLLBACK");
     console.error("❌ Error setting up tables:", error);
-    throw error;
-  } finally {
-    client.release();
-  }
-}
-
-// ----------------------------------------------
-// কোয়েরি হেল্পার ফাংশন
-// ----------------------------------------------
-async function query(text, params) {
-  const start = Date.now();
-  try {
-    const result = await pool.query(text, params);
-    const duration = Date.now() - start;
-    console.log(`📊 Query executed in ${duration}ms: ${text.substring(0, 100)}`);
-    return result;
-  } catch (error) {
-    console.error("❌ Query error:", error.message);
-    throw error;
-  }
-}
-
-async function getOne(text, params) {
-  const result = await query(text, params);
-  return result.rows[0] || null;
-}
-
-async function getMany(text, params) {
-  const result = await query(text, params);
-  return result.rows;
-}
-
-// ----------------------------------------------
-// ট্রানজেকশন হেল্পার
-// ----------------------------------------------
-async function transaction(callback) {
-  const client = await pool.connect();
-  try {
-    await client.query("BEGIN");
-    const result = await callback(client);
-    await client.query("COMMIT");
-    return result;
-  } catch (error) {
-    await client.query("ROLLBACK");
-    throw error;
-  } finally {
-    client.release();
-  }
-}
-
-// ----------------------------------------------
-// বাল্ক ইনসার্ট
-// ----------------------------------------------
-async function bulkInsert(table, columns, values) {
-  const client = await pool.connect();
-  try {
-    const placeholders = values.map((_, i) => 
-      `(${columns.map((_, j) => `$${i * columns.length + j + 1}`).join(", ")})`
-    ).join(", ");
-    
-    const flatValues = values.flat();
-    
-    const queryText = `
-      INSERT INTO ${table} (${columns.join(", ")})
-      VALUES ${placeholders}
-      RETURNING *
-    `;
-    
-    const result = await client.query(queryText, flatValues);
-    return result.rows;
-  } catch (error) {
-    console.error("Bulk insert error:", error);
     throw error;
   } finally {
     client.release();
@@ -429,7 +343,6 @@ async function seedDefaultTools() {
   ];
   
   try {
-    // ক্যাটাগরি সিড
     for (const category of defaultCategories) {
       await query(`
         INSERT INTO tool_categories (slug, name, icon, sort_order)
@@ -439,7 +352,6 @@ async function seedDefaultTools() {
     }
     console.log("✅ Default categories seeded");
     
-    // টুলস সিড
     for (const tool of defaultTools) {
       await query(`
         INSERT INTO tools (slug, name, category, icon, description, is_featured, is_popular, is_new)
@@ -454,8 +366,33 @@ async function seedDefaultTools() {
     
   } catch (error) {
     console.error("Error seeding data:", error);
+  }
+}
+
+// ----------------------------------------------
+// কোয়েরি হেল্পার ফাংশন
+// ----------------------------------------------
+async function query(text, params) {
+  const start = Date.now();
+  try {
+    const result = await pool.query(text, params);
+    const duration = Date.now() - start;
+    console.log(`📊 Query executed in ${duration}ms`);
+    return result;
+  } catch (error) {
+    console.error("❌ Query error:", error.message);
     throw error;
   }
+}
+
+async function getOne(text, params) {
+  const result = await query(text, params);
+  return result.rows[0] || null;
+}
+
+async function getMany(text, params) {
+  const result = await query(text, params);
+  return result.rows;
 }
 
 // ----------------------------------------------
@@ -484,7 +421,5 @@ module.exports = {
   query,
   getOne,
   getMany,
-  transaction,
-  bulkInsert,
   close
 };
