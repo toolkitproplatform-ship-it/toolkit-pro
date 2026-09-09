@@ -1,11 +1,13 @@
 // ============================================
-// Toolkit Pro - Main Server File (Redis Optional)
+// Toolkit Pro - Main Server File
 // ============================================
 
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const compression = require("compression");
+const path = require("path");
+const fs = require("fs");
 const dotenv = require("dotenv");
 const database = require("./database");
 const { standardResponse, errorResponse } = require("./utils/response");
@@ -16,7 +18,9 @@ const app = express();
 const PORT = process.env.PORT || 10000;
 const NODE_ENV = process.env.NODE_ENV || "production";
 
-// Security
+// ============================================
+// Security (সরলীকৃত)
+// ============================================
 app.use(helmet({
   contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false,
@@ -24,7 +28,7 @@ app.use(helmet({
 
 // CORS
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "*",
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
@@ -36,67 +40,187 @@ app.use(compression());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// ----------------------------------------------
+// ============================================
+// স্ট্যাটিক ফাইল সার্ভিং (গুরুত্বপূর্ণ)
+// ============================================
+const publicPath = path.join(__dirname, "public");
+
+// চেক করুন public ফোল্ডার আছে কিনা
+if (!fs.existsSync(publicPath)) {
+  console.warn("⚠️ public folder not found, creating...");
+  fs.mkdirSync(publicPath, { recursive: true });
+}
+
+// স্ট্যাটিক ফাইল সার্ভ করুন
+app.use(express.static(publicPath, {
+  maxAge: "1d",
+  etag: true,
+  lastModified: true,
+  index: "index.html",
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith(".html")) {
+      res.setHeader("Content-Type", "text/html; charset=UTF-8");
+    } else if (filePath.endsWith(".css")) {
+      res.setHeader("Content-Type", "text/css; charset=UTF-8");
+    } else if (filePath.endsWith(".js")) {
+      res.setHeader("Content-Type", "application/javascript; charset=UTF-8");
+    } else if (filePath.endsWith(".svg")) {
+      res.setHeader("Content-Type", "image/svg+xml");
+    } else if (filePath.endsWith(".png")) {
+      res.setHeader("Content-Type", "image/png");
+    } else if (filePath.endsWith(".jpg") || filePath.endsWith(".jpeg")) {
+      res.setHeader("Content-Type", "image/jpeg");
+    }
+  },
+}));
+
+// ============================================
+// API রাউটস (আগে রাখুন)
+// ============================================
+
 // হেলথ চেক
-// ----------------------------------------------
 app.get("/health", async (req, res) => {
   try {
     const dbStatus = await database.checkConnection();
     
-    return standardResponse(res, 200, true, "Server is healthy", {
-      status: "healthy",
-      uptime: process.uptime(),
+    return res.json({
+      success: true,
+      message: "Server is healthy",
+      data: {
+        status: "healthy",
+        uptime: process.uptime(),
+        database: dbStatus ? "connected" : "disconnected",
+        environment: NODE_ENV,
+      },
       timestamp: new Date().toISOString(),
-      database: dbStatus ? "connected" : "disconnected",
-      environment: NODE_ENV,
     });
   } catch (error) {
-    return errorResponse(res, 500, "Health check failed", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Health check failed",
+      error: error.message,
+    });
   }
 });
 
-// ----------------------------------------------
-// Root Route
-// ----------------------------------------------
-app.get("/", (req, res) => {
-  return standardResponse(res, 200, true, "Toolkit Pro API Server", {
-    name: "Toolkit Pro",
-    version: "1.0.0",
-    status: "running",
-    health: "/health",
-  });
-});
-
-// ----------------------------------------------
 // API রাউটস
-// ----------------------------------------------
 app.use("/api/v1/tools", require("./routes/tools"));
 app.use("/api/v1/auth", require("./routes/auth"));
 app.use("/api/v1", require("./routes/api"));
 
-// ----------------------------------------------
+// ============================================
+// HTML পেজ রাউটস (API-র পরে)
+// ============================================
+
+// হোমপেজ - সবচেয়ে গুরুত্বপূর্ণ
+app.get("/", (req, res) => {
+  const indexPath = path.join(publicPath, "index.html");
+  
+  // ফাইল আছে কিনা চেক
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  
+  // ফাইল না থাকলে সাধারণ HTML দেখান
+  return res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Toolkit Pro - Free Online Tools</title>
+      <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f0f4f8; }
+        h1 { color: #2563eb; font-size: 3rem; }
+        p { font-size: 1.2rem; color: #4b5563; }
+        a { color: #2563eb; }
+      </style>
+    </head>
+    <body>
+      <h1>🛠️ Toolkit Pro</h1>
+      <p>500+ Free Online Tools Platform</p>
+      <p>Server is running!</p>
+      <p><a href="/api/v1">API Documentation</a> | <a href="/health">Health Check</a></p>
+    </body>
+    </html>
+  `);
+});
+
+// অন্যান্য পেজ (ফাইল থাকলে দেখাবে)
+app.get("/tools.html", (req, res) => {
+  const filePath = path.join(publicPath, "tools.html");
+  if (fs.existsSync(filePath)) {
+    return res.sendFile(filePath);
+  }
+  return res.redirect("/");
+});
+
+app.get("/tool.html", (req, res) => {
+  const filePath = path.join(publicPath, "tool.html");
+  if (fs.existsSync(filePath)) {
+    return res.sendFile(filePath);
+  }
+  return res.redirect("/");
+});
+
+app.get("/categories.html", (req, res) => {
+  const filePath = path.join(publicPath, "categories.html");
+  if (fs.existsSync(filePath)) {
+    return res.sendFile(filePath);
+  }
+  return res.redirect("/");
+});
+
+// ============================================
 // 404 Handler
-// ----------------------------------------------
+// ============================================
 app.use((req, res) => {
-  return errorResponse(res, 404, "Route not found");
+  const notFoundPath = path.join(publicPath, "404.html");
+  if (fs.existsSync(notFoundPath)) {
+    return res.status(404).sendFile(notFoundPath);
+  }
+  
+  return res.status(404).send(`
+    <!DOCTYPE html>
+    <html>
+    <head><title>404 - Not Found</title></head>
+    <body style="text-align:center;padding:50px;font-family:Arial;">
+      <h1>404 - Page Not Found</h1>
+      <p>The page you are looking for does not exist.</p>
+      <a href="/">Go to Homepage</a>
+    </body>
+    </html>
+  `);
 });
 
-// ----------------------------------------------
-// এরর হ্যান্ডলার
-// ----------------------------------------------
-app.use((err, req, res, next) => {
-  console.error("Global Error:", err);
-  return errorResponse(res, 500, err.message || "Internal server error");
-});
-
-// ----------------------------------------------
+// ============================================
 // সার্ভার স্টার্টআপ
-// ----------------------------------------------
+// ============================================
 async function startServer() {
   try {
     console.log("=".repeat(60));
     console.log("🚀 Toolkit Pro Server Starting...");
     console.log("=".repeat(60));
+    
+    // চেক করুন public ফোল্ডারে কি কি আছে
+    console.log("📁 Checking public folder...");
+    if (fs.existsSync(publicPath)) {
+      const files = fs.readdirSync(publicPath);
+      console.log(`📁 Public folder contains: ${files.join(", ")}`);
+      
+      // সাবফোল্ডার চেক
+      const cssPath = path.join(publicPath, "css");
+      const jsPath = path.join(publicPath, "js");
+      
+      if (fs.existsSync(cssPath)) {
+        console.log(`📁 CSS folder: ${fs.readdirSync(cssPath).join(", ")}`);
+      }
+      if (fs.existsSync(jsPath)) {
+        console.log(`📁 JS folder: ${fs.readdirSync(jsPath).join(", ")}`);
+      }
+    } else {
+      console.warn("⚠️ public folder does not exist");
+    }
     
     // ডাটাবেস কানেকশন
     console.log("📦 Connecting to PostgreSQL...");
@@ -118,9 +242,9 @@ async function startServer() {
       console.log("=".repeat(60));
       console.log("🎉 Toolkit Pro Server Started Successfully!");
       console.log("=".repeat(60));
-      console.log(`🔗 Server URL: http://0.0.0.0:${PORT}`);
-      console.log(`❤️ Health Check: http://0.0.0.0:${PORT}/health`);
-      console.log(`📚 API Base: http://0.0.0.0:${PORT}/api/v1`);
+      console.log(`🌐 Website: http://0.0.0.0:${PORT}`);
+      console.log(`❤️ Health: http://0.0.0.0:${PORT}/health`);
+      console.log(`📚 API: http://0.0.0.0:${PORT}/api/v1`);
       console.log("=".repeat(60));
     });
     
