@@ -13,11 +13,15 @@
     <meta property="og:type" content="website">
     <link rel="canonical" href="https://toolkit-pro-1.onrender.com/">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Google Fonts - Bangla + English -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- ============================================ -->
+    <!-- Google AdSense - পরে যোগ করুন -->
+    <!-- ============================================ -->
+    <!-- অ্যাপ্রুভাল পাওয়ার পর নিচের কমেন্ট খুলুন -->
+    <!--
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    -->
     
     <style>
         :root { --primary: #2563eb; --secondary: #7c3aed; --accent: #f59e0b; --success: #10b981; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; --bg-input: #f1f5f9; --header-bg: #ffffff; --footer-bg: #ffffff; }
@@ -25,7 +29,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
         
-        /* হেডার */
         .site-header { background: var(--header-bg); box-shadow: 0 2px 15px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--primary); }
         .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 65px; gap: 10px; }
         .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); flex-shrink: 0; }
@@ -37,13 +40,12 @@
         .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; padding: 8px 14px; border-radius: 8px; white-space: nowrap; font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
         .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(37, 99, 235, 0.08); }
         .header-actions { display: flex; gap: 6px; align-items: center; }
-        .theme-toggle, .lang-toggle { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .theme-toggle, .lang-toggle { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all 0.3s; }
         .theme-toggle:hover, .lang-toggle:hover { background: var(--gradient); color: white; border-color: transparent; }
         .menu-toggle { display: none; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; align-items: center; justify-content: center; font-size: 1rem; }
         .mobile-menu { display: none; background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 10px 20px; flex-direction: column; gap: 4px; }
         .mobile-menu.active { display: flex; }
         
-        /* হিরো */
         .hero-section { background: var(--gradient); padding: 60px 20px; text-align: center; position: relative; overflow: hidden; }
         .hero-section::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: heroGlow 10s infinite; }
         @keyframes heroGlow { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(10%, 10%); } }
@@ -52,7 +54,7 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         .hero-title { color: white; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 12px; line-height: 1.3; font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
         .hero-title span { color: #fbbf24; }
-        .hero-subtitle { color: rgba(255,255,255,0.9); font-size: clamp(0.9rem, 2vw, 1.15rem); margin-bottom: 30px; font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
+        .hero-subtitle { color: rgba(255,255,255,0.9); font-size: clamp(0.9rem, 2vw, 1.15rem); margin-bottom: 30px; font-family: 'Noto Sans Bengali', sans-serif; }
         .search-wrapper { max-width: 600px; margin: 0 auto 25px; display: flex; gap: 10px; }
         .search-input { flex: 1; padding: 14px 20px; border: 2px solid transparent; border-radius: 50px; font-size: 0.95rem; outline: none; font-family: 'Noto Sans Bengali', sans-serif; background: white; color: #1e293b; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s; }
         .search-input:focus { border-color: #fbbf24; box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.3); }
@@ -61,21 +63,15 @@
         .quick-links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
         .quick-link { background: rgba(255,255,255,0.2); color: white; text-decoration: none; padding: 10px 18px; border-radius: 50px; font-weight: 600; transition: all 0.3s; backdrop-filter: blur(10px); font-size: 0.85rem; }
         .quick-link:hover { background: rgba(255,255,255,0.35); transform: translateY(-2px); }
-        
-        /* স্ট্যাটস */
         .stats-bar { background: var(--card); padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 900px; margin: -30px auto 0; border-radius: 15px; box-shadow: var(--shadow-lg); position: relative; z-index: 10; }
         .stat-item { text-align: center; }
         .stat-number { font-size: 1.5rem; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .stat-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; font-family: 'Noto Sans Bengali', sans-serif; }
-        
-        /* মেইন কন্টেন্ট */
         .main-content { flex: 1; max-width: 1200px; margin: 0 auto; padding: 30px 20px; width: 100%; }
         .section { margin-bottom: 50px; }
         .section-header { text-align: center; margin-bottom: 30px; }
-        .section-title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; color: var(--text); font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
+        .section-title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; color: var(--text); font-family: 'Noto Sans Bengali', sans-serif; }
         .section-subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-top: 5px; font-family: 'Noto Sans Bengali', sans-serif; }
-        
-        /* টুলস গ্রিড */
         .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .tool-card { background: var(--card); border-radius: 15px; padding: 25px; box-shadow: var(--shadow); transition: all 0.3s; text-decoration: none; color: var(--text); border: 2px solid transparent; position: relative; overflow: hidden; display: block; }
         .tool-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient); transform: scaleX(0); transition: transform 0.3s; }
@@ -87,39 +83,33 @@
         .tool-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
         .tool-rating { color: var(--accent); font-weight: 700; }
         .tool-usage { background: var(--bg-input); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; }
-        
-        /* ক্যাটাগরি */
         .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
         .category-card { text-align: center; padding: 25px 15px; background: var(--card); border-radius: 15px; text-decoration: none; color: var(--text); transition: all 0.3s; border: 2px solid transparent; }
         .category-card:hover { transform: translateY(-5px); border-color: var(--secondary); box-shadow: var(--shadow-lg); }
         .category-icon { font-size: 2.5rem; margin-bottom: 10px; display: block; }
         .category-name { font-weight: 700; font-size: 0.95rem; }
         .category-count { color: var(--text-secondary); font-size: 0.8rem; margin-top: 3px; font-family: 'Noto Sans Bengali', sans-serif; }
-        
-        /* ফিচার */
         .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
         .feature-card { text-align: center; padding: 30px 20px; background: var(--card); border-radius: 15px; box-shadow: var(--shadow); transition: all 0.3s; }
         .feature-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
         .feature-icon { font-size: 2.5rem; margin-bottom: 12px; display: block; }
         .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; font-family: 'Noto Sans Bengali', sans-serif; }
         .feature-card p { color: var(--text-secondary); font-size: 0.85rem; font-family: 'Noto Sans Bengali', sans-serif; }
-        
-        /* FAQ */
         .faq-list { max-width: 800px; margin: 0 auto; }
         .faq-item { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 12px; box-shadow: var(--shadow); }
         .faq-item h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
         .faq-item p { color: var(--text-secondary); font-size: 0.85rem; font-family: 'Noto Sans Bengali', sans-serif; }
         
-        /* অ্যাড */
-        .ad-container { max-width: 1200px; margin: 20px auto; padding: 15px; text-align: center; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); min-height: 80px; }
+        /* ============================================ */
+        /* Ad Space - পরে AdSense ID যোগ করবেন */
+        /* ============================================ */
+        .ad-container { max-width: 1200px; margin: 20px auto; padding: 15px; text-align: center; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); min-height: 80px; display: none; }
+        /* অ্যাপ্রুভালের পর display: none; মুছে দিন */
         
-        /* লোডিং */
         .loading { text-align: center; padding: 40px; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; gap: 10px; grid-column: 1 / -1; font-family: 'Noto Sans Bengali', sans-serif; }
         .spinner { width: 20px; height: 20px; border: 3px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .no-data { text-align: center; padding: 40px; color: var(--text-secondary); grid-column: 1 / -1; font-family: 'Noto Sans Bengali', sans-serif; }
-        
-        /* ফুটার */
         .site-footer { background: var(--footer-bg); border-top: 1px solid var(--border); padding: 40px 20px 20px; }
         .footer-container { max-width: 1100px; margin: 0 auto; }
         .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 25px; }
@@ -131,13 +121,9 @@
         .footer-bottom { border-top: 1px solid var(--border); padding-top: 15px; text-align: center; }
         .copyright-text { font-size: 0.75rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
         .version-badge { display: inline-block; background: var(--gradient); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; margin-left: 6px; }
-        .footer-credit { display: flex; justify-content: center; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 10px; padding: 10px; background: var(--bg-input); border-radius: 10px; }
-        .footer-credit span { font-size: 0.7rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
-        .footer-credit .divider { width: 1px; height: 12px; background: var(--border); margin: 0 4px; }
         
-        /* রেসপনসিভ */
         @media (max-width: 768px) { .header-nav { display: none; } .menu-toggle { display: flex; } .search-wrapper { flex-direction: column; } .search-btn { width: 100%; } .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 10px; } .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
-        @media (max-width: 480px) { .header-container { padding: 0 12px; height: 55px; } .logo-icon { width: 34px; height: 34px; font-size: 1rem; border-radius: 9px; } .hero-section { padding: 40px 15px; } .tools-grid { grid-template-columns: 1fr; } .categories-grid { grid-template-columns: repeat(2, 1fr); } .features-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .footer-credit { flex-direction: column; gap: 4px; } .footer-credit .divider { display: none; } }
+        @media (max-width: 480px) { .header-container { padding: 0 12px; height: 55px; } .logo-icon { width: 34px; height: 34px; font-size: 1rem; border-radius: 9px; } .hero-section { padding: 40px 15px; } .tools-grid { grid-template-columns: 1fr; } .categories-grid { grid-template-columns: repeat(2, 1fr); } .features-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
     </style>
 </head>
 <body>
@@ -194,10 +180,20 @@
     </div>
 
     <div class="main-content">
+        <!-- ============================================ -->
+        <!-- অ্যাড স্পেস - পরে AdSense ID যোগ করবেন -->
+        <!-- ============================================ -->
+        <!--
         <div class="ad-container">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
+        -->
 
         <div class="section">
             <div class="section-header">
@@ -205,11 +201,6 @@
                 <p class="section-subtitle">সবচেয়ে বেশি ব্যবহৃত টুলস</p>
             </div>
             <div class="tools-grid" id="popularTools"><div class="loading"><span class="spinner"></span> লোড হচ্ছে...</div></div>
-        </div>
-
-        <div class="ad-container">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="3456789012" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
         <div class="section">
@@ -250,11 +241,6 @@
                 <div class="faq-item"><h3>অ্যাকাউন্ট লাগবে?</h3><p>না, সব টুলস অ্যাকাউন্ট ছাড়াই ব্যবহার করতে পারবেন।</p></div>
             </div>
         </div>
-
-        <div class="ad-container">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="4567890123" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
     </div>
 
     <footer class="site-footer">
@@ -262,24 +248,23 @@
             <div class="footer-grid">
                 <div class="footer-column">
                     <h4>জনপ্রিয় টুলস</h4>
-                    <ul class="footer-links"><li><a href="/tool.html?slug=word-counter">Word Counter</a></li><li><a href="/tool.html?slug=password-generator">Password Generator</a></li><li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li><li><a href="/tool.html?slug=image-compressor">Image Compressor</a></li></ul>
+                    <ul class="footer-links"><li><a href="/tool.html?slug=word-counter">Word Counter</a></li><li><a href="/tool.html?slug=password-generator">Password Generator</a></li><li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li></ul>
                 </div>
                 <div class="footer-column">
                     <h4>কুইক লিংক</h4>
-                    <ul class="footer-links"><li><a href="/tools.html">সব টুলস</a></li><li><a href="/categories.html">ক্যাটাগরি</a></li><li><a href="/about.html">আমাদের সম্পর্কে</a></li><li><a href="/contact.html">যোগাযোগ</a></li></ul>
+                    <ul class="footer-links"><li><a href="/tools.html">সব টুলস</a></li><li><a href="/categories.html">ক্যাটাগরি</a></li><li><a href="/about.html">আমাদের সম্পর্কে</a></li></ul>
                 </div>
                 <div class="footer-column">
                     <h4>আইনি</h4>
-                    <ul class="footer-links"><li><a href="/privacy.html">গোপনীয়তা নীতি</a></li><li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li><li><a href="/disclaimer.html">দাবিত্যাগ</a></li></ul>
+                    <ul class="footer-links"><li><a href="/privacy.html">গোপনীয়তা নীতি</a></li><li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li></ul>
                 </div>
                 <div class="footer-column">
                     <h4>গুরুত্বপূর্ণ</h4>
-                    <ul class="footer-links"><li><a href="/sitemap.xml">সাইটম্যাপ</a></li><li><a href="/robots.txt">Robots.txt</a></li><li><a href="/api/v1/stats">স্ট্যাটস</a></li></ul>
+                    <ul class="footer-links"><li><a href="/sitemap.xml">সাইটম্যাপ</a></li><li><a href="/api/v1/stats">স্ট্যাটস</a></li></ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="copyright-text">© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত <span class="version-badge">v1.0</span></p>
-                <div class="footer-credit"><span><i class="fas fa-shield-alt"></i> ১০০% ফ্রি টুলস</span><span class="divider"></span><span><i class="fas fa-check-circle"></i> কোনো ডেটা সংরক্ষণ করা হয় না</span></div>
+                <p class="copyright-text">© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত</p>
             </div>
         </div>
     </footer>
