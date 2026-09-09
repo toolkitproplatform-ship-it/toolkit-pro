@@ -82,7 +82,7 @@ app.use(
   cors({
     origin: process.env.CORS_ORIGIN || "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "X-API-Key"],
     credentials: true,
     maxAge: 86400,
   })
@@ -95,7 +95,7 @@ app.use(compression());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// Logging (Development only)
+// Logging
 if (NODE_ENV === "development") {
   app.use(morgan("dev"));
 } else {
@@ -152,7 +152,9 @@ app.use("/api/v1", require("./routes/api"));
 app.use("/api/v1/tools", require("./routes/tools"));
 app.use("/api/v1/auth", authLimiter, require("./routes/auth"));
 
+// ----------------------------------------------
 // 404 Handler
+// ----------------------------------------------
 app.use((req, res, next) => {
   return errorResponse(res, 404, "Route not found", {
     path: req.originalUrl,
@@ -167,7 +169,7 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error("Global Error:", err);
   
-  // MongoDB/Mongoose এরর
+  // Validation এরর
   if (err.name === "ValidationError") {
     return errorResponse(res, 422, "Validation error", err.message);
   }
@@ -209,71 +211,138 @@ app.use((err, req, res, next) => {
 // ----------------------------------------------
 async function startServer() {
   try {
-    // ডাটাবেস কানেকশন
-    console.log("Connecting to PostgreSQL...");
-    await database.connect();
+    console.log("=".repeat(60));
+    console.log("🚀 Toolkit Pro Server Starting...");
+    console.log("=".repeat(60));
+    console.log(`📡 Environment: ${NODE_ENV}`);
+    console.log(`🔧 Port: ${PORT}`);
+    console.log(`🗄️ Database URL: ${maskURL(process.env.DATABASE_URL)}`);
+    console.log(`💾 Redis URL: ${maskURL(process.env.REDIS_URL)}`);
+    console.log("=".repeat(60));
+    
+    // ডাটাবেস কানেকশন (৫ বার রিট্রাই সহ)
+    console.log("📦 Connecting to PostgreSQL...");
+    await database.connect(5);
     console.log("✅ PostgreSQL connected successfully");
     
-    // Redis কানেকশন
-    console.log("Connecting to Redis...");
-    await redisClient.connect();
-    console.log("✅ Redis connected successfully");
+    // Redis কানেকশন (অপশনাল)
+    try {
+      console.log("📦 Connecting to Redis...");
+      await redisClient.connect();
+      console.log("✅ Redis connected successfully");
+    } catch (redisError) {
+      console.warn("⚠️ Redis connection failed (continuing without cache):", redisError.message);
+      console.warn("ℹ️ Cache features will be disabled");
+    }
     
     // ডাটাবেস টেবিল তৈরি
-    console.log("Setting up database tables...");
+    console.log("📦 Setting up database tables...");
     await database.setupTables();
     console.log("✅ Database tables ready");
     
+    // ডিফল্ট ডাটা সিড
+    console.log("📦 Seeding default data...");
+    await database.seedDefaultTools();
+    console.log("✅ Default data seeded");
+    
     // সার্ভার লিসেন
-    app.listen(PORT, () => {
-      console.log("=".repeat(50));
-      console.log("🚀 Toolkit Pro Server Started");
-      console.log("=".repeat(50));
-      console.log(`📡 Environment: ${NODE_ENV}`);
-      console.log(`🔗 URL: http://localhost:${PORT}`);
-      console.log(`❤️ Health: http://localhost:${PORT}/health`);
-      console.log(`📚 API: http://localhost:${PORT}/api/v1`);
-      console.log(`📊 AdSense: ${process.env.ADSENSE_ENABLED === "true" ? "Enabled" : "Disabled"}`);
-      console.log("=".repeat(50));
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log("=".repeat(60));
+      console.log("🎉 Toolkit Pro Server Started Successfully!");
+      console.log("=".repeat(60));
+      console.log(`🔗 Server URL: http://0.0.0.0:${PORT}`);
+      console.log(`❤️ Health Check: http://0.0.0.0:${PORT}/health`);
+      console.log(`📚 API Base: http://0.0.0.0:${PORT}/api/v1`);
+      console.log(`📊 AdSense: ${process.env.ADSENSE_ENABLED === "true" ? "✅ Enabled" : "❌ Disabled"}`);
+      console.log(`🔐 JWT Secret: ${process.env.JWT_SECRET ? "✅ Configured" : "❌ Not set"}`);
+      console.log("=".repeat(60));
+      console.log("🌟 Toolkit Pro is ready to serve!");
+      console.log("=".repeat(60));
     });
     
   } catch (error) {
-    console.error("❌ Server startup failed:", error);
+    console.error("=".repeat(60));
+    console.error("❌ Server startup failed!");
+    console.error("=".repeat(60));
+    console.error(`Error: ${error.message}`);
+    console.error(`Stack: ${error.stack}`);
+    console.error("=".repeat(60));
+    console.error("Troubleshooting tips:");
+    console.error("1. Check if DATABASE_URL is set correctly");
+    console.error("2. Ensure PostgreSQL service is running");
+    console.error("3. Check Render.com environment variables");
+    console.error("4. Visit https://render.com/docs/troubleshooting-deploys");
+    console.error("=".repeat(60));
     process.exit(1);
+  }
+}
+
+// ----------------------------------------------
+// URL মাস্ক হেল্পার (সিকিউরিটির জন্য)
+// ----------------------------------------------
+function maskURL(url) {
+  if (!url) return "Not set";
+  
+  try {
+    const parsed = new URL(url);
+    const username = parsed.username ? `${parsed.username}:****@` : "";
+    return `${parsed.protocol}//${username}${parsed.hostname}:${parsed.port || "default"}${parsed.pathname}`;
+  } catch {
+    return "Invalid URL";
   }
 }
 
 // ----------------------------------------------
 // গ্রেসফুল শাটডাউন
 // ----------------------------------------------
-process.on("SIGTERM", async () => {
-  console.log("SIGTERM received. Closing server gracefully...");
+async function gracefulShutdown(signal) {
+  console.log(`\n${signal} received. Closing server gracefully...`);
   
   try {
+    // সার্ভার বন্ধ করুন
+    if (server) {
+      server.close(() => {
+        console.log("✅ HTTP server closed");
+      });
+    }
+    
+    // ডাটাবেস কানেকশন বন্ধ
     await database.close();
+    console.log("✅ Database connection closed");
+    
+    // Redis কানেকশন বন্ধ
     await redisClient.close();
-    console.log("✅ Connections closed");
+    console.log("✅ Redis connection closed");
+    
+    console.log("👋 Server shutdown complete");
     process.exit(0);
   } catch (error) {
-    console.error("Error during shutdown:", error);
+    console.error("❌ Error during shutdown:", error);
     process.exit(1);
   }
-});
+}
 
-process.on("SIGINT", async () => {
-  console.log("SIGINT received. Closing server...");
-  process.exit(0);
-});
+// সিগন্যাল হ্যান্ডলার
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));
 
-// Unhandled এরর
+// ----------------------------------------------
+// আনহ্যান্ডলড এরর হ্যান্ডলার
+// ----------------------------------------------
 process.on("unhandledRejection", (reason, promise) => {
-  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  console.error("❌ Unhandled Rejection at:", promise);
+  console.error("Reason:", reason);
 });
 
 process.on("uncaughtException", (error) => {
-  console.error("Uncaught Exception:", error);
-  process.exit(1);
+  console.error("❌ Uncaught Exception:", error);
+  console.error("Stack:", error.stack);
 });
+
+// ----------------------------------------------
+// সার্ভার ভেরিয়েবল (শাটডাউনের জন্য)
+// ----------------------------------------------
+let server;
 
 // ----------------------------------------------
 // সার্ভার শুরু করুন
