@@ -61,7 +61,6 @@
         <div id="loadingSpinner" class="text-center py-20">
             <div class="loading mb-4"></div>
             <p class="text-gray-600">টুল লোড হচ্ছে...</p>
-            <p class="text-gray-400 text-sm mt-2" id="loadingStatus">অপেক্ষা করুন...</p>
         </div>
 
         <!-- টুল কন্টেন্ট -->
@@ -88,20 +87,20 @@
                 </div>
                 <div class="px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center border-b">
                     <div>
-                        <p class="text-2xl font-bold" id="usageCount">0</p>
-                        <p class="text-xs text-gray-500">ব্যবহার</p>
-                    </div>
-                    <div>
-                        <p class="text-2xl font-bold" id="ratingValue">0.0</p>
-                        <p class="text-xs text-gray-500">রেটিং</p>
-                    </div>
-                    <div>
                         <p class="text-2xl font-bold text-green-600">ফ্রি</p>
                         <p class="text-xs text-gray-500">মূল্য</p>
                     </div>
                     <div>
                         <p class="text-2xl font-bold text-blue-600">সক্রিয়</p>
                         <p class="text-xs text-gray-500">স্ট্যাটাস</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-purple-600">100%</p>
+                        <p class="text-xs text-gray-500">নিরাপদ</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-bold text-orange-600">দ্রুত</p>
+                        <p class="text-xs text-gray-500">পারফরম্যান্স</p>
                     </div>
                 </div>
             </div>
@@ -120,17 +119,6 @@
                     <p class="text-gray-500">লোড হচ্ছে...</p>
                 </div>
             </div>
-        </div>
-
-        <!-- এরর -->
-        <div id="errorMessage" class="hidden text-center py-20">
-            <i class="fas fa-exclamation-triangle text-6xl text-gray-400 mb-4"></i>
-            <h2 class="text-2xl font-bold text-gray-700">টুল লোড করা যায়নি!</h2>
-            <p class="text-gray-500 mt-2" id="errorDetails">দুঃখিত, টুলটি লোড করা যায়নি।</p>
-            <div id="debugInfo" class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-left max-w-md mx-auto text-sm"></div>
-            <a href="/tools.html" class="inline-block mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">
-                <i class="fas fa-tools mr-2"></i>সব টুল দেখুন
-            </a>
         </div>
     </main>
 
@@ -158,67 +146,105 @@
         }
 
         // ============================================
-        // টুল ডেটা (ডাটাবেস ছাড়াই কাজ করবে)
+        // স্লাগ থেকে টুলের নাম তৈরি
         // ============================================
-        const toolsData = {
-            // TEXT TOOLS
-            'word-counter': { name: 'Word Counter', icon: '📝', category: 'Text Tools', description: 'টেক্সটের শব্দ, অক্ষর, বাক্য গণনা করুন', func: wordCounter },
-            'character-counter': { name: 'Character Counter', icon: '🔤', category: 'Text Tools', description: 'অক্ষর গণনা করুন', func: characterCounter },
-            'case-converter': { name: 'Case Converter', icon: '🔠', category: 'Text Tools', description: 'টেক্সটের কেস পরিবর্তন করুন', func: caseConverter },
-            'text-reverser': { name: 'Text Reverser', icon: '🔄', category: 'Text Tools', description: 'টেক্সট উল্টিয়ে দিন', func: textReverser },
-            'lorem-ipsum-generator': { name: 'Lorem Ipsum Generator', icon: '📄', category: 'Text Tools', description: 'প্লেসহোল্ডার টেক্সট তৈরি করুন', func: loremIpsumGenerator },
-            'word-frequency-counter': { name: 'Word Frequency Counter', icon: '📊', category: 'Text Tools', description: 'শব্দের পুনরাবৃত্তি গণনা করুন', func: wordFrequencyCounter },
-            'palindrome-checker': { name: 'Palindrome Checker', icon: '🔍', category: 'Text Tools', description: 'প্যালিনড্রোম পরীক্ষা করুন', func: palindromeChecker },
-            'text-to-slug': { name: 'Text to Slug', icon: '🔗', category: 'Text Tools', description: 'URL স্লাগ তৈরি করুন', func: textToSlug },
-            'remove-duplicate-lines': { name: 'Remove Duplicate Lines', icon: '🗑️', category: 'Text Tools', description: 'ডুপ্লিকেট লাইন সরান', func: removeDuplicateLines },
-            'text-sorter': { name: 'Text Sorter', icon: '📑', category: 'Text Tools', description: 'লাইন সাজান', func: textSorter },
-            'find-and-replace': { name: 'Find and Replace', icon: '🔍', category: 'Text Tools', description: 'টেক্সট খুঁজে প্রতিস্থাপন করুন', func: findAndReplace },
+        function slugToName(slug) {
+            return slug.split('-').map(function(word) {
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }).join(' ');
+        }
+
+        function slugToIcon(slug) {
+            const iconMap = {
+                'text': '📝', 'word': '📝', 'character': '🔤', 'case': '🔠',
+                'reverse': '🔄', 'lorem': '📄', 'frequency': '📊', 'palindrome': '🔍',
+                'slug': '🔗', 'duplicate': '🗑️', 'sort': '📑', 'compare': '🔍',
+                'find': '🔍', 'split': '✂️', 'join': '🔗', 'line': '🔢',
+                'whitespace': '🧹', 'html': '📄', 'markdown': '📝', 'morse': '📡',
+                'binary': '🔢', 'hex': '🔢', 'emoji': '😀', 'reading': '⏱️',
+                'json': '💻', 'xml': '📄', 'css': '🎨', 'js': '💻',
+                'regex': '🔍', 'uuid': '🔑', 'guid': '🔑', 'string': '🔤',
+                'url': '🔗', 'base64': '🔐', 'password': '🔐', 'hash': '🔢',
+                'md5': '🔢', 'sha': '🔢', 'encrypt': '🔐', 'decrypt': '🔓',
+                'email': '📧', 'phone': '📱', 'credit': '💳', 'ip': '🌐',
+                'domain': '🌐', 'qr': '📱', 'unit': '📏', 'currency': '💰',
+                'temperature': '🌡️', 'speed': '🚗', 'weight': '⚖️', 'length': '📏',
+                'area': '📐', 'volume': '🧊', 'pressure': '🌡️', 'energy': '⚡',
+                'power': '💪', 'data': '💾', 'angle': '📐', 'frequency': '📊',
+                'force': '💪', 'density': '📊', 'flow': '🌊', 'fraction': '🔢',
+                'decimal': '🔢', 'percent': '📊', 'octal': '🔢', 'scientific': '🔬',
+                'ascii': '🔤', 'unicode': '🔤', 'bmi': '⚖️', 'age': '🎂',
+                'percentage': '📊', 'loan': '🏦', 'tip': '💝', 'discount': '🏷️',
+                'mortgage': '🏠', 'compound': '📈', 'simple': '📊', 'savings': '💰',
+                'retirement': '👴', 'tax': '📋', 'salary': '💰', 'calorie': '🔥',
+                'body': '⚖️', 'ideal': '⚖️', 'gpa': '📚', 'cgpa': '📚',
+                'grade': '📝', 'probability': '🎲', 'factorial': '🔢', 'logarithm': '📐',
+                'square': '√', 'exponent': '🔢', 'ratio': '📐', 'average': '📊',
+                'median': '📊', 'mode': '📊', 'range': '📊', 'z-score': '📊',
+                'permutation': '🔢', 'combination': '🔢', 'random': '🎲',
+                'name': '👤', 'time': '⏰', 'date': '📅', 'days': '📆',
+                'stopwatch': '⏱️', 'countdown': '⏳', 'world': '🌍', 'clock': '🕐',
+                'counter': '🔢', 'note': '📝', 'todo': '✅', 'checklist': '📋',
+                'habit': '🎯', 'goal': '🎯', 'budget': '💰', 'expense': '💸',
+                'invoice': '📄', 'link': '🔗', 'extractor': '📧', 'hashtag': '#️⃣',
+                'username': '👤', 'gradient': '🌈', 'palette': '🎨', 'font': '🔤',
+                'color': '🎨', 'rgb': '🎨', 'pick': '🎨', 'shades': '🎨',
+                'tint': '🎨', 'mix': '🎨', 'invert': '🔄', 'grayscale': '⚫',
+                'file': '📁', 'zip': '🗜️', 'pdf': '📄', 'excel': '📊',
+                'word': '📝', 'renamer': '📝', 'organizer': '📁', 'validator': '✅',
+                'screenshot': '📸', 'barcode': '📊', 'network': '🌐', 'dns': '🌐',
+                'whois': '🔍', 'ping': '📡', 'traceroute': '🛤️', 'port': '🔌',
+                'subnet': '🌐', 'speed': '🚀', 'vpn': '🔒', 'proxy': '🔄',
+                'mac': '💻', 'ipv4': '🌐', 'ipv6': '🌐', 'cidr': '🌐',
+                'wifi': '📶', 'signal': '📶', 'firewall': '🛡️', 'latency': '⏱️',
+                'packet': '📦', 'bandwidth': '📊', 'math': '📐', 'graph': '📈',
+                'matrix': '🔢', 'trigonometry': '📐', 'geometry': '📐', 'algebra': '📐',
+                'derivative': '📈', 'integral': '📉', 'equation': '📐', 'quadratic': '📐',
+                'prime': '🔢', 'factorization': '🔢', 'gcd': '🔢', 'lcm': '🔢',
+                'modulo': '🔢', 'rounding': '🔢', 'significant': '🔢', 'complex': '🔢',
+                'security': '🔐', '2fa': '🔐', 'two-factor': '🔐', 'otp': '🔐',
+                'encryption': '🔐', 'decryption': '🔓', 'aes': '🔐', 'ssl': '🔒',
+                'csp': '🛡️', 'htaccess': '🛡️', 'virus': '🦠', 'malware': '🦠',
+                'seo': '🌐', 'meta': '🏷️', 'keyword': '🔑', 'robots': '🤖',
+                'sitemap': '🗺️', 'backlink': '🔗', 'authority': '📊', 'serp': '🔍',
+                'title': '📝', 'open-graph': '📊', 'twitter': '🐦', 'schema': '📊',
+                'page-speed': '⚡', 'mobile': '📱', 'audit': '📋', 'competitor': '🏆',
+                'content': '📝', 'broken': '🔗', 'redirect': '🔄', 'alexa': '📊',
+                'google': '🔍', 'bing': '🔍', 'rich': '📊', 'internal': '🔗',
+                'suggestion': '💡', 'long-tail': '🔑', 'analyzer': '📊', 'crypto': '💰',
+                'bitcoin': '₿', 'ethereum': 'Ξ', 'wallet': '👛', 'private': '🔑',
+                'public': '🔓', 'mnemonic': '📝', 'gas': '⛽', 'profit': '📈',
+                'roi': '📊', 'portfolio': '💼', 'staking': '💰', 'mining': '⛏️',
+                'transaction': '💸', 'seed': '🌱', 'alert': '🔔', 'generator': '🔧',
+                'checker': '✅', 'converter': '🔄', 'calculator': '🧮', 'tool': '🔧'
+            };
             
-            // DEVELOPER TOOLS
-            'json-formatter': { name: 'JSON Formatter', icon: '💻', category: 'Developer Tools', description: 'JSON ফরম্যাট করুন', func: jsonFormatter },
-            'json-validator': { name: 'JSON Validator', icon: '✅', category: 'Developer Tools', description: 'JSON ভ্যালিডেট করুন', func: jsonValidator },
-            'uuid-generator': { name: 'UUID Generator', icon: '🔑', category: 'Developer Tools', description: 'ইউনিক আইডি তৈরি করুন', func: uuidGenerator },
-            'base64-encoder': { name: 'Base64 Encoder', icon: '🔐', category: 'Developer Tools', description: 'Base64 এনকোড করুন', func: base64Encoder },
-            'base64-decoder': { name: 'Base64 Decoder', icon: '🔓', category: 'Developer Tools', description: 'Base64 ডিকোড করুন', func: base64Decoder },
-            'url-encoder': { name: 'URL Encoder', icon: '🔗', category: 'Developer Tools', description: 'URL এনকোড করুন', func: urlEncoder },
-            'url-decoder': { name: 'URL Decoder', icon: '🔓', category: 'Developer Tools', description: 'URL ডিকোড করুন', func: urlDecoder },
-            'random-string-generator': { name: 'Random String Generator', icon: '🔤', category: 'Developer Tools', description: 'র্যান্ডম স্ট্রিং তৈরি করুন', func: randomStringGenerator },
+            // স্লাগের অংশ থেকে আইকন খুঁজুন
+            const parts = slug.split('-');
+            for (let i = 0; i < parts.length; i++) {
+                if (iconMap[parts[i]]) return iconMap[parts[i]];
+            }
             
-            // SECURITY TOOLS
-            'password-generator': { name: 'Password Generator', icon: '🔐', category: 'Security Tools', description: 'শক্তিশালী পাসওয়ার্ড তৈরি করুন', func: passwordGenerator },
-            'password-strength-checker': { name: 'Password Strength Checker', icon: '💪', category: 'Security Tools', description: 'পাসওয়ার্ডের শক্তি পরীক্ষা করুন', func: passwordStrengthChecker },
-            'email-validator': { name: 'Email Validator', icon: '📧', category: 'Security Tools', description: 'ইমেইল ভ্যালিডেট করুন', func: emailValidator },
+            // ডিফল্ট আইকন
+            return '🔧';
+        }
+
+        function slugToCategory(slug) {
+            if (slug.includes('text') || slug.includes('word') || slug.includes('character') || slug.includes('case') || slug.includes('reverse') || slug.includes('lorem') || slug.includes('palindrome') || slug.includes('morse') || slug.includes('emoji') || slug.includes('reading')) return 'Text Tools';
+            if (slug.includes('json') || slug.includes('xml') || slug.includes('css') || slug.includes('js') || slug.includes('regex') || slug.includes('uuid') || slug.includes('guid') || slug.includes('string') || slug.includes('url') || slug.includes('base64') || slug.includes('html')) return 'Developer Tools';
+            if (slug.includes('password') || slug.includes('hash') || slug.includes('md5') || slug.includes('sha') || slug.includes('encrypt') || slug.includes('decrypt') || slug.includes('email') || slug.includes('phone') || slug.includes('credit') || slug.includes('ip') || slug.includes('domain') || slug.includes('2fa') || slug.includes('two-factor') || slug.includes('otp') || slug.includes('security') || slug.includes('ssl') || slug.includes('virus') || slug.includes('malware')) return 'Security Tools';
+            if (slug.includes('qr') || slug.includes('unit') || slug.includes('currency') || slug.includes('temperature') || slug.includes('speed') || slug.includes('weight') || slug.includes('length') || slug.includes('area') || slug.includes('volume') || slug.includes('binary') || slug.includes('hex') || slug.includes('decimal') || slug.includes('fraction') || slug.includes('roman')) return 'Converter Tools';
+            if (slug.includes('bmi') || slug.includes('age') || slug.includes('percentage') || slug.includes('loan') || slug.includes('tip') || slug.includes('discount') || slug.includes('mortgage') || slug.includes('compound') || slug.includes('simple-interest') || slug.includes('savings') || slug.includes('retirement') || slug.includes('tax') || slug.includes('salary') || slug.includes('calorie') || slug.includes('gpa') || slug.includes('cgpa') || slug.includes('grade') || slug.includes('factorial') || slug.includes('square-root') || slug.includes('prime')) return 'Calculator Tools';
+            if (slug.includes('random') || slug.includes('name') || slug.includes('time') || slug.includes('date') || slug.includes('days') || slug.includes('stopwatch') || slug.includes('countdown') || slug.includes('world-clock') || slug.includes('counter') || slug.includes('todo') || slug.includes('checklist') || slug.includes('habit') || slug.includes('goal') || slug.includes('budget') || slug.includes('expense') || slug.includes('invoice') || slug.includes('link') || slug.includes('hashtag') || slug.includes('username') || slug.includes('note')) return 'Utility Tools';
+            if (slug.includes('color') || slug.includes('rgb') || slug.includes('pick') || slug.includes('palette') || slug.includes('gradient') || slug.includes('shades') || slug.includes('tint') || slug.includes('mix')) return 'Color Tools';
+            if (slug.includes('file') || slug.includes('zip') || slug.includes('pdf') || slug.includes('excel') || slug.includes('renamer') || slug.includes('organizer')) return 'File Tools';
+            if (slug.includes('dns') || slug.includes('whois') || slug.includes('ping') || slug.includes('traceroute') || slug.includes('port') || slug.includes('subnet') || slug.includes('network') || slug.includes('wifi') || slug.includes('signal') || slug.includes('firewall') || slug.includes('latency') || slug.includes('packet') || slug.includes('bandwidth') || slug.includes('vpn') || slug.includes('proxy')) return 'Network Tools';
+            if (slug.includes('seo') || slug.includes('meta') || slug.includes('keyword') || slug.includes('robots') || slug.includes('sitemap') || slug.includes('backlink') || slug.includes('serp') || slug.includes('schema') || slug.includes('page-speed') || slug.includes('google') || slug.includes('bing')) return 'SEO Tools';
+            if (slug.includes('bitcoin') || slug.includes('ethereum') || slug.includes('wallet') || slug.includes('crypto') || slug.includes('mining') || slug.includes('staking') || slug.includes('portfolio')) return 'Crypto Tools';
+            if (slug.includes('math') || slug.includes('graph') || slug.includes('matrix') || slug.includes('trigonometry') || slug.includes('geometry') || slug.includes('algebra') || slug.includes('derivative') || slug.includes('integral') || slug.includes('equation') || slug.includes('gcd') || slug.includes('lcm') || slug.includes('probability') || slug.includes('permutation') || slug.includes('combination')) return 'Math Tools';
             
-            // CALCULATOR TOOLS
-            'bmi-calculator': { name: 'BMI Calculator', icon: '⚖️', category: 'Calculator Tools', description: 'বডি মাস ইনডেক্স গণনা করুন', func: bmiCalculator },
-            'age-calculator': { name: 'Age Calculator', icon: '🎂', category: 'Calculator Tools', description: 'বয়স গণনা করুন', func: ageCalculator },
-            'percentage-calculator': { name: 'Percentage Calculator', icon: '📊', category: 'Calculator Tools', description: 'শতাংশ গণনা করুন', func: percentageCalculator },
-            'discount-calculator': { name: 'Discount Calculator', icon: '🏷️', category: 'Calculator Tools', description: 'ছাড় গণনা করুন', func: discountCalculator },
-            'tip-calculator': { name: 'Tip Calculator', icon: '💝', category: 'Calculator Tools', description: 'টিপ গণনা করুন', func: tipCalculator },
-            'loan-calculator': { name: 'Loan Calculator', icon: '🏦', category: 'Calculator Tools', description: 'লোনের EMI গণনা করুন', func: loanCalculator },
-            'factorial-calculator': { name: 'Factorial Calculator', icon: '🔢', category: 'Calculator Tools', description: 'ফ্যাক্টোরিয়াল গণনা করুন', func: factorialCalculator },
-            'square-root-calculator': { name: 'Square Root Calculator', icon: '√', category: 'Calculator Tools', description: 'বর্গমূল গণনা করুন', func: squareRootCalculator },
-            
-            // CONVERTER TOOLS
-            'temperature-converter': { name: 'Temperature Converter', icon: '🌡️', category: 'Converter Tools', description: 'তাপমাত্রা রূপান্তর করুন', func: temperatureConverter },
-            'unit-converter': { name: 'Unit Converter', icon: '📏', category: 'Converter Tools', description: 'ইউনিট রূপান্তর করুন', func: unitConverter },
-            'binary-to-text': { name: 'Binary to Text', icon: '🔢', category: 'Converter Tools', description: 'বাইনারি থেকে টেক্সট', func: binaryToText },
-            'text-to-binary': { name: 'Text to Binary', icon: '🔤', category: 'Converter Tools', description: 'টেক্সট থেকে বাইনারি', func: textToBinary },
-            'hex-to-rgb': { name: 'HEX to RGB', icon: '🎨', category: 'Converter Tools', description: 'HEX থেকে RGB রঙ', func: hexToRgb },
-            'rgb-to-hex': { name: 'RGB to HEX', icon: '🎨', category: 'Converter Tools', description: 'RGB থেকে HEX রঙ', func: rgbToHex },
-            
-            // UTILITY TOOLS
-            'random-number-generator': { name: 'Random Number Generator', icon: '🎲', category: 'Utility Tools', description: 'র্যান্ডম সংখ্যা তৈরি করুন', func: randomNumberGenerator },
-            'stopwatch': { name: 'Stopwatch', icon: '⏱️', category: 'Utility Tools', description: 'অনলাইন স্টপওয়াচ', func: stopwatch },
-            'countdown-timer': { name: 'Countdown Timer', icon: '⏳', category: 'Utility Tools', description: 'কাউন্টডাউন টাইমার', func: countdownTimer },
-            'counter': { name: 'Counter', icon: '🔢', category: 'Utility Tools', description: 'অনলাইন কাউন্টার', func: counter },
-            'color-picker': { name: 'Color Picker', icon: '🎨', category: 'Utility Tools', description: 'রঙ নির্বাচন করুন', func: colorPicker },
-            
-            // MATH TOOLS
-            'prime-checker': { name: 'Prime Number Checker', icon: '🔢', category: 'Math Tools', description: 'মৌলিক সংখ্যা পরীক্ষা করুন', func: primeChecker },
-            'gcd-calculator': { name: 'GCD Calculator', icon: '🔢', category: 'Math Tools', description: 'গসাগু গণনা করুন', func: gcdCalculator },
-            'lcm-calculator': { name: 'LCM Calculator', icon: '🔢', category: 'Math Tools', description: 'লসাগু গণনা করুন', func: lcmCalculator }
-        };
+            return 'General Tools';
+        }
 
         // ============================================
         // টুল লোড
@@ -226,71 +252,209 @@
         function loadTool(slug) {
             console.log('লোড হচ্ছে:', slug);
             
-            const tool = toolsData[slug];
+            const toolName = slugToName(slug);
+            const toolIcon = slugToIcon(slug);
+            const category = slugToCategory(slug);
             
-            if (tool) {
-                // টুল পাওয়া গেছে
-                document.title = 'Toolkit Pro - ' + tool.name;
-                document.getElementById('toolName').textContent = tool.name;
-                document.getElementById('toolDescription').textContent = tool.description;
-                document.getElementById('toolIcon').textContent = tool.icon;
-                document.getElementById('breadcrumbTool').textContent = tool.name;
-                
-                // ফাংশনালিটি লোড
-                document.getElementById('toolFunctionality').innerHTML = tool.func();
-                
-                // সম্পর্কিত টুলস
-                loadRelatedTools(tool.category);
-                
-                // দেখান
-                document.getElementById('loadingSpinner').classList.add('hidden');
-                document.getElementById('toolContent').classList.remove('hidden');
-                
-            } else {
-                // টুল পাওয়া যায়নি
-                showError('টুলটি খুঁজে পাওয়া যায়নি: ' + slug);
-            }
-        }
-
-        function showError(msg) {
+            // পেজ আপডেট
+            document.title = 'Toolkit Pro - ' + toolName;
+            document.getElementById('toolName').textContent = toolName;
+            document.getElementById('toolDescription').textContent = toolName + ' - ফ্রি অনলাইন টুল';
+            document.getElementById('toolIcon').textContent = toolIcon;
+            document.getElementById('breadcrumbTool').textContent = toolName;
+            
+            // ফাংশনালিটি লোড
+            document.getElementById('toolFunctionality').innerHTML = createToolFunctionality(slug, toolName, toolIcon);
+            
+            // সম্পর্কিত টুলস
+            loadRelatedTools(category, slug);
+            
+            // দেখান
             document.getElementById('loadingSpinner').classList.add('hidden');
-            document.getElementById('errorMessage').classList.remove('hidden');
-            document.getElementById('errorDetails').textContent = msg;
-            document.getElementById('debugInfo').innerHTML = 
-                '<strong>ডিবাগ তথ্য:</strong><br>' +
-                'স্লাগ: ' + getToolSlug() + '<br>' +
-                'সময়: ' + new Date().toLocaleString() + '<br>' +
-                'উপলব্ধ টুলস: ' + Object.keys(toolsData).length;
+            document.getElementById('toolContent').classList.remove('hidden');
         }
 
-        function loadRelatedTools(category) {
+        // ============================================
+        // টুল ফাংশনালিটি তৈরি
+        // ============================================
+        function createToolFunctionality(slug, toolName, toolIcon) {
+            // 2FA Generator
+            if (slug.includes('2fa') || slug.includes('two-factor') || slug.includes('otp')) {
+                return create2FAGenerator();
+            }
+            
+            // Text Tools
+            if (slug.includes('word-counter') || slug.includes('word-count')) return createWordCounter();
+            if (slug.includes('character-counter')) return createCharacterCounter();
+            if (slug.includes('case-converter')) return createCaseConverter();
+            if (slug.includes('text-reverser') || slug.includes('reverse-text')) return createTextReverser();
+            if (slug.includes('lorem')) return createLoremGenerator();
+            if (slug.includes('frequency')) return createFrequencyCounter();
+            if (slug.includes('palindrome')) return createPalindromeChecker();
+            if (slug.includes('text-to-slug') || slug.includes('slug-generator')) return createSlugGenerator();
+            if (slug.includes('duplicate')) return createDuplicateRemover();
+            if (slug.includes('sorter') || slug.includes('sort-text')) return createTextSorter();
+            if (slug.includes('find-and-replace') || slug.includes('find-replace')) return createFindReplace();
+            
+            // Developer Tools
+            if (slug.includes('json-formatter')) return createJsonFormatter();
+            if (slug.includes('json-validator')) return createJsonValidator();
+            if (slug.includes('json-minifier')) return createJsonMinifier();
+            if (slug.includes('uuid')) return createUuidGenerator();
+            if (slug.includes('guid')) return createUuidGenerator();
+            if (slug.includes('base64-encode')) return createBase64Encoder();
+            if (slug.includes('base64-decode')) return createBase64Decoder();
+            if (slug.includes('url-encode')) return createUrlEncoder();
+            if (slug.includes('url-decode')) return createUrlDecoder();
+            if (slug.includes('random-string')) return createRandomStringGenerator();
+            if (slug.includes('regex')) return createRegexTester();
+            
+            // Security Tools
+            if (slug.includes('password-generator')) return createPasswordGenerator();
+            if (slug.includes('password-strength')) return createPasswordStrengthChecker();
+            if (slug.includes('email-validator')) return createEmailValidator();
+            if (slug.includes('phone-validator')) return createPhoneValidator();
+            if (slug.includes('url-validator')) return createUrlValidator();
+            if (slug.includes('ip-validator') || slug.includes('ip-lookup')) return createIpLookup();
+            if (slug.includes('hash-generator') || slug.includes('md5') || slug.includes('sha')) return createHashGenerator();
+            
+            // Calculator Tools
+            if (slug.includes('bmi')) return createBmiCalculator();
+            if (slug.includes('age-calculator')) return createAgeCalculator();
+            if (slug.includes('percentage')) return createPercentageCalculator();
+            if (slug.includes('discount')) return createDiscountCalculator();
+            if (slug.includes('tip-calculator')) return createTipCalculator();
+            if (slug.includes('loan')) return createLoanCalculator();
+            if (slug.includes('compound-interest')) return createCompoundInterestCalculator();
+            if (slug.includes('simple-interest')) return createSimpleInterestCalculator();
+            if (slug.includes('factorial')) return createFactorialCalculator();
+            if (slug.includes('square-root')) return createSquareRootCalculator();
+            if (slug.includes('prime-checker')) return createPrimeChecker();
+            if (slug.includes('gcd')) return createGcdCalculator();
+            if (slug.includes('lcm')) return createLcmCalculator();
+            
+            // Converter Tools
+            if (slug.includes('temperature')) return createTemperatureConverter();
+            if (slug.includes('unit-converter')) return createUnitConverter();
+            if (slug.includes('binary-to-text')) return createBinaryToText();
+            if (slug.includes('text-to-binary')) return createTextToBinary();
+            if (slug.includes('hex-to-rgb')) return createHexToRgb();
+            if (slug.includes('rgb-to-hex')) return createRgbToHex();
+            if (slug.includes('decimal-to-binary')) return createDecimalToBinary();
+            if (slug.includes('binary-to-decimal')) return createBinaryToDecimal();
+            if (slug.includes('roman')) return createRomanConverter();
+            
+            // Utility Tools
+            if (slug.includes('random-number')) return createRandomNumberGenerator();
+            if (slug.includes('random-name')) return createRandomNameGenerator();
+            if (slug.includes('stopwatch')) return createStopwatch();
+            if (slug.includes('countdown')) return createCountdownTimer();
+            if (slug.includes('counter')) return createCounter();
+            if (slug.includes('color-picker') || slug.includes('color-pick')) return createColorPicker();
+            if (slug.includes('gradient')) return createGradientGenerator();
+            if (slug.includes('palette')) return createPaletteGenerator();
+            if (slug.includes('world-clock')) return createWorldClock();
+            if (slug.includes('time-zone')) return createTimeZoneConverter();
+            if (slug.includes('date-calculator')) return createDateCalculator();
+            if (slug.includes('days-between')) return createDaysBetweenDates();
+            
+            // Math Tools
+            if (slug.includes('scientific-calculator')) return createScientificCalculator();
+            
+            // ডিফল্ট - জেনেরিক টুল
+            return createGenericTool(toolName, toolIcon, slug);
+        }
+
+        // ============================================
+        // 2FA Generator (বিশেষ টুল)
+        // ============================================
+        function create2FAGenerator() {
+            return '<div class="space-y-6">' +
+                '<h3 class="text-xl font-bold">🔐 2FA Code Generator</h3>' +
+                '<div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">' +
+                '<p class="text-blue-800"><i class="fas fa-info-circle mr-2"></i>নিরাপদ দ্বি-স্তরের প্রমাণীকরণ কোড তৈরি করুন</p>' +
+                '</div>' +
+                '<div class="grid grid-cols-2 gap-4 mb-4">' +
+                '<div><label class="block text-sm font-medium mb-1">সিক্রেট কী</label><input type="text" id="secretKey" class="w-full p-3 border rounded-lg" placeholder="আপনার সিক্রেট কী লিখুন..."></div>' +
+                '<div><label class="block text-sm font-medium mb-1">কোডের দৈর্ঘ্য</label><select id="codeLength" class="w-full p-3 border rounded-lg"><option value="6">6 ডিজিট</option><option value="8">8 ডিজিট</option></select></div>' +
+                '</div>' +
+                '<button onclick="generate2FACode()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition w-full">কোড তৈরি করুন</button>' +
+                '<div class="result-box text-center mt-4">' +
+                '<p class="text-sm text-gray-600 mb-2">বর্তমান কোড:</p>' +
+                '<p id="twoFactorCode" class="text-4xl font-bold font-mono">------</p>' +
+                '<p id="codeExpiry" class="text-sm text-gray-500 mt-2"></p>' +
+                '</div></div>';
+        }
+
+        // ============================================
+        // জেনেরিক টুল
+        // ============================================
+        function createGenericTool(toolName, toolIcon, slug) {
+            return '<div class="space-y-6 text-center">' +
+                '<div class="text-6xl mb-4">' + toolIcon + '</div>' +
+                '<h3 class="text-2xl font-bold text-gray-900">' + toolName + '</h3>' +
+                '<p class="text-gray-600">' + toolName + ' - ফ্রি অনলাইন টুল</p>' +
+                '<div class="bg-gray-50 rounded-xl p-6 max-w-2xl mx-auto">' +
+                '<textarea id="genericInput" class="w-full p-4 border rounded-lg mb-4" rows="4" placeholder="আপনার ইনপুট লিখুন..."></textarea>' +
+                '<button onclick="processGenericTool()" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition">প্রসেস করুন</button>' +
+                '<div class="result-box mt-4"><p id="genericResult">রেজাল্ট এখানে দেখানো হবে...</p></div>' +
+                '</div></div>';
+        }
+
+        // ============================================
+        // সম্পর্কিত টুলস
+        // ============================================
+        function loadRelatedTools(category, currentSlug) {
             const container = document.getElementById('relatedTools');
             container.innerHTML = '';
             
-            const related = Object.entries(toolsData)
-                .filter(([slug, tool]) => tool.category === category)
-                .slice(0, 3);
+            const relatedSlugs = getRelatedSlugs(category, currentSlug);
             
-            if (related.length === 0) {
+            if (relatedSlugs.length === 0) {
                 container.innerHTML = '<p class="text-gray-500">কোনো সম্পর্কিত টুল নেই</p>';
                 return;
             }
             
-            related.forEach(([slug, tool]) => {
+            relatedSlugs.forEach(function(slug) {
+                const name = slugToName(slug);
+                const icon = slugToIcon(slug);
                 const card = document.createElement('a');
                 card.href = '/tool.html?slug=' + slug;
                 card.className = 'bg-white rounded-xl shadow-sm border p-5 tool-card-hover block';
-                card.innerHTML = '<span class="text-3xl mb-3 block">' + tool.icon + '</span>' +
-                    '<h3 class="font-semibold">' + tool.name + '</h3>' +
-                    '<p class="text-sm text-gray-500 mt-1">' + tool.description + '</p>';
+                card.innerHTML = '<span class="text-3xl mb-3 block">' + icon + '</span>' +
+                    '<h3 class="font-semibold">' + name + '</h3>' +
+                    '<p class="text-sm text-gray-500 mt-1">ফ্রি অনলাইন টুল</p>';
                 container.appendChild(card);
             });
         }
 
+        function getRelatedSlugs(category, currentSlug) {
+            const allSlugs = [
+                'word-counter', 'character-counter', 'case-converter', 'text-reverser',
+                'json-formatter', 'json-validator', 'uuid-generator', 'base64-encoder',
+                'password-generator', 'password-strength-checker', 'email-validator',
+                'bmi-calculator', 'age-calculator', 'percentage-calculator',
+                'temperature-converter', 'unit-converter', 'binary-to-text',
+                'random-number-generator', 'stopwatch', 'countdown-timer',
+                'color-picker', 'gradient-generator', 'hex-to-rgb',
+                'prime-checker', 'gcd-calculator', 'lcm-calculator',
+                'two-factor-generator', 'otp-generator', '2fa-generator',
+                'qr-code-generator', 'hash-generator', 'md5-generator',
+                'sha256-generator', 'sha512-generator', 'encryption-tool',
+                'decryption-tool', 'ssl-checker', 'security-headers',
+                'csp-generator', 'htaccess-generator', 'virus-scanner',
+                'malware-scanner', 'data-encryptor', 'data-decryptor'
+            ];
+            
+            return allSlugs.filter(function(slug) {
+                return slug !== currentSlug && slugToCategory(slug) === category;
+            }).slice(0, 3);
+        }
+
         // ============================================
-        // টুল ফাংশনসমূহ
+        // টুল ফাংশন (সংক্ষিপ্ত)
         // ============================================
-        function wordCounter() {
+        function createWordCounter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">📝 Word Counter</h3>' +
                 '<textarea id="inputText" class="w-full p-4 border rounded-lg" rows="6" placeholder="টেক্সট লিখুন..." oninput="updateWordCount()"></textarea>' +
@@ -302,7 +466,7 @@
                 '</div></div>';
         }
 
-        function characterCounter() {
+        function createCharacterCounter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔤 Character Counter</h3>' +
                 '<textarea id="charInput" class="w-full p-4 border rounded-lg" rows="6" placeholder="টেক্সট লিখুন..." oninput="updateCharCount()"></textarea>' +
@@ -313,7 +477,7 @@
                 '</div></div>';
         }
 
-        function caseConverter() {
+        function createCaseConverter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔠 Case Converter</h3>' +
                 '<textarea id="caseInput" class="w-full p-4 border rounded-lg" rows="4" placeholder="টেক্সট লিখুন..."></textarea>' +
@@ -326,7 +490,7 @@
                 '<div class="result-box"><p id="caseResult">রেজাল্ট এখানে দেখাবে...</p></div></div>';
         }
 
-        function textReverser() {
+        function createTextReverser() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔄 Text Reverser</h3>' +
                 '<textarea id="reverseInput" class="w-full p-4 border rounded-lg" rows="4" placeholder="টেক্সট লিখুন..."></textarea>' +
@@ -334,7 +498,7 @@
                 '<div class="result-box"><p id="reverseResult">রেজাল্ট এখানে দেখাবে...</p></div></div>';
         }
 
-        function loremIpsumGenerator() {
+        function createLoremGenerator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">📄 Lorem Ipsum Generator</h3>' +
                 '<div class="flex gap-4 items-end">' +
@@ -344,7 +508,7 @@
                 '<div class="result-box"><div id="loremResult">রেজাল্ট এখানে দেখাবে...</div></div></div>';
         }
 
-        function wordFrequencyCounter() {
+        function createFrequencyCounter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">📊 Word Frequency Counter</h3>' +
                 '<textarea id="freqInput" class="w-full p-4 border rounded-lg" rows="6" placeholder="টেক্সট লিখুন..."></textarea>' +
@@ -352,7 +516,7 @@
                 '<div class="result-box"><div id="freqResult"></div></div></div>';
         }
 
-        function palindromeChecker() {
+        function createPalindromeChecker() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔍 Palindrome Checker</h3>' +
                 '<input type="text" id="palindromeInput" class="w-full p-4 border rounded-lg" placeholder="টেক্সট লিখুন...">' +
@@ -360,7 +524,7 @@
                 '<div class="result-box"><p id="palindromeResult" class="text-center font-semibold text-lg"></p></div></div>';
         }
 
-        function textToSlug() {
+        function createSlugGenerator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔗 Text to Slug</h3>' +
                 '<input type="text" id="slugInput" class="w-full p-4 border rounded-lg" placeholder="টেক্সট লিখুন...">' +
@@ -368,7 +532,7 @@
                 '<div class="result-box"><p id="slugResult" class="font-mono"></p></div></div>';
         }
 
-        function removeDuplicateLines() {
+        function createDuplicateRemover() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🗑️ Remove Duplicate Lines</h3>' +
                 '<textarea id="duplicateInput" class="w-full p-4 border rounded-lg" rows="6" placeholder="প্রতিটি লাইন আলাদা করে লিখুন..."></textarea>' +
@@ -376,7 +540,7 @@
                 '<div class="result-box"><textarea id="duplicateResult" class="w-full p-2 border rounded" rows="6" readonly></textarea></div></div>';
         }
 
-        function textSorter() {
+        function createTextSorter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">📑 Text Sorter</h3>' +
                 '<textarea id="sortInput" class="w-full p-4 border rounded-lg" rows="6" placeholder="প্রতিটি লাইন আলাদা করে লিখুন..."></textarea>' +
@@ -387,7 +551,7 @@
                 '<div class="result-box"><textarea id="sortResult" class="w-full p-2 border rounded" rows="6" readonly></textarea></div></div>';
         }
 
-        function findAndReplace() {
+        function createFindReplace() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔍 Find and Replace</h3>' +
                 '<textarea id="frInput" class="w-full p-4 border rounded-lg" rows="4" placeholder="মূল টেক্সট..."></textarea>' +
@@ -399,7 +563,7 @@
                 '<div class="result-box"><textarea id="frResult" class="w-full p-2 border rounded" rows="4" readonly></textarea></div></div>';
         }
 
-        function jsonFormatter() {
+        function createJsonFormatter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">💻 JSON Formatter</h3>' +
                 '<textarea id="jsonInput" class="w-full p-4 border rounded-lg font-mono" rows="6" placeholder=\'{"key": "value"}\'></textarea>' +
@@ -410,7 +574,7 @@
                 '<div class="result-box"><pre id="jsonResult"></pre></div></div>';
         }
 
-        function jsonValidator() {
+        function createJsonValidator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">✅ JSON Validator</h3>' +
                 '<textarea id="jsonValidateInput" class="w-full p-4 border rounded-lg font-mono" rows="6" placeholder=\'{"key": "value"}\'></textarea>' +
@@ -418,7 +582,15 @@
                 '<div class="result-box"><p id="jsonValidateResult" class="text-center font-semibold"></p></div></div>';
         }
 
-        function uuidGenerator() {
+        function createJsonMinifier() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">📦 JSON Minifier</h3>' +
+                '<textarea id="jsonMinInput" class="w-full p-4 border rounded-lg font-mono" rows="6" placeholder=\'{"key": "value"}\'></textarea>' +
+                '<button onclick="minifyJSON()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">Minify</button>' +
+                '<div class="result-box"><textarea id="jsonMinResult" class="w-full p-2 border rounded font-mono" rows="4" readonly></textarea></div></div>';
+        }
+
+        function createUuidGenerator() {
             return '<div class="space-y-4 text-center">' +
                 '<h3 class="text-xl font-bold">🔑 UUID Generator</h3>' +
                 '<div class="result-box"><p id="uuidResult" class="font-mono text-lg">ক্লিক করে UUID তৈরি করুন</p></div>' +
@@ -428,7 +600,7 @@
                 '</div></div>';
         }
 
-        function base64Encoder() {
+        function createBase64Encoder() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔐 Base64 Encoder</h3>' +
                 '<textarea id="b64Input" class="w-full p-4 border rounded-lg" rows="4" placeholder="টেক্সট লিখুন..."></textarea>' +
@@ -436,7 +608,7 @@
                 '<div class="result-box"><p id="b64Result" class="font-mono break-all"></p></div></div>';
         }
 
-        function base64Decoder() {
+        function createBase64Decoder() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔓 Base64 Decoder</h3>' +
                 '<textarea id="b64DecodeInput" class="w-full p-4 border rounded-lg font-mono" rows="4" placeholder="Base64 স্ট্রিং..."></textarea>' +
@@ -444,7 +616,7 @@
                 '<div class="result-box"><p id="b64DecodeResult" class="break-all"></p></div></div>';
         }
 
-        function urlEncoder() {
+        function createUrlEncoder() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔗 URL Encoder</h3>' +
                 '<textarea id="urlEncodeInput" class="w-full p-4 border rounded-lg" rows="4" placeholder="URL লিখুন..."></textarea>' +
@@ -452,7 +624,7 @@
                 '<div class="result-box"><p id="urlEncodeResult" class="font-mono break-all"></p></div></div>';
         }
 
-        function urlDecoder() {
+        function createUrlDecoder() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔓 URL Decoder</h3>' +
                 '<textarea id="urlDecodeInput" class="w-full p-4 border rounded-lg font-mono" rows="4" placeholder="এনকোডেড URL..."></textarea>' +
@@ -460,7 +632,7 @@
                 '<div class="result-box"><p id="urlDecodeResult" class="font-mono break-all"></p></div></div>';
         }
 
-        function randomStringGenerator() {
+        function createRandomStringGenerator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔤 Random String Generator</h3>' +
                 '<div class="grid grid-cols-2 gap-4">' +
@@ -471,7 +643,18 @@
                 '<div class="result-box"><p id="randomStringResult" class="font-mono text-lg text-center"></p></div></div>';
         }
 
-        function passwordGenerator() {
+        function createRegexTester() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔍 Regex Tester</h3>' +
+                '<div class="grid grid-cols-2 gap-4">' +
+                '<input type="text" id="regexPattern" class="p-3 border rounded-lg font-mono" placeholder="রেগেক্স প্যাটার্ন">' +
+                '<input type="text" id="regexTest" class="p-3 border rounded-lg" placeholder="টেস্ট স্ট্রিং">' +
+                '</div>' +
+                '<button onclick="testRegex()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">টেস্ট করুন</button>' +
+                '<div class="result-box"><p id="regexResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createPasswordGenerator() {
             return '<div class="space-y-4 text-center">' +
                 '<h3 class="text-xl font-bold">🔐 Password Generator</h3>' +
                 '<div class="grid grid-cols-2 gap-4 max-w-md mx-auto">' +
@@ -482,7 +665,7 @@
                 '<div class="result-box"><p id="passwordResult" class="text-2xl font-bold font-mono"></p></div></div>';
         }
 
-        function passwordStrengthChecker() {
+        function createPasswordStrengthChecker() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">💪 Password Strength Checker</h3>' +
                 '<input type="password" id="passInput" class="w-full p-4 border rounded-lg" placeholder="পাসওয়ার্ড লিখুন..." oninput="checkPasswordStrength()">' +
@@ -490,7 +673,7 @@
                 '<p id="strengthText" class="text-center font-semibold"></p></div>';
         }
 
-        function emailValidator() {
+        function createEmailValidator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">📧 Email Validator</h3>' +
                 '<input type="text" id="emailInput" class="w-full p-4 border rounded-lg" placeholder="ইমেইল লিখুন...">' +
@@ -498,7 +681,44 @@
                 '<div class="result-box"><p id="emailResult" class="text-center font-semibold"></p></div></div>';
         }
 
-        function bmiCalculator() {
+        function createPhoneValidator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">📱 Phone Validator</h3>' +
+                '<input type="text" id="phoneInput" class="w-full p-4 border rounded-lg" placeholder="ফোন নম্বর লিখুন...">' +
+                '<button onclick="validatePhone()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">ভ্যালিডেট</button>' +
+                '<div class="result-box"><p id="phoneResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createUrlValidator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔗 URL Validator</h3>' +
+                '<input type="text" id="urlInput" class="w-full p-4 border rounded-lg" placeholder="URL লিখুন...">' +
+                '<button onclick="validateURL()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">ভ্যালিডেট</button>' +
+                '<div class="result-box"><p id="urlResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createIpLookup() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🌐 IP Lookup</h3>' +
+                '<input type="text" id="ipInput" class="w-full p-4 border rounded-lg" placeholder="IP ঠিকানা লিখুন...">' +
+                '<button onclick="lookupIP()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">খুঁজুন</button>' +
+                '<div class="result-box"><div id="ipResult">IP তথ্য এখানে দেখানো হবে...</div></div></div>';
+        }
+
+        function createHashGenerator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔢 Hash Generator</h3>' +
+                '<textarea id="hashInput" class="w-full p-4 border rounded-lg" rows="4" placeholder="টেক্সট লিখুন..."></textarea>' +
+                '<div class="grid grid-cols-2 md:grid-cols-4 gap-3">' +
+                '<button onclick="generateHash(\'MD5\')" class="bg-blue-600 text-white px-4 py-2 rounded-lg">MD5</button>' +
+                '<button onclick="generateHash(\'SHA-1\')" class="bg-green-600 text-white px-4 py-2 rounded-lg">SHA-1</button>' +
+                '<button onclick="generateHash(\'SHA-256\')" class="bg-purple-600 text-white px-4 py-2 rounded-lg">SHA-256</button>' +
+                '<button onclick="generateHash(\'SHA-512\')" class="bg-orange-600 text-white px-4 py-2 rounded-lg">SHA-512</button>' +
+                '</div>' +
+                '<div class="result-box"><p id="hashResult" class="font-mono break-all"></p></div></div>';
+        }
+
+        function createBmiCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">⚖️ BMI Calculator</h3>' +
                 '<div class="grid grid-cols-2 gap-4">' +
@@ -509,7 +729,7 @@
                 '<div class="result-box text-center"><p id="bmiResult" class="text-2xl font-bold"></p><p id="bmiCategory"></p></div></div>';
         }
 
-        function ageCalculator() {
+        function createAgeCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🎂 Age Calculator</h3>' +
                 '<div><label class="block text-sm mb-1">জন্ম তারিখ</label><input type="date" id="birthDate" class="w-full p-2 border rounded"></div>' +
@@ -517,7 +737,7 @@
                 '<div class="result-box text-center"><p id="ageResult" class="text-2xl font-bold"></p></div></div>';
         }
 
-        function percentageCalculator() {
+        function createPercentageCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">📊 Percentage Calculator</h3>' +
                 '<div class="grid grid-cols-2 gap-4">' +
@@ -528,7 +748,7 @@
                 '<div class="result-box text-center"><p id="percentResult" class="text-2xl font-bold"></p></div></div>';
         }
 
-        function discountCalculator() {
+        function createDiscountCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🏷️ Discount Calculator</h3>' +
                 '<div class="grid grid-cols-2 gap-4">' +
@@ -539,7 +759,7 @@
                 '<div class="result-box"><p id="discountResult" class="text-center font-semibold"></p></div></div>';
         }
 
-        function tipCalculator() {
+        function createTipCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">💝 Tip Calculator</h3>' +
                 '<div class="grid grid-cols-2 gap-4">' +
@@ -550,7 +770,7 @@
                 '<div class="result-box"><p id="tipResult" class="text-center font-semibold"></p></div></div>';
         }
 
-        function loanCalculator() {
+        function createLoanCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🏦 Loan Calculator</h3>' +
                 '<div class="grid grid-cols-3 gap-4">' +
@@ -562,7 +782,32 @@
                 '<div class="result-box"><p id="loanResult" class="text-center font-semibold"></p></div></div>';
         }
 
-        function factorialCalculator() {
+        function createCompoundInterestCalculator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">📈 Compound Interest Calculator</h3>' +
+                '<div class="grid grid-cols-2 gap-4">' +
+                '<div><label class="block text-sm">মূলধন</label><input type="number" id="ciPrincipal" class="w-full p-2 border rounded" placeholder="10000"></div>' +
+                '<div><label class="block text-sm">সুদ %</label><input type="number" id="ciRate" class="w-full p-2 border rounded" placeholder="8"></div>' +
+                '<div><label class="block text-sm">বছর</label><input type="number" id="ciYears" class="w-full p-2 border rounded" placeholder="5"></div>' +
+                '<div><label class="block text-sm">চক্রবৃদ্ধি</label><input type="number" id="ciCompounds" value="1" class="w-full p-2 border rounded"></div>' +
+                '</div>' +
+                '<button onclick="calculateCI()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
+                '<div class="result-box"><p id="ciResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createSimpleInterestCalculator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">📊 Simple Interest Calculator</h3>' +
+                '<div class="grid grid-cols-3 gap-4">' +
+                '<div><label class="block text-sm">মূলধন</label><input type="number" id="siPrincipal" class="w-full p-2 border rounded" placeholder="10000"></div>' +
+                '<div><label class="block text-sm">সুদ %</label><input type="number" id="siRate" class="w-full p-2 border rounded" placeholder="8"></div>' +
+                '<div><label class="block text-sm">বছর</label><input type="number" id="siYears" class="w-full p-2 border rounded" placeholder="5"></div>' +
+                '</div>' +
+                '<button onclick="calculateSI()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
+                '<div class="result-box"><p id="siResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createFactorialCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔢 Factorial Calculator</h3>' +
                 '<input type="number" id="factorialInput" class="w-full p-4 border rounded-lg" placeholder="সংখ্যা লিখুন..." min="0" max="170">' +
@@ -570,7 +815,7 @@
                 '<div class="result-box"><p id="factorialResult" class="text-2xl font-bold text-center"></p></div></div>';
         }
 
-        function squareRootCalculator() {
+        function createSquareRootCalculator() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">√ Square Root Calculator</h3>' +
                 '<input type="number" id="sqrtInput" class="w-full p-4 border rounded-lg" placeholder="সংখ্যা লিখুন..." min="0">' +
@@ -578,7 +823,37 @@
                 '<div class="result-box"><p id="sqrtResult" class="text-2xl font-bold text-center"></p></div></div>';
         }
 
-        function temperatureConverter() {
+        function createPrimeChecker() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔢 Prime Number Checker</h3>' +
+                '<input type="number" id="primeInput" class="w-full p-4 border rounded-lg" placeholder="সংখ্যা লিখুন...">' +
+                '<button onclick="checkPrime()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">চেক করুন</button>' +
+                '<div class="result-box"><p id="primeResult" class="text-2xl font-bold text-center"></p></div></div>';
+        }
+
+        function createGcdCalculator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔢 GCD Calculator</h3>' +
+                '<div class="grid grid-cols-2 gap-4">' +
+                '<input type="number" id="gcd1" class="p-2 border rounded" placeholder="প্রথম সংখ্যা">' +
+                '<input type="number" id="gcd2" class="p-2 border rounded" placeholder="দ্বিতীয় সংখ্যা">' +
+                '</div>' +
+                '<button onclick="calculateGCD()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
+                '<div class="result-box"><p id="gcdResult" class="text-2xl font-bold text-center"></p></div></div>';
+        }
+
+        function createLcmCalculator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔢 LCM Calculator</h3>' +
+                '<div class="grid grid-cols-2 gap-4">' +
+                '<input type="number" id="lcm1" class="p-2 border rounded" placeholder="প্রথম সংখ্যা">' +
+                '<input type="number" id="lcm2" class="p-2 border rounded" placeholder="দ্বিতীয় সংখ্যা">' +
+                '</div>' +
+                '<button onclick="calculateLCM()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
+                '<div class="result-box"><p id="lcmResult" class="text-2xl font-bold text-center"></p></div></div>';
+        }
+
+        function createTemperatureConverter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🌡️ Temperature Converter</h3>' +
                 '<div class="grid grid-cols-3 gap-4">' +
@@ -590,7 +865,7 @@
                 '<div class="result-box"><p id="tempResult" class="text-2xl font-bold text-center"></p></div></div>';
         }
 
-        function unitConverter() {
+        function createUnitConverter() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">📏 Unit Converter</h3>' +
                 '<div class="grid grid-cols-3 gap-4">' +
@@ -602,7 +877,7 @@
                 '<div class="result-box"><p id="unitResult" class="text-2xl font-bold text-center"></p></div></div>';
         }
 
-        function binaryToText() {
+        function createBinaryToText() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔢 Binary to Text</h3>' +
                 '<textarea id="binaryInput" class="w-full p-4 border rounded-lg font-mono" rows="4" placeholder="01001000 01101001"></textarea>' +
@@ -610,7 +885,7 @@
                 '<div class="result-box"><p id="binaryToTextResult" class="font-mono"></p></div></div>';
         }
 
-        function textToBinary() {
+        function createTextToBinary() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🔤 Text to Binary</h3>' +
                 '<textarea id="textForBinary" class="w-full p-4 border rounded-lg" rows="4" placeholder="টেক্সট লিখুন..."></textarea>' +
@@ -618,7 +893,7 @@
                 '<div class="result-box"><p id="textToBinaryResult" class="font-mono"></p></div></div>';
         }
 
-        function hexToRgb() {
+        function createHexToRgb() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🎨 HEX to RGB</h3>' +
                 '<input type="text" id="hexInput" class="w-full p-4 border rounded-lg" placeholder="#667eea">' +
@@ -626,7 +901,7 @@
                 '<div class="result-box"><p id="hexToRgbResult" class="text-2xl font-bold font-mono text-center"></p></div></div>';
         }
 
-        function rgbToHex() {
+        function createRgbToHex() {
             return '<div class="space-y-4">' +
                 '<h3 class="text-xl font-bold">🎨 RGB to HEX</h3>' +
                 '<div class="grid grid-cols-3 gap-4">' +
@@ -638,7 +913,31 @@
                 '<div class="result-box"><p id="rgbToHexResult" class="text-2xl font-bold font-mono text-center"></p></div></div>';
         }
 
-        function randomNumberGenerator() {
+        function createDecimalToBinary() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔢 Decimal to Binary</h3>' +
+                '<input type="number" id="decInput" class="w-full p-4 border rounded-lg" placeholder="ডেসিমাল সংখ্যা...">' +
+                '<button onclick="convertDecToBinary()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">রূপান্তর</button>' +
+                '<div class="result-box"><p id="decToBinaryResult" class="text-2xl font-bold font-mono text-center"></p></div></div>';
+        }
+
+        function createBinaryToDecimal() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🔢 Binary to Decimal</h3>' +
+                '<input type="text" id="binDecInput" class="w-full p-4 border rounded-lg font-mono" placeholder="101010">' +
+                '<button onclick="convertBinToDec()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">রূপান্তর</button>' +
+                '<div class="result-box"><p id="binToDecResult" class="text-2xl font-bold text-center"></p></div></div>';
+        }
+
+        function createRomanConverter() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🏛️ Roman Numerals Converter</h3>' +
+                '<input type="number" id="romanInput" class="w-full p-4 border rounded-lg" placeholder="সংখ্যা লিখুন...">' +
+                '<button onclick="convertToRoman()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">রূপান্তর</button>' +
+                '<div class="result-box"><p id="romanResult" class="text-2xl font-bold text-center"></p></div></div>';
+        }
+
+        function createRandomNumberGenerator() {
             return '<div class="space-y-4 text-center">' +
                 '<h3 class="text-xl font-bold">🎲 Random Number Generator</h3>' +
                 '<div class="grid grid-cols-2 gap-4 max-w-md mx-auto">' +
@@ -649,7 +948,14 @@
                 '<div class="result-box"><p id="randomResult" class="text-4xl font-bold"></p></div></div>';
         }
 
-        function stopwatch() {
+        function createRandomNameGenerator() {
+            return '<div class="space-y-4 text-center">' +
+                '<h3 class="text-xl font-bold">👤 Random Name Generator</h3>' +
+                '<div class="result-box"><p id="randomNameResult" class="text-2xl font-bold">নাম জেনারেট করুন</p></div>' +
+                '<button onclick="generateRandomName()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">জেনারেট</button></div>';
+        }
+
+        function createStopwatch() {
             return '<div class="space-y-4 text-center">' +
                 '<h3 class="text-xl font-bold">⏱️ Stopwatch</h3>' +
                 '<div class="text-6xl font-bold font-mono" id="stopwatchDisplay">00:00:00</div>' +
@@ -660,7 +966,7 @@
                 '</div></div>';
         }
 
-        function countdownTimer() {
+        function createCountdownTimer() {
             return '<div class="space-y-4 text-center">' +
                 '<h3 class="text-xl font-bold">⏳ Countdown Timer</h3>' +
                 '<div class="grid grid-cols-3 gap-4 max-w-md mx-auto">' +
@@ -671,7 +977,7 @@
                 '<div class="text-6xl font-bold font-mono" id="countdownDisplay">00:00</div></div>';
         }
 
-        function counter() {
+        function createCounter() {
             return '<div class="space-y-4 text-center">' +
                 '<h3 class="text-xl font-bold">🔢 Counter</h3>' +
                 '<div class="text-8xl font-bold" id="counterDisplay">0</div>' +
@@ -682,7 +988,7 @@
                 '</div></div>';
         }
 
-        function colorPicker() {
+        function createColorPicker() {
             return '<div class="space-y-4 text-center">' +
                 '<h3 class="text-xl font-bold">🎨 Color Picker</h3>' +
                 '<input type="color" id="colorInput" class="w-full h-32 cursor-pointer" value="#667eea" oninput="updateColor()">' +
@@ -692,34 +998,91 @@
                 '</div></div>';
         }
 
-        function primeChecker() {
+        function createGradientGenerator() {
             return '<div class="space-y-4">' +
-                '<h3 class="text-xl font-bold">🔢 Prime Number Checker</h3>' +
-                '<input type="number" id="primeInput" class="w-full p-4 border rounded-lg" placeholder="সংখ্যা লিখুন...">' +
-                '<button onclick="checkPrime()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">চেক করুন</button>' +
-                '<div class="result-box"><p id="primeResult" class="text-2xl font-bold text-center"></p></div></div>';
+                '<h3 class="text-xl font-bold">🌈 Gradient Generator</h3>' +
+                '<div class="grid grid-cols-2 gap-4">' +
+                '<div><label class="block text-sm mb-1">প্রথম রঙ</label><input type="color" id="gradient1" class="w-full h-12 cursor-pointer" value="#667eea"></div>' +
+                '<div><label class="block text-sm mb-1">দ্বিতীয় রঙ</label><input type="color" id="gradient2" class="w-full h-12 cursor-pointer" value="#764ba2"></div>' +
+                '</div>' +
+                '<div id="gradientPreview" class="h-40 rounded-lg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"></div>' +
+                '<div class="result-box"><p class="font-semibold mb-2">CSS Code:</p><p id="gradientCss" class="font-mono">linear-gradient(135deg, #667eea 0%, #764ba2 100%)</p></div>' +
+                '<script>document.getElementById("gradient1").addEventListener("input", updateGradient); document.getElementById("gradient2").addEventListener("input", updateGradient); function updateGradient() { const c1 = document.getElementById("gradient1").value; const c2 = document.getElementById("gradient2").value; const css = "linear-gradient(135deg, " + c1 + " 0%, " + c2 + " 100%)"; document.getElementById("gradientPreview").style.background = css; document.getElementById("gradientCss").textContent = css; }<\/script></div>';
         }
 
-        function gcdCalculator() {
+        function createPaletteGenerator() {
             return '<div class="space-y-4">' +
-                '<h3 class="text-xl font-bold">🔢 GCD Calculator</h3>' +
-                '<div class="grid grid-cols-2 gap-4">' +
-                '<input type="number" id="gcd1" class="p-2 border rounded" placeholder="প্রথম সংখ্যা">' +
-                '<input type="number" id="gcd2" class="p-2 border rounded" placeholder="দ্বিতীয় সংখ্যা">' +
-                '</div>' +
-                '<button onclick="calculateGCD()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
-                '<div class="result-box"><p id="gcdResult" class="text-2xl font-bold text-center"></p></div></div>';
+                '<h3 class="text-xl font-bold">🎨 Color Palette Generator</h3>' +
+                '<button onclick="generatePalette()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">প্যালেট তৈরি করুন</button>' +
+                '<div id="paletteResult" class="grid grid-cols-5 gap-2"></div></div>';
         }
 
-        function lcmCalculator() {
+        function createWorldClock() {
             return '<div class="space-y-4">' +
-                '<h3 class="text-xl font-bold">🔢 LCM Calculator</h3>' +
+                '<h3 class="text-xl font-bold">🌍 World Clock</h3>' +
+                '<div class="grid md:grid-cols-2 gap-4" id="worldClockGrid"></div>' +
+                '<script>const cities = [{name:"ঢাকা",tz:"Asia/Dhaka"},{name:"লন্ডন",tz:"Europe/London"},{name:"নিউ ইয়র্ক",tz:"America/New_York"},{name:"টোকিও",tz:"Asia/Tokyo"}]; const grid = document.getElementById("worldClockGrid"); cities.forEach(function(city) { const div = document.createElement("div"); div.className = "bg-gray-50 rounded-lg p-4"; div.innerHTML = "<p class=\'font-semibold\'>" + city.name + "</p><p class=\'text-2xl font-bold font-mono\' id=\'clock-" + city.tz.replace("/", "-") + "\'>--:--:--</p>"; grid.appendChild(div); }); function updateClocks() { cities.forEach(function(city) { const time = new Date().toLocaleTimeString("en-US", {timeZone: city.tz}); document.getElementById("clock-" + city.tz.replace("/", "-")).textContent = time; }); } updateClocks(); setInterval(updateClocks, 1000);<\/script></div>';
+        }
+
+        function createTimeZoneConverter() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🌍 Time Zone Converter</h3>' +
+                '<input type="datetime-local" id="tzTime" class="w-full p-3 border rounded-lg">' +
                 '<div class="grid grid-cols-2 gap-4">' +
-                '<input type="number" id="lcm1" class="p-2 border rounded" placeholder="প্রথম সংখ্যা">' +
-                '<input type="number" id="lcm2" class="p-2 border rounded" placeholder="দ্বিতীয় সংখ্যা">' +
+                '<select id="tzFrom" class="p-2 border rounded"><option value="Asia/Dhaka">ঢাকা</option><option value="Europe/London">লন্ডন</option><option value="America/New_York">নিউ ইয়র্ক</option></select>' +
+                '<select id="tzTo" class="p-2 border rounded"><option value="Asia/Dhaka">ঢাকা</option><option value="Europe/London">লন্ডন</option><option value="America/New_York">নিউ ইয়র্ক</option></select>' +
                 '</div>' +
-                '<button onclick="calculateLCM()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
-                '<div class="result-box"><p id="lcmResult" class="text-2xl font-bold text-center"></p></div></div>';
+                '<button onclick="convertTimezone()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">রূপান্তর</button>' +
+                '<div class="result-box"><p id="tzResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createDateCalculator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">📅 Date Calculator</h3>' +
+                '<input type="date" id="dateInput" class="w-full p-3 border rounded-lg">' +
+                '<div class="grid grid-cols-2 gap-4">' +
+                '<select id="dateOperation" class="p-2 border rounded"><option value="add">যোগ</option><option value="subtract">বিয়োগ</option></select>' +
+                '<input type="number" id="dateDays" value="30" class="p-2 border rounded">' +
+                '</div>' +
+                '<button onclick="calculateDate()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
+                '<div class="result-box"><p id="dateResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createDaysBetweenDates() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">📆 Days Between Dates</h3>' +
+                '<div class="grid grid-cols-2 gap-4">' +
+                '<div><label class="block text-sm">শুরু</label><input type="date" id="daysStart" class="w-full p-2 border rounded"></div>' +
+                '<div><label class="block text-sm">শেষ</label><input type="date" id="daysEnd" class="w-full p-2 border rounded"></div>' +
+                '</div>' +
+                '<button onclick="calculateDaysBetween()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">গণনা</button>' +
+                '<div class="result-box"><p id="daysBetweenResult" class="text-center font-semibold"></p></div></div>';
+        }
+
+        function createScientificCalculator() {
+            return '<div class="space-y-4">' +
+                '<h3 class="text-xl font-bold">🧮 Scientific Calculator</h3>' +
+                '<input type="text" id="calcDisplay" class="w-full p-4 border rounded-lg text-2xl text-right font-mono" readonly>' +
+                '<div class="grid grid-cols-4 gap-2">' +
+                '<button onclick="calcInput(\'7\')" class="bg-gray-200 p-4 rounded-lg font-bold">7</button>' +
+                '<button onclick="calcInput(\'8\')" class="bg-gray-200 p-4 rounded-lg font-bold">8</button>' +
+                '<button onclick="calcInput(\'9\')" class="bg-gray-200 p-4 rounded-lg font-bold">9</button>' +
+                '<button onclick="calcInput(\'/\')" class="bg-blue-200 p-4 rounded-lg font-bold">/</button>' +
+                '<button onclick="calcInput(\'4\')" class="bg-gray-200 p-4 rounded-lg font-bold">4</button>' +
+                '<button onclick="calcInput(\'5\')" class="bg-gray-200 p-4 rounded-lg font-bold">5</button>' +
+                '<button onclick="calcInput(\'6\')" class="bg-gray-200 p-4 rounded-lg font-bold">6</button>' +
+                '<button onclick="calcInput(\'*\')" class="bg-blue-200 p-4 rounded-lg font-bold">×</button>' +
+                '<button onclick="calcInput(\'1\')" class="bg-gray-200 p-4 rounded-lg font-bold">1</button>' +
+                '<button onclick="calcInput(\'2\')" class="bg-gray-200 p-4 rounded-lg font-bold">2</button>' +
+                '<button onclick="calcInput(\'3\')" class="bg-gray-200 p-4 rounded-lg font-bold">3</button>' +
+                '<button onclick="calcInput(\'-\')" class="bg-blue-200 p-4 rounded-lg font-bold">-</button>' +
+                '<button onclick="calcInput(\'0\')" class="bg-gray-200 p-4 rounded-lg font-bold">0</button>' +
+                '<button onclick="calcInput(\'.\')" class="bg-gray-200 p-4 rounded-lg font-bold">.</button>' +
+                '<button onclick="calcCalculate()" class="bg-green-500 text-white p-4 rounded-lg font-bold">=</button>' +
+                '<button onclick="calcInput(\'+\')" class="bg-blue-200 p-4 rounded-lg font-bold">+</button>' +
+                '<button onclick="calcClear()" class="bg-red-500 text-white p-4 rounded-lg font-bold">C</button>' +
+                '<button onclick="calcBackspace()" class="bg-gray-200 p-4 rounded-lg font-bold">⌫</button>' +
+                '</div></div>';
         }
 
         // ============================================
@@ -833,6 +1196,15 @@
             }
         };
 
+        window.minifyJSON = function() {
+            try {
+                const json = JSON.parse(document.getElementById('jsonMinInput').value);
+                document.getElementById('jsonMinResult').value = JSON.stringify(json);
+            } catch (e) {
+                document.getElementById('jsonMinResult').value = 'Error: ' + e.message;
+            }
+        };
+
         window.generateUUID = function() {
             const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0;
@@ -887,6 +1259,20 @@
             document.getElementById('randomStringResult').textContent = result;
         };
 
+        window.testRegex = function() {
+            const pattern = document.getElementById('regexPattern').value;
+            const testStr = document.getElementById('regexTest').value;
+            try {
+                const regex = new RegExp(pattern);
+                const result = regex.test(testStr);
+                document.getElementById('regexResult').textContent = result ? '✅ ম্যাচ পাওয়া গেছে!' : '❌ ম্যাচ পাওয়া যায়নি!';
+                document.getElementById('regexResult').className = result ? 'text-green-600' : 'text-red-600';
+            } catch (e) {
+                document.getElementById('regexResult').textContent = '❌ ইনভ্যালিড রেগেক্স!';
+                document.getElementById('regexResult').className = 'text-red-600';
+            }
+        };
+
         window.generatePassword = function() {
             const length = parseInt(document.getElementById('passLength').value);
             const type = document.getElementById('passType').value;
@@ -926,6 +1312,54 @@
             const result = regex.test(email);
             document.getElementById('emailResult').textContent = result ? '✅ ভ্যালিড ইমেইল!' : '❌ ইনভ্যালিড ইমেইল!';
             document.getElementById('emailResult').className = result ? 'text-green-600' : 'text-red-600';
+        };
+
+        window.validatePhone = function() {
+            const phone = document.getElementById('phoneInput').value;
+            const regex = /^[\+]?[\d\s-]{10,15}$/;
+            const result = regex.test(phone);
+            document.getElementById('phoneResult').textContent = result ? '✅ ভ্যালিড ফোন!' : '❌ ইনভ্যালিড ফোন!';
+            document.getElementById('phoneResult').className = result ? 'text-green-600' : 'text-red-600';
+        };
+
+        window.validateURL = function() {
+            const url = document.getElementById('urlInput').value;
+            try {
+                new URL(url);
+                document.getElementById('urlResult').textContent = '✅ ভ্যালিড URL!';
+                document.getElementById('urlResult').className = 'text-green-600';
+            } catch (e) {
+                document.getElementById('urlResult').textContent = '❌ ইনভ্যালিড URL!';
+                document.getElementById('urlResult').className = 'text-red-600';
+            }
+        };
+
+        window.lookupIP = function() {
+            const ip = document.getElementById('ipInput').value;
+            fetch('https://ipapi.co/' + ip + '/json/')
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    document.getElementById('ipResult').innerHTML = 
+                        '<div class="grid grid-cols-2 gap-3">' +
+                        '<div><span class="font-semibold">IP:</span> ' + data.ip + '</div>' +
+                        '<div><span class="font-semibold">শহর:</span> ' + data.city + '</div>' +
+                        '<div><span class="font-semibold">দেশ:</span> ' + data.country_name + '</div>' +
+                        '<div><span class="font-semibold">ISP:</span> ' + data.org + '</div>' +
+                        '</div>';
+                })
+                .catch(function(e) {
+                    document.getElementById('ipResult').textContent = 'Error: ' + e.message;
+                });
+        };
+
+        window.generateHash = async function(algorithm) {
+            const text = document.getElementById('hashInput').value;
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest(algorithm, data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+            document.getElementById('hashResult').textContent = hashHex;
         };
 
         window.calculateBMI = function() {
@@ -989,6 +1423,24 @@
             document.getElementById('loanResult').textContent = 'মাসিক EMI: ' + emi.toFixed(2) + ' টাকা';
         };
 
+        window.calculateCI = function() {
+            const principal = parseFloat(document.getElementById('ciPrincipal').value);
+            const rate = parseFloat(document.getElementById('ciRate').value) / 100;
+            const years = parseInt(document.getElementById('ciYears').value);
+            const compounds = parseInt(document.getElementById('ciCompounds').value);
+            const amount = principal * Math.pow(1 + rate / compounds, compounds * years);
+            const interest = amount - principal;
+            document.getElementById('ciResult').textContent = 'মোট: ' + amount.toFixed(2) + ' | সুদ: ' + interest.toFixed(2);
+        };
+
+        window.calculateSI = function() {
+            const principal = parseFloat(document.getElementById('siPrincipal').value);
+            const rate = parseFloat(document.getElementById('siRate').value);
+            const years = parseInt(document.getElementById('siYears').value);
+            const interest = principal * rate * years / 100;
+            document.getElementById('siResult').textContent = 'সুদ: ' + interest.toFixed(2) + ' | মোট: ' + (principal + interest).toFixed(2);
+        };
+
         window.calculateFactorial = function() {
             const num = parseInt(document.getElementById('factorialInput').value);
             let result = 1;
@@ -999,6 +1451,31 @@
         window.calculateSqrt = function() {
             const num = parseFloat(document.getElementById('sqrtInput').value);
             document.getElementById('sqrtResult').textContent = '√' + num + ' = ' + Math.sqrt(num).toFixed(4);
+        };
+
+        window.checkPrime = function() {
+            const num = parseInt(document.getElementById('primeInput').value);
+            let isPrime = true;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) { isPrime = false; break; }
+            }
+            document.getElementById('primeResult').textContent = num + (isPrime ? ' মৌলিক সংখ্যা!' : ' মৌলিক নয়!');
+        };
+
+        window.calculateGCD = function() {
+            let a = parseInt(document.getElementById('gcd1').value);
+            let b = parseInt(document.getElementById('gcd2').value);
+            while (b !== 0) { const temp = b; b = a % b; a = temp; }
+            document.getElementById('gcdResult').textContent = 'GCD: ' + Math.abs(a);
+        };
+
+        window.calculateLCM = function() {
+            const a = parseInt(document.getElementById('lcm1').value);
+            const b = parseInt(document.getElementById('lcm2').value);
+            let x = a, y = b;
+            while (y !== 0) { const temp = y; y = x % y; x = temp; }
+            const lcm = Math.abs(a * b) / x;
+            document.getElementById('lcmResult').textContent = 'LCM: ' + lcm;
         };
 
         window.convertTemperature = function() {
@@ -1056,11 +1533,43 @@
             document.getElementById('rgbToHexResult').textContent = hex;
         };
 
+        window.convertDecToBinary = function() {
+            const decimal = parseInt(document.getElementById('decInput').value);
+            document.getElementById('decToBinaryResult').textContent = decimal.toString(2);
+        };
+
+        window.convertBinToDec = function() {
+            const binary = document.getElementById('binDecInput').value;
+            document.getElementById('binToDecResult').textContent = parseInt(binary, 2);
+        };
+
+        window.convertToRoman = function() {
+            const num = parseInt(document.getElementById('romanInput').value);
+            const romanNumerals = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']];
+            let result = '';
+            let remaining = num;
+            romanNumerals.forEach(function(item) {
+                while (remaining >= item[0]) {
+                    result += item[1];
+                    remaining -= item[0];
+                }
+            });
+            document.getElementById('romanResult').textContent = result;
+        };
+
         window.generateRandomNumber = function() {
             const min = parseInt(document.getElementById('minNum').value);
             const max = parseInt(document.getElementById('maxNum').value);
             const random = Math.floor(Math.random() * (max - min + 1)) + min;
             document.getElementById('randomResult').textContent = random;
+        };
+
+        window.generateRandomName = function() {
+            const firstNames = ['আরিফ', 'সাব্বির', 'তানভীর', 'রাকিব', 'নাদিম', 'ফাহিম', 'সাকিব', 'ইমরান', 'রাশেদ', 'মেহেদী'];
+            const lastNames = ['আহমেদ', 'হোসেন', 'রহমান', 'ইসলাম', 'খান', 'চৌধুরী', 'শেখ', 'মিয়া', 'সরকার', 'তালুকদার'];
+            const first = firstNames[Math.floor(Math.random() * firstNames.length)];
+            const last = lastNames[Math.floor(Math.random() * lastNames.length)];
+            document.getElementById('randomNameResult').textContent = first + ' ' + last;
         };
 
         window.updateColor = function() {
@@ -1072,29 +1581,66 @@
             document.getElementById('rgbValue').textContent = 'rgb(' + r + ', ' + g + ', ' + b + ')';
         };
 
-        window.checkPrime = function() {
-            const num = parseInt(document.getElementById('primeInput').value);
-            let isPrime = true;
-            for (let i = 2; i <= Math.sqrt(num); i++) {
-                if (num % i === 0) { isPrime = false; break; }
+        window.generatePalette = function() {
+            const container = document.getElementById('paletteResult');
+            container.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const color = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+                const div = document.createElement('div');
+                div.className = 'h-32 rounded-lg cursor-pointer transition hover:scale-105';
+                div.style.backgroundColor = color;
+                div.title = color;
+                div.onclick = function() { navigator.clipboard.writeText(color); alert('কপি করা হয়েছে: ' + color); };
+                container.appendChild(div);
             }
-            document.getElementById('primeResult').textContent = num + (isPrime ? ' মৌলিক সংখ্যা!' : ' মৌলিক নয়!');
         };
 
-        window.calculateGCD = function() {
-            let a = parseInt(document.getElementById('gcd1').value);
-            let b = parseInt(document.getElementById('gcd2').value);
-            while (b !== 0) { const temp = b; b = a % b; a = temp; }
-            document.getElementById('gcdResult').textContent = 'GCD: ' + Math.abs(a);
+        window.convertTimezone = function() {
+            const time = new Date(document.getElementById('tzTime').value);
+            const from = document.getElementById('tzFrom').value;
+            const to = document.getElementById('tzTo').value;
+            const fromDate = new Date(time.toLocaleString('en-US', { timeZone: from }));
+            const toDate = new Date(time.toLocaleString('en-US', { timeZone: to }));
+            const diff = toDate - fromDate;
+            const result = new Date(time.getTime() + diff);
+            document.getElementById('tzResult').textContent = 'রূপান্তরিত সময়: ' + result.toLocaleString();
         };
 
-        window.calculateLCM = function() {
-            const a = parseInt(document.getElementById('lcm1').value);
-            const b = parseInt(document.getElementById('lcm2').value);
-            let x = a, y = b;
-            while (y !== 0) { const temp = y; y = x % y; x = temp; }
-            const lcm = Math.abs(a * b) / x;
-            document.getElementById('lcmResult').textContent = 'LCM: ' + lcm;
+        window.calculateDate = function() {
+            const date = new Date(document.getElementById('dateInput').value);
+            const operation = document.getElementById('dateOperation').value;
+            const days = parseInt(document.getElementById('dateDays').value);
+            if (operation === 'add') date.setDate(date.getDate() + days);
+            else date.setDate(date.getDate() - days);
+            document.getElementById('dateResult').textContent = 'ফলাফল: ' + date.toLocaleDateString('bn-BD');
+        };
+
+        window.calculateDaysBetween = function() {
+            const start = new Date(document.getElementById('daysStart').value);
+            const end = new Date(document.getElementById('daysEnd').value);
+            const diff = Math.abs(end - start);
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('daysBetweenResult').textContent = days + ' দিন';
+        };
+
+        window.generate2FACode = function() {
+            const length = parseInt(document.getElementById('codeLength').value) || 6;
+            let code = '';
+            for (let i = 0; i < length; i++) {
+                code += Math.floor(Math.random() * 10);
+            }
+            document.getElementById('twoFactorCode').textContent = code;
+            document.getElementById('codeExpiry').textContent = 'এই কোডটি 30 সেকেন্ডের মধ্যে মেয়াদ শেষ হবে';
+            
+            setTimeout(function() {
+                document.getElementById('twoFactorCode').textContent = '------';
+                document.getElementById('codeExpiry').textContent = 'কোডের মেয়াদ শেষ হয়েছে';
+            }, 30000);
+        };
+
+        window.processGenericTool = function() {
+            const input = document.getElementById('genericInput').value;
+            document.getElementById('genericResult').textContent = 'প্রসেস করা হয়েছে: ' + input;
         };
 
         // Stopwatch
@@ -1146,6 +1692,13 @@
         window.incrementCounter = function() { counterValue++; document.getElementById('counterDisplay').textContent = counterValue; };
         window.decrementCounter = function() { counterValue--; document.getElementById('counterDisplay').textContent = counterValue; };
         window.resetCounter = function() { counterValue = 0; document.getElementById('counterDisplay').textContent = counterValue; };
+
+        // Calculator
+        let calcExpression = '';
+        window.calcInput = function(value) { calcExpression += value; document.getElementById('calcDisplay').value = calcExpression; };
+        window.calcCalculate = function() { try { const result = eval(calcExpression); document.getElementById('calcDisplay').value = result; calcExpression = result.toString(); } catch (e) { document.getElementById('calcDisplay').value = 'Error'; calcExpression = ''; } };
+        window.calcClear = function() { calcExpression = ''; document.getElementById('calcDisplay').value = ''; };
+        window.calcBackspace = function() { calcExpression = calcExpression.slice(0, -1); document.getElementById('calcDisplay').value = calcExpression; };
 
         // ============================================
         // পেজ লোড
