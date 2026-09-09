@@ -3,162 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toolkit Pro - Free Online Tools Platform</title>
-    <meta name="description" content="Toolkit Pro - 500+ Free Online Tools. Text tools, image tools, developer tools, SEO tools and more. All 100% free!">
-    <meta name="keywords" content="online tools, free tools, text tools, image tools, developer tools, seo tools">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="Toolkit Pro - Free Online Tools">
-    <meta property="og:description" content="500+ Free Online Tools for everyone">
+    <!-- Primary Meta Tags -->
+    <title>MAPTracker.online - 500+ Free Online Tools | Text, Image, SEO Tools</title>
+    <meta name="title" content="MAPTracker.online - 500+ Free Online Tools | Text, Image, SEO Tools">
+    <meta name="description" content="MAPTracker.online offers 500+ free online tools. Word counter, image compressor, JSON formatter, password generator, SEO tools and more. No signup required!">
+    <meta name="keywords" content="online tools, free tools, text tools, image tools, developer tools, seo tools, word counter, image compressor, json formatter, password generator">
+    <meta name="author" content="MAPTracker.online">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="1 day">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://maptracker.online/">
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://maptracker.online/">
+    <meta property="og:title" content="MAPTracker.online - 500+ Free Online Tools">
+    <meta property="og:description" content="Free online tools for everyone. Text tools, image tools, developer tools, SEO tools and more. No signup required!">
+    <meta property="og:image" content="https://maptracker.online/images/og-image.png">
+    <meta property="og:site_name" content="MAPTracker.online">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://maptracker.online/">
+    <meta name="twitter:title" content="MAPTracker.online - 500+ Free Online Tools">
+    <meta name="twitter:description" content="Free online tools for everyone. No signup required!">
+    <meta name="twitter:image" content="https://maptracker.online/images/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+    <link rel="apple-touch-icon" href="/images/logo.svg">
+    
+    <!-- PWA -->
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MAPTracker">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- CSS -->
     <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MAPTracker.online",
+        "url": "https://maptracker.online",
+        "description": "500+ Free Online Tools Platform",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://maptracker.online/tools.html?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "MAPTracker.online",
+        "url": "https://maptracker.online",
+        "logo": "https://maptracker.online/images/logo.svg"
+    }
+    </script>
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Skip to main content -->
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+    
     <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
             <div class="container">
-                <a href="/" class="logo">
-                    <span class="logo-icon">🛠️</span>
-                    <span class="logo-text">Toolkit Pro</span>
+                <a href="/" class="logo" aria-label="MAPTracker.online Home">
+                    <img src="/images/logo.svg" alt="MAPTracker.online Logo" class="logo-img" width="40" height="40">
+                    <span class="logo-text">MAPTracker<span class="logo-dot">.online</span></span>
                 </a>
                 
-                <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
                 
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="/" class="active">Home</a></li>
-                    <li><a href="/tools.html">All Tools</a></li>
-                    <li><a href="/categories.html">Categories</a></li>
-                    <li><a href="/about.html">About</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
+                <ul class="nav-menu" id="navMenu" role="menubar">
+                    <li role="none"><a href="/" class="active" role="menuitem" aria-current="page">Home</a></li>
+                    <li role="none"><a href="/tools.html" role="menuitem">All Tools</a></li>
+                    <li role="none"><a href="/categories.html" role="menuitem">Categories</a></li>
+                    <li role="none"><a href="/about.html" role="menuitem">About</a></li>
+                    <li role="none"><a href="/contact.html" role="menuitem">Contact</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1 class="hero-title">
-                Free Online Tools for <span class="highlight">Everyone</span>
-            </h1>
-            <p class="hero-subtitle">
-                500+ Free Tools for Text, Images, Development, SEO & More
-            </p>
-            
-            <!-- Search Bar -->
-            <div class="search-container">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    class="search-input" 
-                    placeholder="Search for tools... (e.g., word counter, image compressor)"
-                    autocomplete="off"
-                >
-                <button class="search-btn" id="searchBtn">
-                    🔍 Search
-                </button>
+    <!-- Main Content -->
+    <main id="mainContent" role="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-label="Hero section">
+            <div class="container">
+                <h1 class="hero-title">
+                    Free Online Tools for <span class="highlight">Everyone</span>
+                </h1>
+                <p class="hero-subtitle">
+                    500+ Free Tools for Text, Images, Development, SEO & More
+                </p>
+                
+                <!-- Search Bar -->
+                <div class="search-container" role="search">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="search-input" 
+                        placeholder="Search for tools... (e.g., word counter)"
+                        autocomplete="off"
+                        aria-label="Search tools"
+                        role="searchbox"
+                    >
+                    <button class="search-btn" id="searchBtn" aria-label="Search">
+                        <span class="search-icon">🔍</span>
+                        <span class="search-text">Search</span>
+                    </button>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="quick-links" aria-label="Quick links">
+                    <a href="/tools.html?category=text-tools" class="quick-link">📝 Text Tools</a>
+                    <a href="/tools.html?category=image-tools" class="quick-link">🖼️ Image Tools</a>
+                    <a href="/tools.html?category=developer-tools" class="quick-link">💻 Developer</a>
+                    <a href="/tools.html?category=seo-tools" class="quick-link">🌐 SEO Tools</a>
+                    <a href="/tools.html?category=security-tools" class="quick-link">🔐 Security</a>
+                    <a href="/tools.html" class="quick-link">📱 All Tools →</a>
+                </div>
             </div>
-            
-            <!-- Quick Links -->
-            <div class="quick-links">
-                <a href="/tools.html?category=text-tools" class="quick-link">📝 Text</a>
-                <a href="/tools.html?category=image-tools" class="quick-link">🖼️ Image</a>
-                <a href="/tools.html?category=developer-tools" class="quick-link">💻 Developer</a>
-                <a href="/tools.html?category=seo-tools" class="quick-link">🌐 SEO</a>
-                <a href="/tools.html?category=security-tools" class="quick-link">🔐 Security</a>
-                <a href="/tools.html" class="quick-link">📱 More →</a>
-            </div>
+        </section>
+
+        <!-- Ad Space - Header -->
+        <div class="ad-container" id="ad-header" aria-label="Advertisement">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-    </section>
 
-    <!-- Ad Space - Header -->
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-    <!-- Popular Tools Section -->
-    <section class="tools-section">
-        <div class="container">
-            <h2 class="section-title">🔥 Popular Tools</h2>
-            <div class="tools-grid" id="popularTools">
-                <!-- Dynamic content loaded from API -->
-                <div class="loading">Loading popular tools...</div>
+        <!-- Popular Tools Section -->
+        <section class="tools-section" aria-labelledby="popularTitle">
+            <div class="container">
+                <h2 class="section-title" id="popularTitle">🔥 Popular Tools</h2>
+                <p class="section-subtitle">Most used tools by our community</p>
+                <div class="tools-grid" id="popularTools">
+                    <div class="loading" role="status">
+                        <span class="spinner"></span>
+                        <span>Loading popular tools...</span>
+                    </div>
+                </div>
             </div>
+        </section>
+
+        <!-- Ad Space - In Content -->
+        <div class="ad-container" id="ad-content" aria-label="Advertisement">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="3456789012"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-    </section>
 
-    <!-- Ad Space - In Content -->
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-             data-ad-slot="3456789012"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-
-    <!-- Categories Section -->
-    <section class="categories-section">
-        <div class="container">
-            <h2 class="section-title">📂 Browse Categories</h2>
-            <div class="categories-grid" id="categoriesGrid">
-                <!-- Dynamic content loaded from API -->
-                <div class="loading">Loading categories...</div>
+        <!-- Categories Section -->
+        <section class="categories-section" aria-labelledby="categoriesTitle">
+            <div class="container">
+                <h2 class="section-title" id="categoriesTitle">📂 Browse Categories</h2>
+                <p class="section-subtitle">Find tools by category</p>
+                <div class="categories-grid" id="categoriesGrid">
+                    <div class="loading" role="status">
+                        <span class="spinner"></span>
+                        <span>Loading categories...</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- New Tools Section -->
-    <section class="tools-section">
-        <div class="container">
-            <h2 class="section-title">✨ New Tools</h2>
-            <div class="tools-grid" id="newTools">
-                <!-- Dynamic content loaded from API -->
-                <div class="loading">Loading new tools...</div>
+        <!-- New Tools Section -->
+        <section class="tools-section" aria-labelledby="newToolsTitle">
+            <div class="container">
+                <h2 class="section-title" id="newToolsTitle">✨ New Tools</h2>
+                <p class="section-subtitle">Recently added tools</p>
+                <div class="tools-grid" id="newTools">
+                    <div class="loading" role="status">
+                        <span class="spinner"></span>
+                        <span>Loading new tools...</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Ad Space - Footer -->
-    <div class="ad-container">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-             data-ad-slot="4567890123"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
+        <!-- Features Section -->
+        <section class="features-section" aria-labelledby="featuresTitle">
+            <div class="container">
+                <h2 class="section-title" id="featuresTitle">Why Choose MAPTracker.online?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🆓</div>
+                        <h3>100% Free</h3>
+                        <p>All tools are completely free to use</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Fast & Reliable</h3>
+                        <p>Lightning-fast performance with caching</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Works perfectly on all devices</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure</h3>
+                        <p>Your data is safe and private</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section (SEO) -->
+        <section class="faq-section" aria-labelledby="faqTitle">
+            <div class="container">
+                <h2 class="section-title" id="faqTitle">Frequently Asked Questions</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3>What is MAPTracker.online?</h3>
+                        <p>MAPTracker.online is a free online tools platform offering 500+ tools for text processing, image editing, development, SEO, and more.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Are the tools really free?</h3>
+                        <p>Yes! All tools on MAPTracker.online are 100% free. No signup or payment required.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Do I need to create an account?</h3>
+                        <p>No, you can use all tools without creating an account.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ad Space - Footer -->
+        <div class="ad-container" id="ad-footer" aria-label="Advertisement">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="4567890123"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>🛠️ Toolkit Pro</h3>
+                    <h3>🛠️ MAPTracker.online</h3>
                     <p>Free online tools for everyone. 500+ tools and growing.</p>
                 </div>
                 <div class="footer-col">
@@ -170,27 +301,31 @@
                     </ul>
                 </div>
                 <div class="footer-col">
+                    <h4>Popular Tools</h4>
+                    <ul>
+                        <li><a href="/tool.html?slug=word-counter">Word Counter</a></li>
+                        <li><a href="/tool.html?slug=password-generator">Password Generator</a></li>
+                        <li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
                     <h4>Legal</h4>
                     <ul>
                         <li><a href="/privacy.html">Privacy Policy</a></li>
                         <li><a href="/terms.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <ul>
                         <li><a href="/contact.html">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Toolkit Pro. All rights reserved.</p>
+                <p>&copy; 2026 MAPTracker.online. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
-    <script src="/js/api.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/main.js" defer></script>
+    <script src="/js/ads.js" defer></script>
 </body>
 </html>
