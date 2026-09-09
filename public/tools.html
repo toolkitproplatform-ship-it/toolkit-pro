@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সব টুলস - Toolkit Pro | ৫০০+ ফ্রি অনলাইন টুলস</title>
+    <meta name="description" content="Toolkit Pro-তে সব ফ্রি অনলাইন টুলস ব্রাউজ করুন। Text, Image, Developer, SEO, Security সহ ১০+ ক্যাটাগরিতে ৫০০+ টুলস।">
+    <meta name="keywords" content="all tools, free tools, online tools, text tools, image tools, developer tools">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <meta property="og:title" content="সব টুলস - Toolkit Pro">
+    <meta property="og:description" content="৫০০+ ফ্রি অনলাইন টুলস ব্রাউজ করুন।">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://toolkit-pro-1.onrender.com/tools.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --secondary: #7c3aed; --accent: #f59e0b; --success: #10b981; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; --bg-input: #f1f5f9; --header-bg: #ffffff; --footer-bg: #ffffff; }
+        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-secondary: #94a3b8; --border: #334155; --shadow: 0 2px 10px rgba(0,0,0,0.3); --shadow-lg: 0 10px 40px rgba(0,0,0,0.5); --bg-input: #334155; --header-bg: #1e293b; --footer-bg: #1e293b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
+        
+        /* হেডার */
+        .site-header { background: var(--header-bg); box-shadow: 0 2px 15px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--primary); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 65px; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); flex-shrink: 0; }
+        .logo-icon { width: 42px; height: 42px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .logo-text .brand-name { font-weight: 800; font-size: 1.1rem; display: block; line-height: 1.1; }
+        .logo-text .brand-name span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo-text .brand-tagline { font-size: 0.65rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .header-nav { display: flex; gap: 4px; align-items: center; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; padding: 8px 14px; border-radius: 8px; white-space: nowrap; font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(37, 99, 235, 0.08); }
+        .header-actions { display: flex; gap: 6px; align-items: center; }
+        .theme-toggle, .lang-toggle { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all 0.3s; }
+        .theme-toggle:hover, .lang-toggle:hover { background: var(--gradient); color: white; border-color: transparent; }
+        .menu-toggle { display: none; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; align-items: center; justify-content: center; font-size: 1rem; }
+        .mobile-menu { display: none; background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 10px 20px; flex-direction: column; gap: 4px; }
+        .mobile-menu.active { display: flex; }
+        
+        /* পেজ হেডার */
+        .page-header { background: var(--gradient); padding: 40px 20px; text-align: center; }
+        .page-title { color: white; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; font-family: 'Noto Sans Bengali', sans-serif; }
+        .page-subtitle { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-top: 5px; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* ফিল্টার বার */
+        .filter-bar { background: var(--card); padding: 15px 20px; box-shadow: var(--shadow); position: sticky; top: 65px; z-index: 100; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: center; }
+        .filter-btn { padding: 8px 16px; border: 2px solid var(--border); border-radius: 50px; background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; white-space: nowrap; }
+        .filter-btn:hover, .filter-btn.active { background: var(--gradient); color: white; border-color: transparent; }
+        
+        /* মেইন কন্টেন্ট */
+        .main-content { flex: 1; max-width: 1200px; margin: 0 auto; padding: 30px 20px; width: 100%; }
+        
+        /* সার্চ বার */
+        .search-bar { max-width: 600px; margin: 0 auto 30px; display: flex; gap: 10px; }
+        .search-input { flex: 1; padding: 12px 20px; border: 2px solid var(--border); border-radius: 50px; font-size: 0.9rem; outline: none; font-family: 'Noto Sans Bengali', sans-serif; background: var(--card); color: var(--text); transition: all 0.3s; }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .search-btn { padding: 12px 24px; background: var(--gradient); color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; white-space: nowrap; }
+        .search-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        
+        /* টুলস গ্রিড */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .tool-card { background: var(--card); border-radius: 15px; padding: 25px; box-shadow: var(--shadow); transition: all 0.3s; text-decoration: none; color: var(--text); border: 2px solid transparent; position: relative; overflow: hidden; display: block; }
+        .tool-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient); transform: scaleX(0); transition: transform 0.3s; }
+        .tool-card:hover::before { transform: scaleX(1); }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+        .tool-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .tool-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+        .tool-description { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .tool-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
+        .tool-rating { color: var(--accent); font-weight: 700; }
+        .tool-usage { background: var(--bg-input); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; }
+        
+        /* পেজিনেশন */
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 30px; flex-wrap: wrap; }
+        .page-btn { width: 40px; height: 40px; border: 2px solid var(--border); border-radius: 10px; background: var(--card); color: var(--text); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .page-btn:hover, .page-btn.active { background: var(--gradient); color: white; border-color: transparent; }
+        
+        /* লোডিং */
+        .loading { text-align: center; padding: 40px; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; gap: 10px; grid-column: 1 / -1; font-family: 'Noto Sans Bengali', sans-serif; }
+        .spinner { width: 20px; height: 20px; border: 3px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .no-data { text-align: center; padding: 40px; color: var(--text-secondary); grid-column: 1 / -1; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* অ্যাড */
+        .ad-container { max-width: 1200px; margin: 20px auto; padding: 15px; text-align: center; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); min-height: 80px; }
+        
+        /* ফুটার */
+        .site-footer { background: var(--footer-bg); border-top: 1px solid var(--border); padding: 40px 20px 20px; }
+        .footer-container { max-width: 1100px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 25px; }
+        .footer-column h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text); padding-bottom: 6px; border-bottom: 2px solid var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 6px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links a:hover { color: var(--primary); padding-left: 4px; }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 15px; text-align: center; }
+        .copyright-text { font-size: 0.75rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* রেসপনসিভ */
+        @media (max-width: 768px) { .header-nav { display: none; } .menu-toggle { display: flex; } .filter-bar { top: 55px; } .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        @media (max-width: 480px) { .tools-grid { grid-template-columns: 1fr; } .search-bar { flex-direction: column; } .search-btn { width: 100%; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a href="/" class="logo"><div class="logo-icon"><i class="fas fa-tools"></i></div><div class="logo-text"><span class="brand-name">Toolkit <span>Pro</span></span><span class="brand-tagline">ফ্রি অনলাইন টুলস</span></div></a>
+            <nav class="header-nav">
+                <a href="/" class="nav-link">হোম</a>
+                <a href="/tools.html" class="nav-link active">সব টুলস</a>
+                <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+                <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+                <a href="/contact.html" class="nav-link">যোগাযোগ</a>
+            </nav>
+            <div class="header-actions">
+                <button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">EN</button>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/" class="nav-link">হোম</a>
+            <a href="/tools.html" class="nav-link active">সব টুলস</a>
+            <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+            <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+            <a href="/contact.html" class="nav-link">যোগাযোগ</a>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1 class="page-title">🛠️ সব টুলস</h1>
+        <p class="page-subtitle">৫০০+ ফ্রি টুলস ব্রাউজ করুন</p>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" data-category="all">সব</button>
+        <button class="filter-btn" data-category="text-tools">📝 Text</button>
+        <button class="filter-btn" data-category="image-tools">🖼️ Image</button>
+        <button class="filter-btn" data-category="developer-tools">💻 Developer</button>
+        <button class="filter-btn" data-category="data-tools">📊 Data</button>
+        <button class="filter-btn" data-category="security-tools">🔐 Security</button>
+        <button class="filter-btn" data-category="multimedia-tools">🎥 Media</button>
+        <button class="filter-btn" data-category="seo-tools">🌐 SEO</button>
+        <button class="filter-btn" data-category="converter-tools">📱 Converter</button>
+        <button class="filter-btn" data-category="calculator-tools">🧮 Calculator</button>
+        <button class="filter-btn" data-category="utility-tools">⚡ Utility</button>
+    </div>
+
+    <div class="main-content">
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="টুলস খুঁজুন..." autocomplete="off">
+            <button class="search-btn" onclick="handleSearch()"><i class="fas fa-search"></i> খুঁজুন</button>
+        </div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="tools-grid" id="toolsGrid">
+            <div class="loading"><span class="spinner"></span> লোড হচ্ছে...</div>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="4567890123" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>জনপ্রিয় টুলস</h4>
+                    <ul class="footer-links"><li><a href="/tool.html?slug=word-counter">Word Counter</a></li><li><a href="/tool.html?slug=password-generator">Password Generator</a></li><li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>কুইক লিংক</h4>
+                    <ul class="footer-links"><li><a href="/">হোম</a></li><li><a href="/categories.html">ক্যাটাগরি</a></li><li><a href="/about.html">আমাদের সম্পর্কে</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>আইনি</h4>
+                    <ul class="footer-links"><li><a href="/privacy.html">গোপনীয়তা নীতি</a></li><li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>গুরুত্বপূর্ণ</h4>
+                    <ul class="footer-links"><li><a href="/sitemap.xml">সাইটম্যাপ</a></li><li><a href="/api/v1/stats">স্ট্যাটস</a></li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = window.location.origin + '/api/v1';
+        let currentCategory = 'all';
+        let currentPage = 1;
+        let currentSearch = '';
+        let totalPages = 1;
+
+        function toggleTheme() { const current = document.body.getAttribute('data-theme'); const newTheme = current === 'dark' ? 'light' : 'dark'; document.body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', newTheme); }
+        function toggleLanguage() { if (currentLang === 'bn') { currentLang = 'en'; document.getElementById('langBtn').textContent = 'বাং'; } else { currentLang = 'bn'; document.getElementById('langBtn').textContent = 'EN'; } }
+        let currentLang = 'bn';
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+
+        // URL থেকে প্যারামিটার পড়ুন
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlCategory = urlParams.get('category');
+        const urlSearch = urlParams.get('search');
+        if (urlCategory) currentCategory = urlCategory;
+        if (urlSearch) { currentSearch = urlSearch; document.getElementById('searchInput').value = urlSearch; }
+
+        // ফিল্টার বাটন
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                currentPage = 1;
+                loadTools();
+            });
+        });
+
+        function handleSearch() { const query = document.getElementById('searchInput').value.trim(); currentSearch = query; currentPage = 1; loadTools(); }
+
+        async function loadTools() {
+            const container = document.getElementById('toolsGrid');
+            container.innerHTML = '<div class="loading"><span class="spinner"></span> লোড হচ্ছে...</div>';
+            
+            let endpoint = '/tools?page=' + currentPage + '&limit=20';
+            if (currentCategory !== 'all') endpoint += '&category=' + currentCategory;
+            if (currentSearch) endpoint += '&search=' + encodeURIComponent(currentSearch);
+            
+            try {
+                const response = await fetch(API_BASE + endpoint);
+                const data = await response.json();
+                
+                if (data && data.success) {
+                    const tools = data.data || [];
+                    const pagination = data.pagination || {};
+                    totalPages = pagination.totalPages || 1;
+                    
+                    if (tools.length > 0) {
+                        container.innerHTML = tools.map(createToolCard).join('');
+                        renderPagination();
+                    } else {
+                        container.innerHTML = '<div class="no-data">কোনো টুল পাওয়া যায়নি</div>';
+                        document.getElementById('pagination').innerHTML = '';
+                    }
+                } else {
+                    container.innerHTML = '<div class="no-data">ডেটা লোড করা যায়নি</div>';
+                }
+            } catch (error) {
+                container.innerHTML = '<div class="no-data">এরর: ' + error.message + '</div>';
+            }
+        }
+
+        function createToolCard(tool) {
+            return '<a href="/tool.html?slug=' + tool.slug + '" class="tool-card"><span class="tool-icon">' + (tool.icon || '🔧') + '</span><div class="tool-name">' + tool.name + '</div><p class="tool-description">' + (tool.description || '') + '</p><div class="tool-meta"><span class="tool-rating">⭐ ' + (tool.rating || '0.0') + '</span><span class="tool-usage">' + (tool.usage_count || 0) + ' uses</span></div></a>';
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            let html = '';
+            
+            if (currentPage > 1) {
+                html += '<button class="page-btn" onclick="goToPage(' + (currentPage - 1) + ')">←</button>';
+            }
+            
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage || i === currentPage - 1 || i === currentPage + 1 || i === 1 || i === totalPages) {
+                    html += '<button class="page-btn ' + (i === currentPage ? 'active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>';
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += '<span style="color:var(--text-secondary)">...</span>';
+                }
+            }
+            
+            if (currentPage < totalPages) {
+                html += '<button class="page-btn" onclick="goToPage(' + (currentPage + 1) + ')">→</button>';
+            }
+            
+            pagination.innerHTML = html;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            loadTools();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('themeIcon').className = 'fas fa-sun'; }
+            
+            // অ্যাক্টিভ ফিল্টার সেট করুন
+            if (currentCategory !== 'all') {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    if (btn.dataset.category === currentCategory) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+            
+            loadTools();
+            
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSearch(); });
+        });
+    </script>
+</body>
+</html>
