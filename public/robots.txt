@@ -1,0 +1,92 @@
+# ============================================
+# Toolkit Pro - Robots.txt
+# ============================================
+# সার্চ ইঞ্জিন ক্রলার নির্দেশিকা
+# ============================================
+
+# সব ক্রলারকে অনুমতি দিন
+User-agent: *
+Allow: /
+
+# API এন্ডপয়েন্ট ক্রল করবেন না
+Disallow: /api/
+Disallow: /api/v1/
+
+# অ্যাডমিন পেজ ক্রল করবেন না
+Disallow: /admin/
+Disallow: /private/
+Disallow: /internal/
+
+# টেম্পোরারি ফাইল ক্রল করবেন না
+Disallow: /temp/
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /logs/
+
+# নির্দিষ্ট ফাইল ক্রল করবেন না
+Disallow: /server.js
+Disallow: /database.js
+Disallow: /package.json
+Disallow: /render.yaml
+Disallow: /Dockerfile
+Disallow: /.env
+
+# ক্রল-ডিলে (পলিট ক্রলিং)
+Crawl-delay: 1
+
+# সাইটম্যাপ
+Sitemap: https://toolkit-pro-1.onrender.com/sitemap.xml
+
+# ============================================
+# নির্দিষ্ট ক্রলারদের জন্য নিয়ম
+# ============================================
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+# ============================================
+# ব্লক করা ক্রলার
+# ============================================
+
+# ক্ষতিকর বট
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ============================================
+# নোট
+# ============================================
+# 1. /api/ ক্রল না করার কারণ - শুধু JSON ডেটা
+# 2. Crawl-delay - সার্ভার লোড কমাতে
+# 3. সাইটম্যাপ - সার্চ ইঞ্জিনকে সব পেজ জানাতে
+# ============================================
