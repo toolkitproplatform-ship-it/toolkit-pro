@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>গোপনীয়তা নীতি - Toolkit Pro</title>
+    <meta name="description" content="Toolkit Pro-এর গোপনীয়তা নীতি। আমরা কীভাবে আপনার ডেটা সুরক্ষিত রাখি তা জানুন।">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="canonical" href="https://toolkit-pro-1.onrender.com/privacy.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --secondary: #7c3aed; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; --header-bg: #ffffff; --footer-bg: #ffffff; }
+        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-secondary: #94a3b8; --border: #334155; --shadow: 0 2px 10px rgba(0,0,0,0.3); --shadow-lg: 0 10px 40px rgba(0,0,0,0.5); --header-bg: #1e293b; --footer-bg: #1e293b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
+        
+        .site-header { background: var(--header-bg); box-shadow: 0 2px 15px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--primary); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 65px; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); flex-shrink: 0; }
+        .logo-icon { width: 42px; height: 42px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; }
+        .logo-text .brand-name { font-weight: 800; font-size: 1.1rem; display: block; line-height: 1.1; }
+        .logo-text .brand-name span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo-text .brand-tagline { font-size: 0.65rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .header-nav { display: flex; gap: 4px; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; font-family: 'Noto Sans Bengali', sans-serif; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(37, 99, 235, 0.08); }
+        .theme-toggle, .lang-toggle { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; }
+        .theme-toggle:hover, .lang-toggle:hover { background: var(--gradient); color: white; border-color: transparent; }
+        .menu-toggle { display: none; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; align-items: center; justify-content: center; font-size: 1rem; }
+        .mobile-menu { display: none; background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 10px 20px; flex-direction: column; gap: 4px; }
+        .mobile-menu.active { display: flex; }
+        
+        .page-header { background: var(--gradient); padding: 50px 20px; text-align: center; }
+        .page-title { color: white; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        .main-content { flex: 1; max-width: 800px; margin: 0 auto; padding: 40px 20px; width: 100%; }
+        
+        .policy-card { background: var(--card); border-radius: 15px; padding: 30px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .policy-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .policy-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8; font-family: 'Noto Sans Bengali', sans-serif; }
+        .policy-card ul { list-style: none; padding: 0; }
+        .policy-card ul li { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8; margin-bottom: 8px; padding-left: 20px; position: relative; font-family: 'Noto Sans Bengali', sans-serif; }
+        .policy-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 700; }
+        
+        .last-updated { text-align: center; color: var(--text-secondary); font-size: 0.8rem; margin-top: 30px; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        .ad-container { max-width: 800px; margin: 20px auto; padding: 15px; text-align: center; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); min-height: 80px; }
+        
+        .site-footer { background: var(--footer-bg); border-top: 1px solid var(--border); padding: 40px 20px 20px; }
+        .footer-container { max-width: 1100px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 25px; }
+        .footer-column h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text); padding-bottom: 6px; border-bottom: 2px solid var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 6px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 15px; text-align: center; }
+        .copyright-text { font-size: 0.75rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        @media (max-width: 768px) { .header-nav { display: none; } .menu-toggle { display: flex; } .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        @media (max-width: 480px) { .policy-card { padding: 20px; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a href="/" class="logo"><div class="logo-icon"><i class="fas fa-tools"></i></div><div class="logo-text"><span class="brand-name">Toolkit <span>Pro</span></span><span class="brand-tagline">ফ্রি অনলাইন টুলস</span></div></a>
+            <nav class="header-nav">
+                <a href="/" class="nav-link">হোম</a>
+                <a href="/tools.html" class="nav-link">সব টুলস</a>
+                <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+                <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+                <a href="/contact.html" class="nav-link">যোগাযোগ</a>
+            </nav>
+            <div class="header-actions">
+                <button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">EN</button>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/" class="nav-link">হোম</a>
+            <a href="/tools.html" class="nav-link">সব টুলস</a>
+            <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+            <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+            <a href="/contact.html" class="nav-link">যোগাযোগ</a>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1 class="page-title">🔒 গোপনীয়তা নীতি</h1>
+    </div>
+
+    <div class="main-content">
+        <div class="policy-card">
+            <h2>১. ভূমিকা</h2>
+            <p>Toolkit Pro-এ আপনাকে স্বাগতম। আমরা আপনার গোপনীয়তাকে গুরুত্ব দিই এবং আপনার ব্যক্তিগত তথ্য সুরক্ষিত রাখতে প্রতিশ্রুতিবদ্ধ। এই নীতিতে বর্ণনা করা হয়েছে আমরা কীভাবে আপনার তথ্য সংগ্রহ, ব্যবহার এবং সুরক্ষিত করি।</p>
+        </div>
+
+        <div class="policy-card">
+            <h2>২. আমরা কী তথ্য সংগ্রহ করি</h2>
+            <ul>
+                <li>ব্যবহারের ডেটা (কোন টুলস ব্যবহার করছেন)</li>
+                <li>ডিভাইস তথ্য (ব্রাউজার, অপারেটিং সিস্টেম)</li>
+                <li>IP অ্যাড্রেস (অস্থায়ীভাবে)</li>
+                <li>কুকি ডেটা</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h2>৩. আমরা কী তথ্য সংগ্রহ করি না</h2>
+            <ul>
+                <li>আপনার টুলে দেওয়া কনটেন্ট</li>
+                <li>পাসওয়ার্ড বা সংবেদনশীল ডেটা</li>
+                <li>ব্যক্তিগত পরিচয় তথ্য</li>
+                <li>অবস্থান ডেটা</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h2>৪. কুকি ব্যবহার</h2>
+            <p>আমরা নিম্নলিখিত উদ্দেশ্যে কুকি ব্যবহার করি:</p>
+            <ul>
+                <li>থিম পছন্দ সংরক্ষণ</li>
+                <li>ভাষা পছন্দ</li>
+                <li>ব্যবহারের পরিসংখ্যান</li>
+                <li>Google AdSense বিজ্ঞাপন</li>
+            </ul>
+        </div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="policy-card">
+            <h2>৫. Google AdSense</h2>
+            <p>আমাদের ওয়েবসাইটে Google AdSense বিজ্ঞাপন দেখানো হয়। Google কুকি ব্যবহার করে বিজ্ঞাপন ব্যক্তিগতকৃত করতে পারে। Google-এর গোপনীয়তা নীতি সম্পর্কে আরও জানতে <a href="https://policies.google.com/privacy" style="color:var(--primary)">এখানে ক্লিক করুন</a>।</p>
+        </div>
+
+        <div class="policy-card">
+            <h2>৬. ডেটা সুরক্ষা</h2>
+            <p>আমরা আপনার ডেটা সুরক্ষিত রাখতে নিম্নলিখিত ব্যবস্থা গ্রহণ করি:</p>
+            <ul>
+                <li>SSL এনক্রিপশন</li>
+                <li>নিয়মিত নিরাপত্তা আপডেট</li>
+                <li>ডেটা মিনিমাইজেশন</li>
+                <li>অ্যাক্সেস নিয়ন্ত্রণ</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h2>৭. তৃতীয় পক্ষের লিংক</h2>
+            <p>আমাদের ওয়েবসাইটে তৃতীয় পক্ষের লিংক থাকতে পারে। আমরা তাদের গোপনীয়তা নীতির জন্য দায়ী নই।</p>
+        </div>
+
+        <div class="policy-card">
+            <h2>৮. যোগাযোগ</h2>
+            <p>গোপনীয়তা নীতি সম্পর্কে প্রশ্ন থাকলে আমাদের সাথে যোগাযোগ করুন: support@toolkitpro.com</p>
+        </div>
+
+        <p class="last-updated">সর্বশেষ আপডেট: ৯ সেপ্টেম্বর ২০২৬</p>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>জনপ্রিয় টুলস</h4>
+                    <ul class="footer-links"><li><a href="/tool.html?slug=word-counter">Word Counter</a></li><li><a href="/tool.html?slug=password-generator">Password Generator</a></li><li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>কুইক লিংক</h4>
+                    <ul class="footer-links"><li><a href="/">হোম</a></li><li><a href="/tools.html">সব টুলস</a></li><li><a href="/categories.html">ক্যাটাগরি</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>আইনি</h4>
+                    <ul class="footer-links"><li><a href="/privacy.html">গোপনীয়তা নীতি</a></li><li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>গুরুত্বপূর্ণ</h4>
+                    <ul class="footer-links"><li><a href="/sitemap.xml">সাইটম্যাপ</a></li><li><a href="/api/v1/stats">স্ট্যাটস</a></li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentLang = 'bn';
+        function toggleTheme() { const current = document.body.getAttribute('data-theme'); const newTheme = current === 'dark' ? 'light' : 'dark'; document.body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', newTheme); }
+        function toggleLanguage() { if (currentLang === 'bn') { currentLang = 'en'; document.getElementById('langBtn').textContent = 'বাং'; } else { currentLang = 'bn'; document.getElementById('langBtn').textContent = 'EN'; } }
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+        document.addEventListener('DOMContentLoaded', () => { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('themeIcon').className = 'fas fa-sun'; } });
+    </script>
+</body>
+</html>
