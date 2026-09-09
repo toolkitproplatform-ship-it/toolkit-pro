@@ -3,109 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সব টুলস - Toolkit Pro | ৫০০+ ফ্রি অনলাইন টুলস</title>
-    <meta name="description" content="Toolkit Pro-তে সব ফ্রি অনলাইন টুলস ব্রাউজ করুন। Text, Image, Developer, SEO, Security সহ ১০+ ক্যাটাগরিতে ৫০০+ টুলস।">
-    <meta name="keywords" content="all tools, free tools, online tools, text tools, image tools, developer tools">
+    <title>সব টুলস - Toolkit Pro | ৬০০+ ফ্রি অনলাইন টুলস</title>
+    <meta name="description" content="Toolkit Pro-তে ৬০০+ ফ্রি অনলাইন টুলস ব্রাউজ করুন। ২০+ ক্যাটাগরিতে Text, Image, Developer, SEO, Calculator টুলস।">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#2563eb">
-    <meta property="og:title" content="সব টুলস - Toolkit Pro">
-    <meta property="og:description" content="৫০০+ ফ্রি অনলাইন টুলস ব্রাউজ করুন।">
-    <meta property="og:type" content="website">
-    <link rel="canonical" href="https://toolkit-pro-1.onrender.com/tools.html">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --secondary: #7c3aed; --accent: #f59e0b; --success: #10b981; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; --bg-input: #f1f5f9; --header-bg: #ffffff; --footer-bg: #ffffff; }
-        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-secondary: #94a3b8; --border: #334155; --shadow: 0 2px 10px rgba(0,0,0,0.3); --shadow-lg: 0 10px 40px rgba(0,0,0,0.5); --bg-input: #334155; --header-bg: #1e293b; --footer-bg: #1e293b; }
+        :root { --primary: #2563eb; --secondary: #7c3aed; --accent: #f59e0b; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
+        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-secondary: #94a3b8; --border: #334155; --shadow: 0 2px 10px rgba(0,0,0,0.3); --shadow-lg: 0 10px 40px rgba(0,0,0,0.5); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: all 0.3s; }
         
-        /* হেডার */
-        .site-header { background: var(--header-bg); box-shadow: 0 2px 15px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--primary); }
-        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 65px; gap: 10px; }
-        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); flex-shrink: 0; }
-        .logo-icon { width: 42px; height: 42px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-        .logo-text .brand-name { font-weight: 800; font-size: 1.1rem; display: block; line-height: 1.1; }
-        .logo-text .brand-name span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .logo-text .brand-tagline { font-size: 0.65rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
-        .header-nav { display: flex; gap: 4px; align-items: center; }
-        .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; padding: 8px 14px; border-radius: 8px; white-space: nowrap; font-family: 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
+        /* ============ HEADER ============ */
+        .header { background: var(--card); box-shadow: 0 2px 20px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--primary); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 65px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+        .logo-icon { width: 40px; height: 40px; background: var(--gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; }
+        .logo-text { font-weight: 800; font-size: 1.1rem; }
+        .logo-text span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-nav { display: flex; gap: 5px; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 8px 14px; border-radius: 8px; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
         .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(37, 99, 235, 0.08); }
-        .header-actions { display: flex; gap: 6px; align-items: center; }
-        .theme-toggle, .lang-toggle { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all 0.3s; }
-        .theme-toggle:hover, .lang-toggle:hover { background: var(--gradient); color: white; border-color: transparent; }
-        .menu-toggle { display: none; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; align-items: center; justify-content: center; font-size: 1rem; }
-        .mobile-menu { display: none; background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 10px 20px; flex-direction: column; gap: 4px; }
-        .mobile-menu.active { display: flex; }
+        .header-actions { display: flex; gap: 8px; }
+        .icon-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .icon-btn:hover { background: var(--gradient); color: white; border-color: transparent; }
+        .menu-btn { display: none; }
         
-        /* পেজ হেডার */
-        .page-header { background: var(--gradient); padding: 40px 20px; text-align: center; }
-        .page-title { color: white; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; font-family: 'Noto Sans Bengali', sans-serif; }
+        /* ============ PAGE HEADER ============ */
+        .page-hero { background: var(--gradient); padding: 40px 20px; text-align: center; position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); }
+        .page-hero-content { position: relative; z-index: 1; }
+        .page-title { color: white; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; font-family: 'Noto Sans Bengali', sans-serif; }
         .page-subtitle { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-top: 5px; font-family: 'Noto Sans Bengali', sans-serif; }
         
-        /* ফিল্টার বার */
-        .filter-bar { background: var(--card); padding: 15px 20px; box-shadow: var(--shadow); position: sticky; top: 65px; z-index: 100; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: center; }
-        .filter-btn { padding: 8px 16px; border: 2px solid var(--border); border-radius: 50px; background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; white-space: nowrap; }
-        .filter-btn:hover, .filter-btn.active { background: var(--gradient); color: white; border-color: transparent; }
+        /* ============ SEARCH ============ */
+        .search-section { max-width: 600px; margin: -25px auto 0; padding: 0 20px; position: relative; z-index: 10; }
+        .search-box { display: flex; gap: 10px; background: var(--card); padding: 8px; border-radius: 50px; box-shadow: var(--shadow-lg); }
+        .search-box input { flex: 1; border: none; outline: none; font-size: 0.95rem; padding: 10px 15px; font-family: var(--font); background: transparent; color: var(--text); }
+        .search-box button { padding: 10px 25px; background: var(--gradient); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; font-family: 'Noto Sans Bengali', sans-serif; transition: all 0.3s; }
+        .search-box button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(37,99,235,0.3); }
         
-        /* মেইন কন্টেন্ট */
+        /* ============ FILTER BAR ============ */
+        .filter-section { background: var(--card); padding: 15px 20px; box-shadow: var(--shadow); position: sticky; top: 65px; z-index: 100; border-bottom: 1px solid var(--border); }
+        .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 5px 0; scrollbar-width: none; -ms-overflow-style: none; }
+        .filter-scroll::-webkit-scrollbar { display: none; }
+        .filter-chip { padding: 8px 16px; border: 2px solid var(--border); border-radius: 50px; background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.3s; white-space: nowrap; font-family: 'Noto Sans Bengali', sans-serif; }
+        .filter-chip:hover { border-color: var(--primary); color: var(--primary); }
+        .filter-chip.active { background: var(--gradient); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+        
+        /* ============ MAIN CONTENT ============ */
         .main-content { flex: 1; max-width: 1200px; margin: 0 auto; padding: 30px 20px; width: 100%; }
         
-        /* সার্চ বার */
-        .search-bar { max-width: 600px; margin: 0 auto 30px; display: flex; gap: 10px; }
-        .search-input { flex: 1; padding: 12px 20px; border: 2px solid var(--border); border-radius: 50px; font-size: 0.9rem; outline: none; font-family: 'Noto Sans Bengali', sans-serif; background: var(--card); color: var(--text); transition: all 0.3s; }
-        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .search-btn { padding: 12px 24px; background: var(--gradient); color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 0.9rem; font-weight: 700; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; white-space: nowrap; }
-        .search-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        /* Stats Row */
+        .stats-row { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        .stat-badge { background: var(--card); padding: 10px 20px; border-radius: 50px; box-shadow: var(--shadow); font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .stat-badge i { color: var(--primary); }
         
-        /* টুলস গ্রিড */
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .tool-card { background: var(--card); border-radius: 15px; padding: 25px; box-shadow: var(--shadow); transition: all 0.3s; text-decoration: none; color: var(--text); border: 2px solid transparent; position: relative; overflow: hidden; display: block; }
-        .tool-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient); transform: scaleX(0); transition: transform 0.3s; }
+        /* Tools Grid */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        
+        /* Tool Card - Premium Design */
+        .tool-card { background: var(--card); border-radius: 16px; padding: 25px; box-shadow: var(--shadow); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none; color: var(--text); border: 2px solid transparent; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .tool-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+        .tool-card::after { content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s; }
         .tool-card:hover::before { transform: scaleX(1); }
-        .tool-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
-        .tool-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
-        .tool-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-        .tool-description { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .tool-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
-        .tool-rating { color: var(--accent); font-weight: 700; }
-        .tool-usage { background: var(--bg-input); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; }
+        .tool-card:hover::after { opacity: 1; }
+        .tool-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
         
-        /* পেজিনেশন */
-        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 30px; flex-wrap: wrap; }
-        .page-btn { width: 40px; height: 40px; border: 2px solid var(--border); border-radius: 10px; background: var(--card); color: var(--text); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
-        .page-btn:hover, .page-btn.active { background: var(--gradient); color: white; border-color: transparent; }
+        .tool-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 15px; }
+        .tool-icon { font-size: 2.2rem; display: block; }
+        .tool-badge { font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+        .badge-popular { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+        .badge-new { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .badge-featured { background: rgba(37, 99, 235, 0.1); color: #2563eb; }
         
-        /* লোডিং */
-        .loading { text-align: center; padding: 40px; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; gap: 10px; grid-column: 1 / -1; font-family: 'Noto Sans Bengali', sans-serif; }
-        .spinner { width: 20px; height: 20px; border: 3px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .tool-card-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+        .tool-card-desc { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+        
+        .tool-card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid var(--border); }
+        .tool-rating { display: flex; align-items: center; gap: 5px; font-size: 0.8rem; }
+        .tool-rating .stars { color: #f59e0b; }
+        .tool-usage { background: var(--bg); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--text-secondary); }
+        
+        /* Pagination */
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 40px; flex-wrap: wrap; }
+        .page-btn { min-width: 40px; height: 40px; padding: 0 10px; border: 2px solid var(--border); border-radius: 10px; background: var(--card); color: var(--text); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .page-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .page-btn.active { background: var(--gradient); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Loading */
+        .loading-container { text-align: center; padding: 60px; grid-column: 1 / -1; }
+        .spinner { width: 40px; height: 40px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 15px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .no-data { text-align: center; padding: 40px; color: var(--text-secondary); grid-column: 1 / -1; font-family: 'Noto Sans Bengali', sans-serif; }
+        .loading-text { color: var(--text-secondary); font-size: 0.9rem; }
         
-        /* অ্যাড */
-        .ad-container { max-width: 1200px; margin: 20px auto; padding: 15px; text-align: center; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); min-height: 80px; }
+        .no-results { text-align: center; padding: 60px; grid-column: 1 / -1; }
+        .no-results-icon { font-size: 3rem; margin-bottom: 15px; }
+        .no-results-text { color: var(--text-secondary); font-size: 1rem; }
         
-        /* ফুটার */
-        .site-footer { background: var(--footer-bg); border-top: 1px solid var(--border); padding: 40px 20px 20px; }
-        .footer-container { max-width: 1100px; margin: 0 auto; }
-        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 25px; }
-        .footer-column h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text); padding-bottom: 6px; border-bottom: 2px solid var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
-        .footer-links { list-style: none; padding: 0; }
-        .footer-links li { margin-bottom: 6px; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
-        .footer-links a:hover { color: var(--primary); padding-left: 4px; }
+        /* ============ FOOTER ============ */
+        .footer { background: var(--card); border-top: 1px solid var(--border); padding: 40px 20px 20px; margin-top: auto; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin-bottom: 25px; }
+        .footer-col h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; color: var(--text); font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 8px; }
+        .footer-col ul a { color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-col ul a:hover { color: var(--primary); }
         .footer-bottom { border-top: 1px solid var(--border); padding-top: 15px; text-align: center; }
-        .copyright-text { font-size: 0.75rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-bottom p { font-size: 0.75rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
         
-        /* রেসপনসিভ */
-        @media (max-width: 768px) { .header-nav { display: none; } .menu-toggle { display: flex; } .filter-bar { top: 55px; } .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
-        @media (max-width: 480px) { .tools-grid { grid-template-columns: 1fr; } .search-bar { flex-direction: column; } .search-btn { width: 100%; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+        /* Mobile Menu */
+        .mobile-menu { display: none; background: var(--card); border-bottom: 1px solid var(--border); padding: 10px 20px; flex-direction: column; gap: 4px; }
+        .mobile-menu.active { display: flex; }
+        
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .header-nav { display: none; }
+            .menu-btn { display: flex; }
+            .filter-section { top: 55px; }
+            .tools-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        }
+        @media (max-width: 480px) {
+            .header-inner { padding: 0 12px; height: 55px; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .search-box { flex-direction: column; border-radius: 15px; }
+            .search-box button { width: 100%; border-radius: 10px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+        }
     </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-container">
-            <a href="/" class="logo"><div class="logo-icon"><i class="fas fa-tools"></i></div><div class="logo-text"><span class="brand-name">Toolkit <span>Pro</span></span><span class="brand-tagline">ফ্রি অনলাইন টুলস</span></div></a>
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon"><i class="fas fa-tools"></i></div>
+                <span class="logo-text">Toolkit <span>Pro</span></span>
+            </a>
             <nav class="header-nav">
                 <a href="/" class="nav-link">হোম</a>
                 <a href="/tools.html" class="nav-link active">সব টুলস</a>
@@ -114,9 +153,8 @@
                 <a href="/contact.html" class="nav-link">যোগাযোগ</a>
             </nav>
             <div class="header-actions">
-                <button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">EN</button>
-                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
-                <button class="menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+                <button class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+                <button class="icon-btn menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
             </div>
         </div>
         <div class="mobile-menu" id="mobileMenu">
@@ -128,70 +166,105 @@
         </div>
     </header>
 
-    <div class="page-header">
-        <h1 class="page-title">🛠️ সব টুলস</h1>
-        <p class="page-subtitle">৫০০+ ফ্রি টুলস ব্রাউজ করুন</p>
-    </div>
-
-    <div class="filter-bar" id="filterBar">
-        <button class="filter-btn active" data-category="all">সব</button>
-        <button class="filter-btn" data-category="text-tools">📝 Text</button>
-        <button class="filter-btn" data-category="image-tools">🖼️ Image</button>
-        <button class="filter-btn" data-category="developer-tools">💻 Developer</button>
-        <button class="filter-btn" data-category="data-tools">📊 Data</button>
-        <button class="filter-btn" data-category="security-tools">🔐 Security</button>
-        <button class="filter-btn" data-category="multimedia-tools">🎥 Media</button>
-        <button class="filter-btn" data-category="seo-tools">🌐 SEO</button>
-        <button class="filter-btn" data-category="converter-tools">📱 Converter</button>
-        <button class="filter-btn" data-category="calculator-tools">🧮 Calculator</button>
-        <button class="filter-btn" data-category="utility-tools">⚡ Utility</button>
-    </div>
-
-    <div class="main-content">
-        <div class="search-bar">
-            <input type="text" class="search-input" id="searchInput" placeholder="টুলস খুঁজুন..." autocomplete="off">
-            <button class="search-btn" onclick="handleSearch()"><i class="fas fa-search"></i> খুঁজুন</button>
+    <!-- ============ PAGE HERO ============ -->
+    <div class="page-hero">
+        <div class="page-hero-content">
+            <h1 class="page-title">🛠️ সব টুলস</h1>
+            <p class="page-subtitle">৬০০+ ফ্রি অনলাইন টুলস — ২০+ ক্যাটাগরিতে</p>
         </div>
+    </div>
 
-        <div class="ad-container">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <!-- ============ SEARCH ============ -->
+    <div class="search-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="টুলস খুঁজুন... (যেমন: word counter)" autocomplete="off">
+            <button onclick="handleSearch()"><i class="fas fa-search"></i> খুঁজুন</button>
+        </div>
+    </div>
+
+    <!-- ============ FILTER BAR ============ -->
+    <div class="filter-section">
+        <div class="filter-scroll" id="filterScroll">
+            <button class="filter-chip active" data-category="all">সব টুলস</button>
+            <button class="filter-chip" data-category="text-tools">📝 Text</button>
+            <button class="filter-chip" data-category="image-tools">🖼️ Image</button>
+            <button class="filter-chip" data-category="developer-tools">💻 Developer</button>
+            <button class="filter-chip" data-category="data-tools">📊 Data</button>
+            <button class="filter-chip" data-category="security-tools">🔐 Security</button>
+            <button class="filter-chip" data-category="multimedia-tools">🎥 Media</button>
+            <button class="filter-chip" data-category="seo-tools">🌐 SEO</button>
+            <button class="filter-chip" data-category="converter-tools">📱 Converter</button>
+            <button class="filter-chip" data-category="calculator-tools">🧮 Calculator</button>
+            <button class="filter-chip" data-category="utility-tools">⚡ Utility</button>
+            <button class="filter-chip" data-category="network-tools">🌍 Network</button>
+            <button class="filter-chip" data-category="math-tools">📐 Math</button>
+            <button class="filter-chip" data-category="string-tools">🔤 String</button>
+            <button class="filter-chip" data-category="date-time-tools">📅 Date</button>
+            <button class="filter-chip" data-category="color-tools">🎨 Color</button>
+            <button class="filter-chip" data-category="file-tools">📁 File</button>
+            <button class="filter-chip" data-category="web-tools">🌐 Web</button>
+            <button class="filter-chip" data-category="encoding-tools">🔐 Encoding</button>
+            <button class="filter-chip" data-category="hash-tools">🔢 Hash</button>
+            <button class="filter-chip" data-category="crypto-tools">💰 Crypto</button>
+        </div>
+    </div>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <div class="main-content">
+        <div class="stats-row">
+            <div class="stat-badge"><i class="fas fa-tools"></i> ৬০০+ টুলস</div>
+            <div class="stat-badge"><i class="fas fa-folder"></i> ২০+ ক্যাটাগরি</div>
+            <div class="stat-badge"><i class="fas fa-check-circle"></i> ১০০% ফ্রি</div>
+            <div class="stat-badge"><i class="fas fa-bolt"></i> দ্রুত</div>
         </div>
 
         <div class="tools-grid" id="toolsGrid">
-            <div class="loading"><span class="spinner"></span> লোড হচ্ছে...</div>
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p class="loading-text">টুলস লোড হচ্ছে...</p>
+            </div>
         </div>
 
         <div class="pagination" id="pagination"></div>
-
-        <div class="ad-container">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="4567890123" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
     </div>
 
-    <footer class="site-footer">
-        <div class="footer-container">
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="footer-inner">
             <div class="footer-grid">
-                <div class="footer-column">
+                <div class="footer-col">
                     <h4>জনপ্রিয় টুলস</h4>
-                    <ul class="footer-links"><li><a href="/tool.html?slug=word-counter">Word Counter</a></li><li><a href="/tool.html?slug=password-generator">Password Generator</a></li><li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li></ul>
+                    <ul>
+                        <li><a href="/tool.html?slug=word-counter">Word Counter</a></li>
+                        <li><a href="/tool.html?slug=password-generator">Password Generator</a></li>
+                        <li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li>
+                    </ul>
                 </div>
-                <div class="footer-column">
+                <div class="footer-col">
                     <h4>কুইক লিংক</h4>
-                    <ul class="footer-links"><li><a href="/">হোম</a></li><li><a href="/categories.html">ক্যাটাগরি</a></li><li><a href="/about.html">আমাদের সম্পর্কে</a></li></ul>
+                    <ul>
+                        <li><a href="/">হোম</a></li>
+                        <li><a href="/categories.html">ক্যাটাগরি</a></li>
+                        <li><a href="/about.html">আমাদের সম্পর্কে</a></li>
+                    </ul>
                 </div>
-                <div class="footer-column">
+                <div class="footer-col">
                     <h4>আইনি</h4>
-                    <ul class="footer-links"><li><a href="/privacy.html">গোপনীয়তা নীতি</a></li><li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li></ul>
+                    <ul>
+                        <li><a href="/privacy.html">গোপনীয়তা নীতি</a></li>
+                        <li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li>
+                    </ul>
                 </div>
-                <div class="footer-column">
+                <div class="footer-col">
                     <h4>গুরুত্বপূর্ণ</h4>
-                    <ul class="footer-links"><li><a href="/sitemap.xml">সাইটম্যাপ</a></li><li><a href="/api/v1/stats">স্ট্যাটস</a></li></ul>
+                    <ul>
+                        <li><a href="/sitemap.xml">সাইটম্যাপ</a></li>
+                        <li><a href="/api/v1/stats">স্ট্যাটস</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="copyright-text">© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত</p>
+                <p>© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত</p>
             </div>
         </div>
     </footer>
@@ -203,34 +276,46 @@
         let currentSearch = '';
         let totalPages = 1;
 
-        function toggleTheme() { const current = document.body.getAttribute('data-theme'); const newTheme = current === 'dark' ? 'light' : 'dark'; document.body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', newTheme); }
-        function toggleLanguage() { if (currentLang === 'bn') { currentLang = 'en'; document.getElementById('langBtn').textContent = 'বাং'; } else { currentLang = 'bn'; document.getElementById('langBtn').textContent = 'EN'; } }
-        let currentLang = 'bn';
-        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+        function toggleTheme() {
+            const current = document.body.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', newTheme);
+        }
 
-        // URL থেকে প্যারামিটার পড়ুন
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        // URL থেকে প্যারামিটার
         const urlParams = new URLSearchParams(window.location.search);
         const urlCategory = urlParams.get('category');
         const urlSearch = urlParams.get('search');
         if (urlCategory) currentCategory = urlCategory;
         if (urlSearch) { currentSearch = urlSearch; document.getElementById('searchInput').value = urlSearch; }
 
-        // ফিল্টার বাটন
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCategory = btn.dataset.category;
+        // ফিল্টার চিপ ক্লিক
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                currentCategory = chip.dataset.category;
                 currentPage = 1;
                 loadTools();
             });
         });
 
-        function handleSearch() { const query = document.getElementById('searchInput').value.trim(); currentSearch = query; currentPage = 1; loadTools(); }
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            currentSearch = query;
+            currentPage = 1;
+            loadTools();
+        }
 
         async function loadTools() {
             const container = document.getElementById('toolsGrid');
-            container.innerHTML = '<div class="loading"><span class="spinner"></span> লোড হচ্ছে...</div>';
+            container.innerHTML = '<div class="loading-container"><div class="spinner"></div><p class="loading-text">টুলস লোড হচ্ছে...</p></div>';
             
             let endpoint = '/tools?page=' + currentPage + '&limit=20';
             if (currentCategory !== 'all') endpoint += '&category=' + currentCategory;
@@ -249,45 +334,56 @@
                         container.innerHTML = tools.map(createToolCard).join('');
                         renderPagination();
                     } else {
-                        container.innerHTML = '<div class="no-data">কোনো টুল পাওয়া যায়নি</div>';
+                        container.innerHTML = '<div class="no-results"><div class="no-results-icon">🔍</div><p class="no-results-text">কোনো টুল পাওয়া যায়নি</p></div>';
                         document.getElementById('pagination').innerHTML = '';
                     }
-                } else {
-                    container.innerHTML = '<div class="no-data">ডেটা লোড করা যায়নি</div>';
                 }
             } catch (error) {
-                container.innerHTML = '<div class="no-data">এরর: ' + error.message + '</div>';
+                container.innerHTML = '<div class="no-results"><div class="no-results-icon">⚠️</div><p class="no-results-text">এরর: ' + error.message + '</p></div>';
             }
         }
 
         function createToolCard(tool) {
-            return '<a href="/tool.html?slug=' + tool.slug + '" class="tool-card"><span class="tool-icon">' + (tool.icon || '🔧') + '</span><div class="tool-name">' + tool.name + '</div><p class="tool-description">' + (tool.description || '') + '</p><div class="tool-meta"><span class="tool-rating">⭐ ' + (tool.rating || '0.0') + '</span><span class="tool-usage">' + (tool.usage_count || 0) + ' uses</span></div></a>';
+            let badge = '';
+            if (tool.is_featured) badge = '<span class="tool-badge badge-featured">⭐ Featured</span>';
+            else if (tool.is_popular) badge = '<span class="tool-badge badge-popular">🔥 Popular</span>';
+            else if (tool.is_new) badge = '<span class="tool-badge badge-new">✨ New</span>';
+            
+            return '<a href="/tool.html?slug=' + tool.slug + '" class="tool-card">' +
+                '<div class="tool-card-top">' +
+                    '<span class="tool-icon">' + (tool.icon || '🔧') + '</span>' +
+                    badge +
+                '</div>' +
+                '<div class="tool-card-name">' + tool.name + '</div>' +
+                '<p class="tool-card-desc">' + (tool.description || '') + '</p>' +
+                '<div class="tool-card-footer">' +
+                    '<div class="tool-rating"><span class="stars">⭐</span> ' + (tool.rating || '0.0') + '</div>' +
+                    '<span class="tool-usage">' + (tool.usage_count || 0) + ' uses</span>' +
+                '</div>' +
+            '</a>';
         }
 
         function renderPagination() {
             const pagination = document.getElementById('pagination');
             let html = '';
             
-            if (currentPage > 1) {
-                html += '<button class="page-btn" onclick="goToPage(' + (currentPage - 1) + ')">←</button>';
-            }
+            html += '<button class="page-btn" onclick="goToPage(' + (currentPage - 1) + ')" ' + (currentPage <= 1 ? 'disabled' : '') + '>←</button>';
             
             for (let i = 1; i <= totalPages; i++) {
-                if (i === currentPage || i === currentPage - 1 || i === currentPage + 1 || i === 1 || i === totalPages) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
                     html += '<button class="page-btn ' + (i === currentPage ? 'active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>';
                 } else if (i === currentPage - 2 || i === currentPage + 2) {
                     html += '<span style="color:var(--text-secondary)">...</span>';
                 }
             }
             
-            if (currentPage < totalPages) {
-                html += '<button class="page-btn" onclick="goToPage(' + (currentPage + 1) + ')">→</button>';
-            }
+            html += '<button class="page-btn" onclick="goToPage(' + (currentPage + 1) + ')" ' + (currentPage >= totalPages ? 'disabled' : '') + '>→</button>';
             
             pagination.innerHTML = html;
         }
 
         function goToPage(page) {
+            if (page < 1 || page > totalPages) return;
             currentPage = page;
             loadTools();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -295,23 +391,24 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('themeIcon').className = 'fas fa-sun'; }
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('themeIcon').className = 'fas fa-sun';
+            }
             
-            // অ্যাক্টিভ ফিল্টার সেট করুন
             if (currentCategory !== 'all') {
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    if (btn.dataset.category === currentCategory) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
+                document.querySelectorAll('.filter-chip').forEach(chip => {
+                    if (chip.dataset.category === currentCategory) chip.classList.add('active');
+                    else chip.classList.remove('active');
                 });
             }
             
             loadTools();
             
             const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSearch(); });
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleSearch();
+            });
         });
     </script>
 </body>
