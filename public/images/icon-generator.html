@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator - Toolkit Pro</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f8fafc; }
+        .icon-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px; }
+        .icon-box { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        canvas { border: 2px solid #e2e8f0; border-radius: 10px; }
+        .download-btn { display: inline-block; margin-top: 10px; padding: 8px 16px; background: #2563eb; color: white; text-decoration: none; border-radius: 8px; font-size: 0.85rem; }
+        .download-btn:hover { background: #1d4ed8; }
+    </style>
+</head>
+<body>
+    <h1>🛠️ Toolkit Pro - Icon Generator</h1>
+    <p>নিচের আইকনগুলো ডাউনলোড করে images ফোল্ডারে রাখুন</p>
+    
+    <div class="icon-container" id="iconContainer"></div>
+    
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        function generateIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#2563eb');
+            gradient.addColorStop(1, '#7c3aed');
+            
+            // Rounded rectangle
+            const radius = size * 0.2;
+            ctx.beginPath();
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Tool emoji
+            ctx.font = `${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🛠️', size / 2, size / 2);
+            
+            return canvas;
+        }
+        
+        const container = document.getElementById('iconContainer');
+        
+        sizes.forEach(size => {
+            const canvas = generateIcon(size);
+            const box = document.createElement('div');
+            box.className = 'icon-box';
+            
+            box.innerHTML = `
+                <h3>${size}x${size}</h3>
+                <canvas width="${size}" height="${size}"></canvas>
+                <br>
+                <a class="download-btn" download="icon-${size}x${size}.png">ডাউনলোড</a>
+            `;
+            
+            const canvasEl = box.querySelector('canvas');
+            const ctx = canvasEl.getContext('2d');
+            ctx.drawImage(canvas, 0, 0);
+            
+            const downloadBtn = box.querySelector('.download-btn');
+            downloadBtn.href = canvasEl.toDataURL('image/png');
+            
+            container.appendChild(box);
+        });
+        
+        // Maskable icon (512x512 with padding)
+        const maskableCanvas = document.createElement('canvas');
+        maskableCanvas.width = 512;
+        maskableCanvas.height = 512;
+        const mctx = maskableCanvas.getContext('2d');
+        
+        const mgradient = mctx.createLinearGradient(0, 0, 512, 512);
+        mgradient.addColorStop(0, '#2563eb');
+        mgradient.addColorStop(1, '#7c3aed');
+        
+        mctx.fillStyle = mgradient;
+        mctx.fillRect(0, 0, 512, 512);
+        
+        mctx.font = '200px Arial';
+        mctx.textAlign = 'center';
+        mctx.textBaseline = 'middle';
+        mctx.fillText('🛠️', 256, 256);
+        
+        const maskableBox = document.createElement('div');
+        maskableBox.className = 'icon-box';
+        maskableBox.innerHTML = `
+            <h3>512x512 (Maskable)</h3>
+            <canvas width="512" height="512"></canvas>
+            <br>
+            <a class="download-btn" download="maskable-icon-512x512.png">ডাউনলোড</a>
+        `;
+        
+        const maskableCanvasEl = maskableBox.querySelector('canvas');
+        const maskableCtx = maskableCanvasEl.getContext('2d');
+        maskableCtx.drawImage(maskableCanvas, 0, 0);
+        maskableBox.querySelector('.download-btn').href = maskableCanvasEl.toDataURL('image/png');
+        
+        container.appendChild(maskableBox);
+    </script>
+</body>
+</html>
