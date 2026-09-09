@@ -22,7 +22,6 @@ docs/
 # লগ
 logs/
 *.log
-npm-debug.log*
 
 # টেস্ট
 coverage/
@@ -55,4 +54,6 @@ temp/
 Dockerfile
 .dockerignore
 docker-compose.yml
-docker-compose.*.yml
+
+# Render.com
+render.yaml
