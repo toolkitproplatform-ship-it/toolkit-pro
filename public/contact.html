@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>যোগাযোগ - Toolkit Pro | আমাদের সাথে যোগাযোগ করুন</title>
+    <meta name="description" content="Toolkit Pro-তে যোগাযোগ করুন। প্রশ্ন, মতামত বা সাজেশন থাকলে আমাদের সাথে যোগাযোগ করুন।">
+    <meta name="keywords" content="contact toolkit pro, contact us, support">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <meta property="og:title" content="যোগাযোগ - Toolkit Pro">
+    <meta property="og:description" content="আমাদের সাথে যোগাযোগ করুন।">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://toolkit-pro-1.onrender.com/contact.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --secondary: #7c3aed; --accent: #f59e0b; --success: #10b981; --danger: #ef4444; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; --bg-input: #f1f5f9; --header-bg: #ffffff; --footer-bg: #ffffff; }
+        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-secondary: #94a3b8; --border: #334155; --shadow: 0 2px 10px rgba(0,0,0,0.3); --shadow-lg: 0 10px 40px rgba(0,0,0,0.5); --bg-input: #334155; --header-bg: #1e293b; --footer-bg: #1e293b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
+        
+        /* হেডার */
+        .site-header { background: var(--header-bg); box-shadow: 0 2px 15px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--primary); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 65px; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); flex-shrink: 0; }
+        .logo-icon { width: 42px; height: 42px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .logo-text .brand-name { font-weight: 800; font-size: 1.1rem; display: block; line-height: 1.1; }
+        .logo-text .brand-name span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo-text .brand-tagline { font-size: 0.65rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .header-nav { display: flex; gap: 4px; align-items: center; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; padding: 8px 14px; border-radius: 8px; white-space: nowrap; font-family: 'Noto Sans Bengali', sans-serif; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(37, 99, 235, 0.08); }
+        .header-actions { display: flex; gap: 6px; align-items: center; }
+        .theme-toggle, .lang-toggle { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all 0.3s; }
+        .theme-toggle:hover, .lang-toggle:hover { background: var(--gradient); color: white; border-color: transparent; }
+        .menu-toggle { display: none; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; align-items: center; justify-content: center; font-size: 1rem; }
+        .mobile-menu { display: none; background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 10px 20px; flex-direction: column; gap: 4px; }
+        .mobile-menu.active { display: flex; }
+        
+        /* পেজ হেডার */
+        .page-header { background: var(--gradient); padding: 50px 20px; text-align: center; }
+        .page-title { color: white; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; font-family: 'Noto Sans Bengali', sans-serif; }
+        .page-subtitle { color: rgba(255,255,255,0.9); font-size: 0.95rem; margin-top: 8px; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* মেইন কন্টেন্ট */
+        .main-content { flex: 1; max-width: 900px; margin: 0 auto; padding: 40px 20px; width: 100%; }
+        
+        /* কন্টাক্ট গ্রিড */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        
+        /* কন্টাক্ট ইনফো */
+        .contact-info { display: flex; flex-direction: column; gap: 15px; }
+        .info-card { background: var(--card); border-radius: 15px; padding: 25px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 15px; transition: all 0.3s; }
+        .info-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .info-icon { width: 50px; height: 50px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; }
+        .info-content h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; font-family: 'Noto Sans Bengali', sans-serif; }
+        .info-content p { color: var(--text-secondary); font-size: 0.85rem; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* কন্টাক্ট ফর্ম */
+        .contact-form { background: var(--card); border-radius: 15px; padding: 30px; box-shadow: var(--shadow-lg); }
+        .form-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; font-family: 'Noto Sans Bengali', sans-serif; }
+        .form-group { margin-bottom: 15px; }
+        .form-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text); font-family: 'Noto Sans Bengali', sans-serif; }
+        .form-input { width: 100%; padding: 12px 15px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.9rem; font-family: 'Noto Sans Bengali', sans-serif; background: var(--bg-input); color: var(--text); outline: none; transition: all 0.3s; }
+        .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); background: var(--card); }
+        .form-textarea { width: 100%; min-height: 120px; padding: 12px 15px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.9rem; font-family: 'Noto Sans Bengali', sans-serif; background: var(--bg-input); color: var(--text); outline: none; transition: all 0.3s; resize: vertical; }
+        .form-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); background: var(--card); }
+        .submit-btn { width: 100%; padding: 14px; background: var(--gradient); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4); }
+        
+        /* সাকসেস মেসেজ */
+        .success-message { display: none; padding: 15px; background: rgba(16, 185, 129, 0.1); border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 10px; color: var(--success); font-size: 0.9rem; font-weight: 600; text-align: center; margin-top: 15px; font-family: 'Noto Sans Bengali', sans-serif; }
+        .success-message.active { display: block; }
+        
+        /* FAQ */
+        .faq-section { margin-top: 40px; }
+        .faq-title { text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; font-family: 'Noto Sans Bengali', sans-serif; }
+        .faq-item { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 10px; box-shadow: var(--shadow); }
+        .faq-item h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .faq-item p { color: var(--text-secondary); font-size: 0.85rem; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* অ্যাড */
+        .ad-container { max-width: 900px; margin: 20px auto; padding: 15px; text-align: center; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); min-height: 80px; }
+        
+        /* ফুটার */
+        .site-footer { background: var(--footer-bg); border-top: 1px solid var(--border); padding: 40px 20px 20px; }
+        .footer-container { max-width: 1100px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 25px; }
+        .footer-column h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text); padding-bottom: 6px; border-bottom: 2px solid var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 6px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links a:hover { color: var(--primary); padding-left: 4px; }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 15px; text-align: center; }
+        .copyright-text { font-size: 0.75rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* রেসপনসিভ */
+        @media (max-width: 768px) { .header-nav { display: none; } .menu-toggle { display: flex; } .contact-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        @media (max-width: 480px) { .contact-form { padding: 20px; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a href="/" class="logo"><div class="logo-icon"><i class="fas fa-tools"></i></div><div class="logo-text"><span class="brand-name">Toolkit <span>Pro</span></span><span class="brand-tagline">ফ্রি অনলাইন টুলস</span></div></a>
+            <nav class="header-nav">
+                <a href="/" class="nav-link">হোম</a>
+                <a href="/tools.html" class="nav-link">সব টুলস</a>
+                <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+                <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+                <a href="/contact.html" class="nav-link active">যোগাযোগ</a>
+            </nav>
+            <div class="header-actions">
+                <button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">EN</button>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/" class="nav-link">হোম</a>
+            <a href="/tools.html" class="nav-link">সব টুলস</a>
+            <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+            <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+            <a href="/contact.html" class="nav-link active">যোগাযোগ</a>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h1 class="page-title">📞 যোগাযোগ করুন</h1>
+        <p class="page-subtitle">প্রশ্ন, মতামত বা সাজেশন থাকলে আমাদের জানান</p>
+    </div>
+
+    <div class="main-content">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-content">
+                        <h3>ইমেইল</h3>
+                        <p>support@toolkitpro.com</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-comments"></i></div>
+                    <div class="info-content">
+                        <h3>লাইভ চ্যাট</h3>
+                        <p>সকাল ৯টা - রাত ১০টা (IST)</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-question-circle"></i></div>
+                    <div class="info-content">
+                        <h3>FAQ</h3>
+                        <p>সাধারণ প্রশ্নের উত্তর দেখুন</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div class="info-content">
+                        <h3>রেসপন্স টাইম</h3>
+                        <p>সাধারণত ২৪ ঘণ্টার মধ্যে</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2 class="form-title">মেসেজ পাঠান</h2>
+                <form id="contactForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label">আপনার নাম</label>
+                        <input type="text" class="form-input" id="name" placeholder="আপনার নাম লিখুন" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ইমেইল</label>
+                        <input type="email" class="form-input" id="email" placeholder="আপনার ইমেইল লিখুন" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">বিষয়</label>
+                        <input type="text" class="form-input" id="subject" placeholder="বিষয় লিখুন" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">মেসেজ</label>
+                        <textarea class="form-textarea" id="message" placeholder="আপনার মেসেজ লিখুন..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> মেসেজ পাঠান
+                    </button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    ✅ আপনার মেসেজ সফলভাবে পাঠানো হয়েছে! আমরা শীঘ্রই যোগাযোগ করবো।
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="faq-section">
+            <h2 class="faq-title">সাধারণ প্রশ্ন</h2>
+            <div class="faq-item">
+                <h3>কত দ্রুত রেসপন্স পাবো?</h3>
+                <p>সাধারণত ২৪ ঘণ্টার মধ্যে রেসপন্স পাবেন। জরুরি ক্ষেত্রে দ্রুত যোগাযোগ করুন।</p>
+            </div>
+            <div class="faq-item">
+                <h3>কোন বিষয়ে যোগাযোগ করতে পারি?</h3>
+                <p>নতুন টুল সাজেশন, বাগ রিপোর্ট, মতামত বা যেকোনো প্রশ্নে যোগাযোগ করতে পারেন।</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>জনপ্রিয় টুলস</h4>
+                    <ul class="footer-links"><li><a href="/tool.html?slug=word-counter">Word Counter</a></li><li><a href="/tool.html?slug=password-generator">Password Generator</a></li><li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>কুইক লিংক</h4>
+                    <ul class="footer-links"><li><a href="/">হোম</a></li><li><a href="/tools.html">সব টুলস</a></li><li><a href="/categories.html">ক্যাটাগরি</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>আইনি</h4>
+                    <ul class="footer-links"><li><a href="/privacy.html">গোপনীয়তা নীতি</a></li><li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>গুরুত্বপূর্ণ</h4>
+                    <ul class="footer-links"><li><a href="/sitemap.xml">সাইটম্যাপ</a></li><li><a href="/api/v1/stats">স্ট্যাটস</a></li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = window.location.origin + '/api/v1';
+        let currentLang = 'bn';
+
+        function toggleTheme() { const current = document.body.getAttribute('data-theme'); const newTheme = current === 'dark' ? 'light' : 'dark'; document.body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', newTheme); }
+        function toggleLanguage() { if (currentLang === 'bn') { currentLang = 'en'; document.getElementById('langBtn').textContent = 'বাং'; } else { currentLang = 'bn'; document.getElementById('langBtn').textContent = 'EN'; } }
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // ফর্ম ভ্যালিডেশন
+            if (!name || !email || !subject || !message) {
+                alert('সব ঘর পূরণ করুন');
+                return;
+            }
+            
+            // সাকসেস মেসেজ দেখান
+            document.getElementById('successMessage').classList.add('active');
+            
+            // ফর্ম রিসেট
+            document.getElementById('contactForm').reset();
+            
+            // ৫ সেকেন্ড পর মেসেজ লুকান
+            setTimeout(() => {
+                document.getElementById('successMessage').classList.remove('active');
+            }, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('themeIcon').className = 'fas fa-sun'; }
+        });
+    </script>
+</body>
+</html>
