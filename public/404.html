@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>৪০৪ - পেজ পাওয়া যায়নি | Toolkit Pro</title>
+    <meta name="description" content="দুঃখিত, আপনি যে পেজটি খুঁজছেন তা পাওয়া যায়নি।">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --secondary: #7c3aed; --accent: #f59e0b; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; }
+        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-secondary: #94a3b8; --border: #334155; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; transition: background 0.3s ease, color 0.3s ease; }
+        
+        .error-container { text-align: center; padding: 40px 20px; max-width: 600px; }
+        .error-icon { font-size: 6rem; margin-bottom: 20px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .error-code { font-size: clamp(4rem, 10vw, 6rem); font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+        .error-title { font-size: 1.5rem; font-weight: 800; margin: 15px 0; font-family: 'Noto Sans Bengali', sans-serif; }
+        .error-message { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 30px; font-family: 'Noto Sans Bengali', sans-serif; line-height: 1.6; }
+        
+        .action-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .btn-primary { background: var(--gradient); color: white; box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4); }
+        .btn-secondary { background: var(--card); color: var(--text); border: 2px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-3px); }
+        
+        .quick-links { margin-top: 40px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .quick-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; padding: 8px 15px; border-radius: 20px; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .quick-link:hover { color: var(--primary); background: rgba(37, 99, 235, 0.08); }
+        
+        .theme-toggle { position: fixed; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: all 0.3s; }
+        .theme-toggle:hover { background: var(--gradient); color: white; border-color: transparent; }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+    
+    <div class="error-container">
+        <div class="error-icon">🔍</div>
+        <div class="error-code">404</div>
+        <h1 class="error-title">পেজ পাওয়া যায়নি</h1>
+        <p class="error-message">
+            দুঃখিত! আপনি যে পেজটি খুঁজছেন তা হয়তো সরিয়ে ফেলা হয়েছে, নাম পরিবর্তন করা হয়েছে অথবা সাময়িকভাবে অনুপলব্ধ।
+        </p>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> হোম পেজে যান</a>
+            <a href="/tools.html" class="btn btn-secondary"><i class="fas fa-tools"></i> সব টুলস দেখুন</a>
+        </div>
+        
+        <div class="quick-links">
+            <a href="/tools.html?category=text-tools" class="quick-link">📝 Text Tools</a>
+            <a href="/tools.html?category=image-tools" class="quick-link">🖼️ Image Tools</a>
+            <a href="/tools.html?category=developer-tools" class="quick-link">💻 Developer Tools</a>
+            <a href="/tools.html?category=seo-tools" class="quick-link">🌐 SEO Tools</a>
+            <a href="/categories.html" class="quick-link">📂 সব ক্যাটাগরি</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() { const current = document.body.getAttribute('data-theme'); const newTheme = current === 'dark' ? 'light' : 'dark'; document.body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', newTheme); }
+        document.addEventListener('DOMContentLoaded', () => { const savedTheme = localStorage.getItem('theme'); if (savedTheme === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('themeIcon').className = 'fas fa-sun'; } });
+    </script>
+</body>
+</html>
