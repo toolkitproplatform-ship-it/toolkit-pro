@@ -1,278 +1,246 @@
 // ============================================
-// Toolkit Pro - Tools Routes
-// Complete Updated Version
+// Tools API Routes
 // ============================================
 
 const express = require("express");
 const router = express.Router();
 const database = require("../database");
 
-// সব টুলস লিস্ট
+// ============================================
+// GET /api/v1/tools - সব টুলস লিস্ট
+// ============================================
 router.get("/", async (req, res) => {
   try {
-    const { page = 1, limit = 20, category, search, sort = "popular" } = req.query;
-    const offset = (parseInt(page) - 1) * parseInt(limit);
-    
-    let queryText = `
+    const { 
+      limit = 50, 
+      offset = 0, 
+      category = "", 
+      search = "",
+      sort = "name",
+      order = "asc",
+      featured = false,
+      popular = false,
+      is_new = false
+    } = req.query;
+
+    // SQL কোয়েরি তৈরি
+    let sql = `
       SELECT 
-        id, slug, name, category, description, icon,
-        usage_count, rating, rating_count,
-        is_featured, is_popular, is_new,
-        created_at
-      FROM tools 
-      WHERE is_active = true
+        t.*,
+        tc.name as category_name,
+        tc.icon as category_icon
+      FROM tools t
+      LEFT JOIN tool_categories tc ON t.category = tc.slug
+      WHERE t.is_active = true
     `;
     
     const params = [];
     
-    // ক্যাটাগরি ফিল্টার
-    if (category && category !== "all") {
-      queryText += ` AND category = $${params.length + 1}`;
+    // ফিল্টার যোগ
+    if (category) {
       params.push(category);
+      sql += ` AND t.category = $${params.length}`;
     }
     
-    // সার্চ ফিল্টার
     if (search) {
-      queryText += ` AND (name ILIKE $${params.length + 1} OR description ILIKE $${params.length + 1} OR slug ILIKE $${params.length + 1})`;
       params.push(`%${search}%`);
+      sql += ` AND (t.name ILIKE $${params.length} OR t.description ILIKE $${params.length})`;
     }
     
-    // কাউন্ট
-    const countResult = await database.getOne(`
-      SELECT COUNT(*) as total FROM tools WHERE is_active = true
-      ${category && category !== "all" ? `AND category = $1` : ""}
-      ${search ? `AND (name ILIKE $${category && category !== "all" ? "2" : "1"} OR description ILIKE $${category && category !== "all" ? "2" : "1"})` : ""}
-    `, params);
+    if (featured === "true") {
+      sql += ` AND t.is_featured = true`;
+    }
+    
+    if (popular === "true") {
+      sql += ` AND t.is_popular = true`;
+    }
+    
+    if (is_new === "true") {
+      sql += ` AND t.is_new = true`;
+    }
     
     // সর্টিং
-    switch (sort) {
-      case "newest": queryText += ` ORDER BY created_at DESC`; break;
-      case "rating": queryText += ` ORDER BY rating DESC`; break;
-      case "alphabetical": queryText += ` ORDER BY name ASC`; break;
-      default: queryText += ` ORDER BY usage_count DESC, rating DESC`;
-    }
+    const validSortFields = ["name", "usage_count", "rating", "created_at"];
+    const sortField = validSortFields.includes(sort) ? sort : "name";
+    const sortOrder = order.toLowerCase() === "desc" ? "DESC" : "ASC";
+    sql += ` ORDER BY t.${sortField} ${sortOrder}`;
     
     // পেজিনেশন
-    queryText += ` LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
-    params.push(parseInt(limit), offset);
+    sql += ` LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+    params.push(parseInt(limit));
+    params.push(parseInt(offset));
     
-    const tools = await database.getMany(queryText, params);
+    const tools = await database.getMany(sql, params);
     
-    const totalPages = Math.ceil(parseInt(countResult.total) / parseInt(limit));
+    // মোট কাউন্ট
+    let countSql = `
+      SELECT COUNT(*) as total 
+      FROM tools t 
+      WHERE t.is_active = true
+    `;
+    const countParams = [];
     
-    res.json({
+    if (category) {
+      countParams.push(category);
+      countSql += ` AND t.category = $${countParams.length}`;
+    }
+    
+    if (search) {
+      countParams.push(`%${search}%`);
+      countSql += ` AND (t.name ILIKE $${countParams.length} OR t.description ILIKE $${countParams.length})`;
+    }
+    
+    const countResult = await database.getOne(countSql, countParams);
+    
+    res.status(200).json({
       success: true,
-      message: "Tools retrieved",
+      message: "Tools retrieved successfully",
       data: tools,
       pagination: {
-        total: parseInt(countResult.total),
-        page: parseInt(page),
+        total: parseInt(countResult?.total || 0),
         limit: parseInt(limit),
-        totalPages: totalPages,
-        hasNext: parseInt(page) < totalPages,
-        hasPrev: parseInt(page) > 1,
-      },
-      timestamp: new Date().toISOString(),
+        offset: parseInt(offset),
+        hasMore: parseInt(offset) + tools.length < parseInt(countResult?.total || 0)
+      }
     });
     
   } catch (error) {
-    console.error("Tools list error:", error);
+    console.error("❌ Error fetching tools:", error);
     res.status(500).json({
       success: false,
       message: "Failed to fetch tools",
-      error: error.message,
+      error: error.message
     });
   }
 });
 
-// সিঙ্গেল টুল
+// ============================================
+// GET /api/v1/tools/categories - সব ক্যাটাগরি
+// ============================================
+router.get("/categories", async (req, res) => {
+  try {
+    const categories = await database.getMany(`
+      SELECT 
+        tc.*,
+        (SELECT COUNT(*) FROM tools t WHERE t.category = tc.slug AND t.is_active = true) as actual_tool_count
+      FROM tool_categories tc
+      WHERE tc.is_active = true
+      ORDER BY tc.sort_order ASC
+    `);
+    
+    res.status(200).json({
+      success: true,
+      message: "Categories retrieved successfully",
+      data: categories
+    });
+    
+  } catch (error) {
+    console.error("❌ Error fetching categories:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch categories",
+      error: error.message
+    });
+  }
+});
+
+// ============================================
+// GET /api/v1/tools/:slug - নির্দিষ্ট টুল
+// ============================================
 router.get("/:slug", async (req, res) => {
   try {
     const { slug } = req.params;
     
     const tool = await database.getOne(`
-      SELECT * FROM tools WHERE slug = $1 AND is_active = true
+      SELECT 
+        t.*,
+        tc.name as category_name,
+        tc.icon as category_icon
+      FROM tools t
+      LEFT JOIN tool_categories tc ON t.category = tc.slug
+      WHERE t.slug = $1 AND t.is_active = true
     `, [slug]);
     
     if (!tool) {
       return res.status(404).json({
         success: false,
         message: "Tool not found",
+        data: null
       });
     }
     
-    res.json({
+    // ব্যবহার কাউন্ট বাড়ান
+    await database.query(`
+      UPDATE tools 
+      SET usage_count = usage_count + 1 
+      WHERE slug = $1
+    `, [slug]);
+    
+    res.status(200).json({
       success: true,
-      message: "Tool retrieved",
-      data: tool,
+      message: "Tool retrieved successfully",
+      data: tool
     });
     
   } catch (error) {
+    console.error("❌ Error fetching tool:", error);
     res.status(500).json({
       success: false,
       message: "Failed to fetch tool",
-      error: error.message,
+      error: error.message
     });
   }
 });
 
-// টুল এক্সিকিউট
-router.post("/:slug/execute", async (req, res) => {
+// ============================================
+// POST /api/v1/tools/:slug/rate - টুল রেটিং
+// ============================================
+router.post("/:slug/rate", async (req, res) => {
   try {
     const { slug } = req.params;
-    const input = req.body;
+    const { rating } = req.body;
     
-    const tool = await database.getOne(`
-      SELECT * FROM tools WHERE slug = $1 AND is_active = true
-    `, [slug]);
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid rating value"
+      });
+    }
+    
+    const tool = await database.getOne(
+      "SELECT * FROM tools WHERE slug = $1",
+      [slug]
+    );
     
     if (!tool) {
       return res.status(404).json({
         success: false,
-        message: "Tool not found",
+        message: "Tool not found"
       });
     }
     
-    // ইউজ কাউন্ট আপডেট
+    // নতুন রেটিং হিসাব
+    const newRatingCount = tool.rating_count + 1;
+    const newRating = ((tool.rating * tool.rating_count) + rating) / newRatingCount;
+    
     await database.query(`
-      UPDATE tools SET usage_count = usage_count + 1 WHERE id = $1
-    `, [tool.id]);
+      UPDATE tools 
+      SET rating = $1, rating_count = $2 
+      WHERE slug = $3
+    `, [newRating, newRatingCount, slug]);
     
-    // টুল এক্সিকিউশন লজিক
-    let output = {};
-    
-    switch (tool.category) {
-      case "text-tools":
-        output = executeTextTool(tool.slug, input);
-        break;
-      case "developer-tools":
-        output = executeDeveloperTool(tool.slug, input);
-        break;
-      case "security-tools":
-        output = executeSecurityTool(tool.slug, input);
-        break;
-      default:
-        output = { message: "Tool execution not implemented", input };
-    }
-    
-    res.json({
+    res.status(200).json({
       success: true,
-      message: "Tool executed",
-      data: {
-        tool: tool.name,
-        slug: tool.slug,
-        output: output,
-      },
+      message: "Rating submitted successfully"
     });
     
   } catch (error) {
+    console.error("❌ Error rating tool:", error);
     res.status(500).json({
       success: false,
-      message: "Execution failed",
-      error: error.message,
+      message: "Failed to rate tool",
+      error: error.message
     });
-  }
-});
-
-// টেক্সট টুল এক্সিকিউশন
-function executeTextTool(slug, input) {
-  const text = input.text || input.input || "";
-  
-  switch (slug) {
-    case "word-counter":
-      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      return {
-        words,
-        characters: text.length,
-        charactersNoSpaces: text.replace(/\s/g, "").length,
-        sentences: text.split(/[.!?]+/).filter(s => s.trim()).length,
-        paragraphs: text.split(/\n\s*\n/).filter(p => p.trim()).length,
-      };
-      
-    case "case-converter":
-      return {
-        uppercase: text.toUpperCase(),
-        lowercase: text.toLowerCase(),
-        titleCase: text.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()),
-      };
-      
-    default:
-      return { message: "Text processed", length: text.length };
-  }
-}
-
-// ডেভেলপার টুল এক্সিকিউশন
-function executeDeveloperTool(slug, input) {
-  const text = input.text || input.input || "";
-  
-  switch (slug) {
-    case "json-formatter":
-      try {
-        const parsed = JSON.parse(text);
-        return { formatted: JSON.stringify(parsed, null, 2), valid: true };
-      } catch (e) {
-        return { valid: false, error: e.message };
-      }
-      
-    case "json-validator":
-      try {
-        JSON.parse(text);
-        return { valid: true };
-      } catch (e) {
-        return { valid: false, error: e.message };
-      }
-      
-    default:
-      return { message: "Processed", length: text.length };
-  }
-}
-
-// সিকিউরিটি টুল এক্সিকিউশন
-function executeSecurityTool(slug, input) {
-  const text = input.text || input.input || "";
-  
-  switch (slug) {
-    case "password-generator":
-      const length = input.length || 12;
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-      let password = "";
-      for (let i = 0; i < length; i++) {
-        password += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return { password, length: password.length };
-      
-    case "hash-generator":
-      const crypto = require("crypto");
-      return {
-        md5: crypto.createHash("md5").update(text).digest("hex"),
-        sha1: crypto.createHash("sha1").update(text).digest("hex"),
-        sha256: crypto.createHash("sha256").update(text).digest("hex"),
-      };
-      
-    default:
-      return { message: "Security processed" };
-  }
-}
-
-// পপুলার টুলস
-router.get("/popular", async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit) || 10;
-    
-    const tools = await database.getMany(`
-      SELECT id, slug, name, category, description, icon, usage_count, rating
-      FROM tools 
-      WHERE is_active = true 
-      ORDER BY usage_count DESC, rating DESC 
-      LIMIT $1
-    `, [limit]);
-    
-    res.json({
-      success: true,
-      data: tools,
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
   }
 });
 
