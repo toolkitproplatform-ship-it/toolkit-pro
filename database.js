@@ -1,7 +1,7 @@
 // ============================================
 // Toolkit Pro - Database Connection
 // ============================================
-// PostgreSQL কানেকশন ও টেবিল ম্যানেজমেন্ট
+// PostgreSQL কানেকশন (Redis ছাড়া কাজ করবে)
 // ============================================
 
 // ----------------------------------------------
@@ -19,13 +19,13 @@ dotenv.config();
 // PostgreSQL কানেকশন পুল
 // ----------------------------------------------
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.DATABASE_URL_INTERNAL,
-  max: parseInt(process.env.DB_MAX_CONNECTIONS) || 10,
-  idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT) || 30000,
-  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT) || 10000,
-  ssl: process.env.NODE_ENV === "production" ? {
+  connectionString: process.env.DATABASE_URL || "postgresql://toolkit_admin:PwqP3lux8QCvRlXxKPJJOVZlS8GB7NKU@dpg-dagamoeq1p3s73b86sq0-a/toolkit_pro",
+  max: 10,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000,
+  ssl: {
     rejectUnauthorized: false
-  } : false
+  }
 });
 
 // ----------------------------------------------
@@ -40,40 +40,25 @@ pool.on("connect", () => {
 });
 
 // ----------------------------------------------
-// ডাটাবেস কানেকশন ফাংশন (রিট্রাই সহ)
+// ডাটাবেস কানেকশন ফাংশন
 // ----------------------------------------------
-async function connect(retries = 5) {
+async function connect(retries = 3) {
   for (let i = 0; i < retries; i++) {
     try {
       const client = await pool.connect();
       console.log("✅ PostgreSQL connection successful");
-      console.log(`📊 Database URL: ${maskConnectionString(process.env.DATABASE_URL)}`);
       client.release();
       return true;
     } catch (error) {
       console.error(`❌ PostgreSQL connection attempt ${i + 1}/${retries} failed:`, error.message);
       
       if (i < retries - 1) {
-        console.log(`⏳ Retrying in 5 seconds...`);
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.log(`⏳ Retrying in 3 seconds...`);
+        await new Promise(resolve => setTimeout(resolve, 3000));
       } else {
         throw error;
       }
     }
-  }
-}
-
-// ----------------------------------------------
-// কানেকশন স্ট্রিং মাস্ক হেল্পার
-// ----------------------------------------------
-function maskConnectionString(connectionString) {
-  if (!connectionString) return "Not set";
-  
-  try {
-    const url = new URL(connectionString);
-    return `${url.protocol}//${url.username}:****@${url.hostname}:${url.port}${url.pathname}`;
-  } catch {
-    return "Invalid URL format";
   }
 }
 
@@ -91,7 +76,7 @@ async function checkConnection() {
 }
 
 // ----------------------------------------------
-// টেবিল সেটআপ (এরর হ্যান্ডলিং সহ)
+// টেবিল সেটআপ
 // ----------------------------------------------
 async function setupTables() {
   const client = await pool.connect();
@@ -129,8 +114,6 @@ async function setupTables() {
         category VARCHAR(100) NOT NULL,
         description TEXT NOT NULL,
         icon VARCHAR(50) DEFAULT '🔧',
-        url VARCHAR(500),
-        api_endpoint VARCHAR(500),
         is_free BOOLEAN DEFAULT TRUE,
         is_active BOOLEAN DEFAULT TRUE,
         is_featured BOOLEAN DEFAULT FALSE,
@@ -139,14 +122,6 @@ async function setupTables() {
         usage_count INTEGER DEFAULT 0,
         rating DECIMAL(3,2) DEFAULT 0,
         rating_count INTEGER DEFAULT 0,
-        tags TEXT[],
-        keywords TEXT[],
-        seo_title VARCHAR(300),
-        seo_description TEXT,
-        seo_keywords TEXT[],
-        ads_enabled BOOLEAN DEFAULT TRUE,
-        ads_slots JSONB,
-        config JSONB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
@@ -174,55 +149,13 @@ async function setupTables() {
       CREATE TABLE IF NOT EXISTS tool_views (
         id SERIAL PRIMARY KEY,
         tool_id INTEGER REFERENCES tools(id) ON DELETE CASCADE,
-        user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
         ip_address VARCHAR(45),
-        user_agent TEXT,
-        referrer TEXT,
-        country VARCHAR(50),
-        language VARCHAR(10),
-        device_type VARCHAR(20),
         view_date DATE DEFAULT CURRENT_DATE,
         view_count INTEGER DEFAULT 1,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE(tool_id, view_date, ip_address)
-      )
-    `);
-    console.log("✅ Tool views table ready");
-    
-    // Ad Placements টেবিল
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS ad_placements (
-        id SERIAL PRIMARY KEY,
-        slug VARCHAR(100) UNIQUE NOT NULL,
-        name VARCHAR(100) NOT NULL,
-        location VARCHAR(50) NOT NULL,
-        size VARCHAR(50),
-        format VARCHAR(20) DEFAULT 'auto',
-        is_active BOOLEAN DEFAULT TRUE,
-        adsense_slot_id VARCHAR(50),
-        custom_code TEXT,
-        display_rules JSONB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✅ Ad placements table ready");
-    
-    // Ad Impressions টেবিল
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS ad_impressions (
-        id SERIAL PRIMARY KEY,
-        placement_id INTEGER REFERENCES ad_placements(id) ON DELETE CASCADE,
-        tool_id INTEGER REFERENCES tools(id) ON DELETE CASCADE,
-        page_url TEXT,
-        impression_count INTEGER DEFAULT 1,
-        click_count INTEGER DEFAULT 0,
-        revenue DECIMAL(10,4) DEFAULT 0,
-        impression_date DATE DEFAULT CURRENT_DATE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE(placement_id, tool_id, impression_date)
-      )
-    `);
-    console.log("✅ Ad impressions table ready");
+    console.log("✅ Tool views table ready");
     
     // User Favorites টেবিল
     await client.query(`
@@ -230,8 +163,7 @@ async function setupTables() {
         id SERIAL PRIMARY KEY,
         user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
         tool_id INTEGER REFERENCES tools(id) ON DELETE CASCADE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE(user_id, tool_id)
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
     console.log("✅ User favorites table ready");
@@ -245,26 +177,10 @@ async function setupTables() {
         rating INTEGER CHECK (rating >= 1 AND rating <= 5),
         review_text TEXT,
         is_approved BOOLEAN DEFAULT TRUE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE(tool_id, user_id)
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
     console.log("✅ Tool reviews table ready");
-    
-    // Sessions টেবিল
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS sessions (
-        id SERIAL PRIMARY KEY,
-        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-        token VARCHAR(500) UNIQUE NOT NULL,
-        ip_address VARCHAR(45),
-        user_agent TEXT,
-        expires_at TIMESTAMP,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        last_active_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-    console.log("✅ Sessions table ready");
     
     await client.query("COMMIT");
     console.log("✅ All database tables created successfully");
@@ -373,11 +289,8 @@ async function seedDefaultTools() {
 // কোয়েরি হেল্পার ফাংশন
 // ----------------------------------------------
 async function query(text, params) {
-  const start = Date.now();
   try {
     const result = await pool.query(text, params);
-    const duration = Date.now() - start;
-    console.log(`📊 Query executed in ${duration}ms`);
     return result;
   } catch (error) {
     console.error("❌ Query error:", error.message);
