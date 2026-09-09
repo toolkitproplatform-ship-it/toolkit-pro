@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool - Toolkit Pro | ফ্রি অনলাইন টুল</title>
+    <meta name="description" content="Toolkit Pro-তে ফ্রি টুল ব্যবহার করুন। দ্রুত, সহজ এবং ১০০% ফ্রি।">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    <meta property="og:title" content="Tool - Toolkit Pro">
+    <meta property="og:description" content="ফ্রি অনলাইন টুল ব্যবহার করুন।">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://toolkit-pro-1.onrender.com/tool.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --secondary: #7c3aed; --accent: #f59e0b; --success: #10b981; --danger: #ef4444; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --border: #e2e8f0; --shadow: 0 2px 10px rgba(0,0,0,0.08); --shadow-lg: 0 10px 40px rgba(0,0,0,0.12); --gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); --font: 'Inter', 'Noto Sans Bengali', 'Hind Siliguri', sans-serif; --bg-input: #f1f5f9; --header-bg: #ffffff; --footer-bg: #ffffff; }
+        [data-theme="dark"] { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-secondary: #94a3b8; --border: #334155; --shadow: 0 2px 10px rgba(0,0,0,0.3); --shadow-lg: 0 10px 40px rgba(0,0,0,0.5); --bg-input: #334155; --header-bg: #1e293b; --footer-bg: #1e293b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; }
+        
+        /* হেডার */
+        .site-header { background: var(--header-bg); box-shadow: 0 2px 15px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--primary); }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; height: 65px; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); flex-shrink: 0; }
+        .logo-icon { width: 42px; height: 42px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .logo-text .brand-name { font-weight: 800; font-size: 1.1rem; display: block; line-height: 1.1; }
+        .logo-text .brand-name span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo-text .brand-tagline { font-size: 0.65rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .header-nav { display: flex; gap: 4px; align-items: center; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; padding: 8px 14px; border-radius: 8px; white-space: nowrap; font-family: 'Noto Sans Bengali', sans-serif; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(37, 99, 235, 0.08); }
+        .header-actions { display: flex; gap: 6px; align-items: center; }
+        .theme-toggle, .lang-toggle { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; transition: all 0.3s; }
+        .theme-toggle:hover, .lang-toggle:hover { background: var(--gradient); color: white; border-color: transparent; }
+        .menu-toggle { display: none; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text); cursor: pointer; align-items: center; justify-content: center; font-size: 1rem; }
+        .mobile-menu { display: none; background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 10px 20px; flex-direction: column; gap: 4px; }
+        .mobile-menu.active { display: flex; }
+        
+        /* ব্রেডক্রাম্ব */
+        .breadcrumb { max-width: 1200px; margin: 20px auto 0; padding: 0 20px; font-size: 0.8rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb span { margin: 0 5px; }
+        
+        /* মেইন কন্টেন্ট */
+        .main-content { flex: 1; max-width: 900px; margin: 0 auto; padding: 20px; width: 100%; }
+        
+        /* টুল কন্টেইনার */
+        .tool-container { background: var(--card); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; }
+        
+        /* টুল হেডার */
+        .tool-header { background: var(--gradient); padding: 30px; text-align: center; }
+        .tool-header-icon { width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 2rem; }
+        .tool-header h1 { color: white; font-size: 1.5rem; font-weight: 900; margin-bottom: 8px; font-family: 'Noto Sans Bengali', sans-serif; }
+        .tool-header p { color: rgba(255,255,255,0.9); font-size: 0.9rem; font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* টুল বডি */
+        .tool-body { padding: 25px; }
+        
+        /* ইনপুট সেকশন */
+        .input-section { margin-bottom: 20px; }
+        .input-label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--text); font-family: 'Noto Sans Bengali', sans-serif; }
+        .tool-textarea { width: 100%; min-height: 150px; padding: 15px; border: 2px solid var(--border); border-radius: 12px; font-size: 0.9rem; font-family: 'Noto Sans Bengali', sans-serif; background: var(--bg-input); color: var(--text); outline: none; transition: all 0.3s; resize: vertical; }
+        .tool-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); background: var(--card); }
+        .tool-input { width: 100%; padding: 12px 15px; border: 2px solid var(--border); border-radius: 12px; font-size: 0.9rem; font-family: 'Noto Sans Bengali', sans-serif; background: var(--bg-input); color: var(--text); outline: none; transition: all 0.3s; }
+        .tool-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        
+        /* অপশন */
+        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .option-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .option-group select { width: 100%; padding: 10px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.85rem; font-family: 'Noto Sans Bengali', sans-serif; background: var(--bg-input); color: var(--text); outline: none; cursor: pointer; }
+        
+        /* বাটন */
+        .execute-btn { width: 100%; padding: 14px; background: var(--gradient); color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3); }
+        .execute-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4); }
+        .execute-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        
+        /* রেজাল্ট */
+        .result-section { display: none; margin-top: 20px; padding: 20px; background: rgba(16, 185, 129, 0.06); border: 2px solid rgba(16, 185, 129, 0.25); border-radius: 12px; }
+        .result-section.active { display: block; }
+        .result-header { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; }
+        .result-icon { width: 30px; height: 30px; background: var(--success); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; }
+        .result-title { font-weight: 700; font-size: 0.9rem; color: var(--success); font-family: 'Noto Sans Bengali', sans-serif; }
+        .result-output { width: 100%; min-height: 100px; padding: 15px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.9rem; font-family: 'Noto Sans Bengali', sans-serif; background: var(--card); color: var(--text); white-space: pre-wrap; word-wrap: break-word; }
+        
+        /* ক্লিয়ার বাটন */
+        .clear-btn { padding: 10px 20px; background: transparent; color: var(--text-secondary); border: 2px solid var(--border); border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .clear-btn:hover { background: var(--danger); color: white; border-color: transparent; }
+        
+        /* সম্পর্কিত টুলস */
+        .related-section { margin-top: 40px; }
+        .related-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; text-align: center; font-family: 'Noto Sans Bengali', sans-serif; }
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .related-card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); text-decoration: none; color: var(--text); transition: all 0.3s; display: block; text-align: center; }
+        .related-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .related-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .related-name { font-size: 0.9rem; font-weight: 700; }
+        
+        /* লোডিং */
+        .loading { text-align: center; padding: 40px; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Noto Sans Bengali', sans-serif; }
+        .spinner { width: 20px; height: 20px; border: 3px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* অ্যাড */
+        .ad-container { max-width: 900px; margin: 20px auto; padding: 15px; text-align: center; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); min-height: 80px; }
+        
+        /* ফুটার */
+        .site-footer { background: var(--footer-bg); border-top: 1px solid var(--border); padding: 40px 20px 20px; }
+        .footer-container { max-width: 1100px; margin: 0 auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 25px; }
+        .footer-column h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 12px; color: var(--text); padding-bottom: 6px; border-bottom: 2px solid var(--primary); font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 6px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; transition: all 0.3s; font-family: 'Noto Sans Bengali', sans-serif; }
+        .footer-links a:hover { color: var(--primary); padding-left: 4px; }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 15px; text-align: center; }
+        .copyright-text { font-size: 0.75rem; color: var(--text-secondary); font-family: 'Noto Sans Bengali', sans-serif; }
+        
+        /* রেসপনসিভ */
+        @media (max-width: 768px) { .header-nav { display: none; } .menu-toggle { display: flex; } .options-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        @media (max-width: 480px) { .tool-header { padding: 20px; } .tool-body { padding: 15px; } .related-grid { grid-template-columns: 1fr 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-container">
+            <a href="/" class="logo"><div class="logo-icon"><i class="fas fa-tools"></i></div><div class="logo-text"><span class="brand-name">Toolkit <span>Pro</span></span><span class="brand-tagline">ফ্রি অনলাইন টুলস</span></div></a>
+            <nav class="header-nav">
+                <a href="/" class="nav-link">হোম</a>
+                <a href="/tools.html" class="nav-link">সব টুলস</a>
+                <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+                <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+                <a href="/contact.html" class="nav-link">যোগাযোগ</a>
+            </nav>
+            <div class="header-actions">
+                <button class="lang-toggle" onclick="toggleLanguage()" id="langBtn">EN</button>
+                <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/" class="nav-link">হোম</a>
+            <a href="/tools.html" class="nav-link">সব টুলস</a>
+            <a href="/categories.html" class="nav-link">ক্যাটাগরি</a>
+            <a href="/about.html" class="nav-link">আমাদের সম্পর্কে</a>
+            <a href="/contact.html" class="nav-link">যোগাযোগ</a>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="/">হোম</a><span>→</span><a href="/tools.html">সব টুলস</a><span>→</span><span id="breadcrumbTool">টুল</span>
+    </div>
+
+    <div class="main-content">
+        <div class="tool-container" id="toolContainer">
+            <div class="loading"><span class="spinner"></span> টুল লোড হচ্ছে...</div>
+        </div>
+
+        <div class="ad-container">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="related-section" id="relatedSection" style="display:none;">
+            <h2 class="related-title">সম্পর্কিত টুলস</h2>
+            <div class="related-grid" id="relatedTools"></div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>জনপ্রিয় টুলস</h4>
+                    <ul class="footer-links"><li><a href="/tool.html?slug=word-counter">Word Counter</a></li><li><a href="/tool.html?slug=password-generator">Password Generator</a></li><li><a href="/tool.html?slug=json-formatter">JSON Formatter</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>কুইক লিংক</h4>
+                    <ul class="footer-links"><li><a href="/">হোম</a></li><li><a href="/tools.html">সব টুলস</a></li><li><a href="/categories.html">ক্যাটাগরি</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>আইনি</h4>
+                    <ul class="footer-links"><li><a href="/privacy.html">গোপনীয়তা নীতি</a></li><li><a href="/terms.html">ব্যবহারের শর্তাবলী</a></li></ul>
+                </div>
+                <div class="footer-column">
+                    <h4>গুরুত্বপূর্ণ</h4>
+                    <ul class="footer-links"><li><a href="/sitemap.xml">সাইটম্যাপ</a></li><li><a href="/api/v1/stats">স্ট্যাটস</a></li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright-text">© 2026 Toolkit Pro — সর্বস্বত্ব সংরক্ষিত</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = window.location.origin + '/api/v1';
+        let currentLang = 'bn';
+        let currentTool = null;
+
+        function toggleTheme() { const current = document.body.getAttribute('data-theme'); const newTheme = current === 'dark' ? 'light' : 'dark'; document.body.setAttribute('data-theme', newTheme); document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', newTheme); }
+        function toggleLanguage() { if (currentLang === 'bn') { currentLang = 'en'; document.getElementById('langBtn').textContent = 'বাং'; } else { currentLang = 'bn'; document.getElementById('langBtn').textContent = 'EN'; } }
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+
+        // URL থেকে স্লাগ পড়ুন
+        const urlParams = new URLSearchParams(window.location.search);
+        const toolSlug = urlParams.get('slug') || 'word-counter';
+
+        async function loadTool() {
+            const container = document.getElementById('toolContainer');
+            
+            try {
+                const response = await fetch(API_BASE + '/tools/' + toolSlug);
+                const data = await response.json();
+                
+                if (data && data.success && data.data) {
+                    currentTool = data.data;
+                    renderTool(currentTool);
+                    document.getElementById('breadcrumbTool').textContent = currentTool.name;
+                    document.title = currentTool.name + ' - Toolkit Pro | ফ্রি অনলাইন টুল';
+                    
+                    // সম্পর্কিত টুলস
+                    if (data.data.related_tools && data.data.related_tools.length > 0) {
+                        renderRelatedTools(data.data.related_tools);
+                    }
+                } else {
+                    container.innerHTML = '<div class="loading">টুল পাওয়া যায়নি</div>';
+                }
+            } catch (error) {
+                container.innerHTML = '<div class="loading">এরর: ' + error.message + '</div>';
+            }
+        }
+
+        function renderTool(tool) {
+            const container = document.getElementById('toolContainer');
+            
+            let inputSection = '';
+            
+            // টুল টাইপ অনুযায়ী ইনপুট
+            if (tool.category === 'text-tools') {
+                inputSection = `
+                    <div class="input-section">
+                        <label class="input-label">আপনার টেক্সট লিখুন</label>
+                        <textarea class="tool-textarea" id="toolInput" placeholder="এখানে টেক্সট পেস্ট করুন..."></textarea>
+                    </div>
+                `;
+            } else if (tool.category === 'developer-tools') {
+                inputSection = `
+                    <div class="input-section">
+                        <label class="input-label">JSON ডেটা লিখুন</label>
+                        <textarea class="tool-textarea" id="toolInput" placeholder='{"key": "value"}'></textarea>
+                    </div>
+                `;
+            } else if (tool.category === 'security-tools') {
+                inputSection = `
+                    <div class="input-section">
+                        <label class="input-label">টেক্সট লিখুন</label>
+                        <textarea class="tool-textarea" id="toolInput" placeholder="এখানে টেক্সট লিখুন..."></textarea>
+                    </div>
+                `;
+            } else {
+                inputSection = `
+                    <div class="input-section">
+                        <label class="input-label">ইনপুট দিন</label>
+                        <textarea class="tool-textarea" id="toolInput" placeholder="এখানে ইনপুট দিন..."></textarea>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = `
+                <div class="tool-header">
+                    <div class="tool-header-icon">${tool.icon || '🔧'}</div>
+                    <h1>${tool.name}</h1>
+                    <p>${tool.description || ''}</p>
+                </div>
+                <div class="tool-body">
+                    ${inputSection}
+                    <div style="display:flex; gap:10px; margin-bottom:20px;">
+                        <button class="execute-btn" id="executeBtn" onclick="executeTool()">
+                            <i class="fas fa-play"></i> চালান
+                        </button>
+                        <button class="clear-btn" onclick="clearAll()">
+                            <i class="fas fa-times"></i> ক্লিয়ার
+                        </button>
+                    </div>
+                    <div class="result-section" id="resultSection">
+                        <div class="result-header">
+                            <div class="result-icon">✓</div>
+                            <div class="result-title">রেজাল্ট</div>
+                        </div>
+                        <div class="result-output" id="resultOutput"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderRelatedTools(tools) {
+            const section = document.getElementById('relatedSection');
+            const grid = document.getElementById('relatedTools');
+            
+            grid.innerHTML = tools.map(tool => 
+                '<a href="/tool.html?slug=' + tool.slug + '" class="related-card"><span class="related-icon">' + (tool.icon || '🔧') + '</span><div class="related-name">' + tool.name + '</div></a>'
+            ).join('');
+            
+            section.style.display = 'block';
+        }
+
+        async function executeTool() {
+            const input = document.getElementById('toolInput').value;
+            const btn = document.getElementById('executeBtn');
+            const resultSection = document.getElementById('resultSection');
+            const resultOutput = document.getElementById('resultOutput');
+            
+            if (!input.trim()) {
+                alert('দয়া করে ইনপুট দিন');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> প্রসেসিং...';
+            
+            try {
+                const response = await fetch(API_BASE + '/tools/' + toolSlug + '/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: input, input: input })
+                });
+                
+                const data = await response.json();
+                
+                if (data && data.success) {
+                    resultOutput.textContent = JSON.stringify(data.data.output, null, 2);
+                    resultSection.classList.add('active');
+                } else {
+                    alert(data.message || 'কিছু ভুল হয়েছে');
+                }
+            } catch (error) {
+                alert('এরর: ' + error.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-play"></i> চালান';
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('toolInput').value = '';
+            document.getElementById('resultSection').classList.remove('active');
+            document.getElementById('resultOutput').textContent = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('themeIcon').className = 'fas fa-sun'; }
+            loadTool();
+        });
+    </script>
+</body>
+</html>
